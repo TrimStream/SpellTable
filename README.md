@@ -29,7 +29,7 @@ Interactive cEDH training simulator. Players are presented with real game scenar
 **Prerequisites:** Node 18+, Python 3.11+
 
 ```bash
-git clone https://github.com/TrimStream/spelltable.git
+git clone https://github.com/TrimStream/SpellTable.git
 cd spelltable
 
 # Frontend
