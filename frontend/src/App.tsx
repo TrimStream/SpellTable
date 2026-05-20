@@ -1,14 +1,14 @@
 import { useEffect } from 'react';
+import { fetchCard } from "./api/scryfall.ts";
 
 function App() {
   useEffect(() => {
-    fetch('https://spelltable-backend.onrender.com/scenarios')
-    .then(res => res.json())
-    .then(data => console.log(data))
-    .catch(err => console.error('Error', err));
+    fetchCard('0e259db1-14db-4314-998c-6a076a28d8cb')
+        .then(card => console.log(card))
+        .catch(err => console.error(err));
   }, []);
 
-  return <div>Testing connection...</div>;
+  return <div>Testing Scryfall API...</div>;
 }
 
 export default App
