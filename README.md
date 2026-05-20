@@ -2,8 +2,6 @@
 
 Interactive cEDH training simulator. Players are presented with real game scenarios on a 4-player board and asked to make decisions. The AI evaluates their reasoning and explains the correct line.
 
-Built as a portfolio project demonstrating frontend depth, accessibility, and performance optimization in React + TypeScript.
-
 ---
 
 ## Tech Stack
