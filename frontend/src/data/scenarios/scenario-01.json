@@ -1,0 +1,195 @@
+{
+  "id": "scenario-01",
+  "title": "Thoracle - Demonic Consultation Win attempt on turn three",
+    "description": "This scenario is based on a game where an opponent is able to cast Thoracle to win on turn three by using Demonic Consultation to exile their entire deck and then using Thoracle's ability to win the game. The scenario is designed to test the player's ability to identify and respond to this strategy, as well as to understand the interactions between these cards and how to counter them effectively.",
+  "players": [
+    {
+      "id": "player_1",
+      "name": "You",
+      "life": 38,
+      "commanderTax": 0,
+      "zones": {
+        "command": {
+          "type": "command",
+          "cards": [
+            {
+              "id": "0e259db1-14db-4314-998c-6a076a28d8cb",
+              "name": "Kenrith, the Returned King",
+              "imageUrl": "https://cards.scryfall.io/normal/front/0/e/0e259db1-14db-4314-998c-6a076a28d8cb.jpg?1691056044"
+            }
+          ],
+          "revealed": true
+        },
+        "battlefield": {
+          "type": "battlefield",
+          "cards": [
+            {
+              "id": "2fea0356-6684-4730-9eb4-0262856bc1f9",
+              "name": "The Cabbage Merchant ",
+              "imageUrl": "https://cards.scryfall.io/normal/front/2/f/2fea0356-6684-4730-9eb4-0262856bc1f9.jpg?1770831825"
+            }
+          ],
+          "revealed": true
+        },
+        "hand": {
+          "type": "hand",
+          "cards": [],
+          "revealed": false
+        },
+        "graveyard": {
+          "type": "graveyard",
+          "cards": [],
+          "revealed": true
+        },
+        "exile": {
+          "type": "exile",
+          "cards": [],
+          "revealed": true
+        },
+        "library": {
+          "type": "library",
+          "cards": [],
+          "revealed": false
+        }
+      }
+    },
+    {
+      "id": "player_2",
+      "name": "Opponent 1",
+      "life": 40,
+      "commanderTax": 0,
+      "zones": {
+        "command": {
+          "type": "command",
+          "cards": [],
+          "revealed": true
+        },
+        "battlefield": {
+          "type": "battlefield",
+          "cards": [{
+            "id": "5a293c45-1e73-4527-be2f-2dcd5c47b610",
+            "name": "Sisay, Weatherlight Captain",
+            "imageUrl": "https://cards.scryfall.io/normal/front/5/a/5a293c45-1e73-4527-be2f-2dcd5c47b610.jpg?1650730165"
+          }],
+          "revealed": true
+        },
+        "hand": {
+          "type": "hand",
+          "cards": [],
+          "revealed": false
+        },
+        "graveyard": {
+          "type": "graveyard",
+          "cards": [],
+          "revealed": true
+        },
+        "exile": {
+          "type": "exile",
+          "cards": [],
+          "revealed": true
+        },
+        "library": {
+          "type": "library",
+          "cards": [],
+          "revealed": false
+        }
+      }
+    },
+    {
+      "id": "player_3",
+      "name": "Opponent 2",
+      "life": 40,
+      "commanderTax": 0,
+      "zones": {
+        "command": {
+          "type": "command",
+          "cards": [
+            {
+              "id": "4a1f905f-1d55-4d02-9d24-e58070793d3f",
+              "name": "Atraxa, Grand Unifier",
+              "imageUrl": "https://cards.scryfall.io/normal/front/4/a/4a1f905f-1d55-4d02-9d24-e58070793d3f.jpg"
+            }
+          ],
+          "revealed": true
+        },
+        "battlefield": {
+          "type": "battlefield",
+          "cards": [
+            {
+              "id": "726e8b29-13e9-4138-b6a9-d2a0d8188d1c",
+              "name": "Thassa's Oracle",
+              "imageUrl": "https://cards.scryfall.io/normal/front/7/2/726e8b29-13e9-4138-b6a9-d2a0d8188d1c.jpg?1680582212"
+            }
+          ],
+          "revealed": true
+        },
+        "hand": {
+          "type": "hand",
+          "cards": [],
+          "revealed": false
+        },
+        "graveyard": {
+          "type": "graveyard",
+          "cards": [],
+          "revealed": true
+        },
+        "exile": {
+          "type": "exile",
+          "cards": [],
+          "revealed": true
+        },
+        "library": {
+          "type": "library",
+          "cards": [],
+          "revealed": false
+        }
+      }
+    },
+    {
+        "id": "player_4",
+        "name": "Opponent 3",
+        "life": 40,
+        "commanderTax": 0,
+        "zones": {
+            "command": {
+            "type": "command",
+            "cards": [],
+            "revealed": true
+            },
+            "battlefield": {
+            "type": "battlefield",
+            "cards": [
+              {
+                "id": "63cda4a0-0dff-4edb-ae67-a2b7e2971350",
+                "name": "Kinnan, Bonder Prodigy",
+                "imageUrl": "https://cards.scryfall.io/normal/front/6/3/63cda4a0-0dff-4edb-ae67-a2b7e2971350.jpg?1761053650"
+              }
+            ],
+            "revealed": true
+            },
+            "hand": {
+            "type": "hand",
+            "cards": [],
+            "revealed": false
+            },
+            "graveyard": {
+            "type": "graveyard",
+            "cards": [],
+            "revealed": true
+            },
+            "exile": {
+            "type": "exile",
+            "cards": [],
+            "revealed": true
+            },
+            "library": {
+            "type": "library",
+            "cards": [],
+            "revealed": false
+            }
+        }
+    }
+  ],
+  "question": "Opponent 2 has cast Thassa's Oracle. Its ETB trigger is on the stack. What should you do?",
+  "correctAnswer": "Let your opponent resolve Demonic consultation, then respond to the trigger of Thoracle's ability by making them draw a card hence killing them or stifling the ablility or casting Endurance to stop their win attempt."
+}
