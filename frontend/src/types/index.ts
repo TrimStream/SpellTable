@@ -34,6 +34,7 @@ export interface Player {
 export interface Scenario {
     id: string;
     title: string;              // "Turn 3 Thoracle Attempt"
+    description: string;
     players: [Player, Player, Player, Player];  // Exactly 4
     question: string;           // "What should you do?"
     correctAnswer: string;      // For V1, just store the text explanation
