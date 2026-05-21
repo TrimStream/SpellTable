@@ -1,0 +1,15 @@
+.container {
+    border: 1px solid #333;
+    padding: 8px;
+    border-radius: 4px;
+}
+
+.cards {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.cards > * {
+    width: 120px;
+}
