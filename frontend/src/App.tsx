@@ -12,7 +12,6 @@ function App() {
       "4a1f905f-1d55-4d02-9d24-e58070793d3f", // Atraxa, Grand Unifier
       "63cda4a0-0dff-4edb-ae67-a2b7e2971350", // Kinnan, Bonder Prodigy
       "5a293c45-1e73-4527-be2f-2dcd5c47b610", // Sisay, Weatherlight Captain
-      "fbd447aa-588d-4c4d-925e-a7d3bdf6a65c", // Terra, Magical Adept
       "2fea0356-6684-4730-9eb4-0262856bc1f9", // The Cabbage Merchant
     ];
 
