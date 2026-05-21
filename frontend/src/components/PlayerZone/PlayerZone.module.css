@@ -1,0 +1,26 @@
+.commandZoneWrapper {
+    position: relative;
+}
+
+.tax {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    font-size: 0.8em;
+    font-weight: bold;
+    color: white;
+    background: rgba(0, 0, 0, 0.7);
+    padding: 3px 5px;
+    border-radius: 3px;
+}
+
+.container {
+    border: 1px solid #333;
+    padding: 8px;
+    border-radius: 4px;
+}
+
+.zones {
+    display: flex;
+    gap: 8px;
+}
