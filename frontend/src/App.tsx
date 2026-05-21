@@ -1,20 +1,36 @@
 import {useEffect, useState} from "react";
 import { fetchCard } from "./api/scryfall.ts";
-import { Card } from "./components/Card/Card";
-import type { Card as CardType } from "./types";
+import { Zone as ZoneComponent } from "./components/CardZone/CardZone";
+import type { Zone as ZoneType } from "./types";
 
 function App() {
-  const [card, setCard] = useState<CardType | null>(null);
+  const [zone, setZone] = useState<ZoneType | null>(null);
 
   useEffect(() => {
-    fetchCard("0e259db1-14db-4314-998c-6a076a28d8cb")
-        .then(card => setCard(card))
-        .catch(err => console.log(err));
+    const cardIds = [
+      "0e259db1-14db-4314-998c-6a076a28d8cb", // Kenrith, the Returned King
+      "4a1f905f-1d55-4d02-9d24-e58070793d3f", // Atraxa, Grand Unifier
+      "63cda4a0-0dff-4edb-ae67-a2b7e2971350", // Kinnan, Bonder Prodigy
+      "5a293c45-1e73-4527-be2f-2dcd5c47b610", // Sisay, Weatherlight Captain
+      "fbd447aa-588d-4c4d-925e-a7d3bdf6a65c", // Terra, Magical Adept
+      "2fea0356-6684-4730-9eb4-0262856bc1f9", // The Cabbage Merchant
+    ];
+
+    Promise.all(cardIds.map(id => fetchCard(id)))
+      .then(cards => {
+        const mockZone: ZoneType = {
+          type: "battlefield",
+          cards: cards,
+          revealed: true,
+        };
+        setZone(mockZone);
+      })
+      .catch(err => console.log(err));
   }, []);
 
-  if (!card) return <div>Loading...</div>;
+  if (!zone) return <div>Loading...</div>;
 
-  return <Card card={card} />;
+  return <ZoneComponent zone={zone} />;
 }
 
 export default App
