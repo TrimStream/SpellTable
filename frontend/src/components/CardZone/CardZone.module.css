@@ -6,6 +6,5 @@
 }
 
 .cards > * {
-    width: clamp(45px, 4.5vw, 75px);
     flex-shrink: 0;
 }
