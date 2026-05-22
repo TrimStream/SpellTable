@@ -9,7 +9,7 @@ interface PlayerZoneProps {
 export function PlayerZone({ player }: PlayerZoneProps) {
     return (
         <div className={styles.container}>
-            <h2>{player.name} - {player.life} Life</h2>
+            <p>{player.name} - {player.life} Life</p>
 
             <div className={styles.zones}>
                 <div className={styles.commandZoneWrapper}>
