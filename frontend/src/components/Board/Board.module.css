@@ -1,0 +1,12 @@
+.container {
+    display: flex;
+    height: 100%;
+    width: 100%;
+    flex-direction: column;
+}
+
+.board {
+    display: grid;
+    grid-template-columns: 1fr 1fr;  /* 2 equal columns */
+    grid-template-rows: 1fr 1fr;     /* 2 equal rows */
+}
