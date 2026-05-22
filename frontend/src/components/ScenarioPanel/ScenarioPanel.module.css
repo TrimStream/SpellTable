@@ -1,0 +1,106 @@
+.container {
+	border: 1px solid #333;
+	border-radius: 8px;
+	padding: 16px;
+	display: flex;
+	flex-direction: column;
+	gap: 16px;
+	text-align: left;
+}
+
+.header {
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
+}
+
+.title {
+	margin: 0;
+	font-size: 18px;
+}
+
+.description {
+	margin: 0;
+	font-size: 12px;
+}
+
+.question {
+	margin: 0;
+	font-size: 14px;
+}
+
+.options {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+	gap: 12px;
+}
+
+.optionCard {
+	border: 1px solid #999;
+	border-radius: 5px;
+	padding: 5px;
+	background: transparent;
+	color: inherit;
+	text-align: left;
+	cursor: pointer;
+	transition: border-color 0.15s ease, transform 0.15s ease, background 0.15s ease;
+}
+
+.optionCard:hover {
+	border-color: #555;
+	transform: translateY(-1px);
+}
+
+.optionCardSelected {
+	border-color: #aa3bff;
+	background: rgba(170, 59, 255, 0.08);
+}
+
+.textarea {
+	width: 100%;
+	min-height: 120px;
+	resize: vertical;
+	border: 1px solid #999;
+	border-radius: 8px;
+	padding: 12px;
+	font: inherit;
+	box-sizing: border-box;
+}
+
+.submitButton {
+	align-self: flex-start;
+	border: 1px solid #333;
+	border-radius: 8px;
+	padding: 5px 8px;
+	background: #111;
+	color: #fff;
+	cursor: pointer;
+}
+
+.submitButton:disabled {
+	opacity: 0.5;
+	cursor: not-allowed;
+}
+
+.feedback {
+	border-top: 1px solid #333;
+	padding-top: 12px;
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
+}
+
+.correct {
+	color: #0f8a3d;
+	font-weight: 700;
+}
+
+.incorrect {
+	color: #b42318;
+	font-weight: 700;
+}
+
+.correctAnswer {
+	margin: 0;
+}
+
