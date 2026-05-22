@@ -11,5 +11,5 @@
 }
 
 .cards > * {
-    width: 120px;
+    width: 70px;  /* small but readable */
 }

@@ -4,12 +4,17 @@ import styles from './PlayerZone.module.css';
 
 interface PlayerZoneProps {
     player: Player;
+    position: 'top' | 'bottom';
+    lifePosition: 'top-left' | 'top-right' | 'bottom-left' | 'bottom-right';
 }
 
-export function PlayerZone({ player }: PlayerZoneProps) {
+export function PlayerZone({ player, position, lifePosition }: PlayerZoneProps) {
     return (
-        <div className={styles.container}>
-            <p>{player.name} - {player.life} Life</p>
+        <div className={`${styles.container} ${position === 'top' ? styles.positionTop : styles.positionBottom}`}>
+            <p className={styles.name}>{player.name}</p>
+            <div className={`${styles.life} ${styles[lifePosition.replace('-', '_')]}`}>
+                ❤ {player.life}
+            </div>
 
             <div className={styles.zones}>
                 <div className={styles.commandZoneWrapper}>
