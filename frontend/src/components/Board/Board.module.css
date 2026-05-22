@@ -1,74 +1,17 @@
 .container {
     display: flex;
     flex-direction: column;
-    height: 100vh;
+    min-height: 100vh;
     width: 100%;
-    background: #0a1628;
-    overflow: auto;
-}
-
-/* Scenario title and question above board */
-.scenarioHeader {
-    padding: 8px 16px;
-    background: #0a1628;
-    border-bottom: 1px solid #1e2d45;
-    flex-shrink: 0;
-}
-
-.scenarioTitle {
-    margin: 0 0 4px 0;
-    font-size: 16px;
-    color: white;
-    font-weight: 600;
-}
-
-.scenarioQuestion {
-    margin: 0;
-    font-size: 13px;
-    color: #9ca3af;
-}
-
-/* Board wrapper is relative so center cluster can be absolute */
-.boardWrapper {
-    position: relative;
-    flex: 1;
-    min-height: 0;
+    background: #111318;
 }
 
 .board {
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-template-rows: 1fr 1fr;
-    height: 100%;
-    gap: 8px;
-    padding: 8px;
-    background: #311f03;
-}
-
-/* Life total cluster centered where 4 playmats meet */
-.centerCluster {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    z-index: 10;
-    pointer-events: none;
-}
-
-.lifeGrid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 2px;
-}
-
-.lifeItem {
-    font-size: 0.75em;
-    font-weight: bold;
-    color: white;
-    background: rgba(49, 31, 3, 0.95);
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    padding: 2px 6px;
-    border-radius: 3px;
-    text-align: center;
-    white-space: nowrap;
+    flex: 1;
+    gap: 6px;
+    padding: 6px;
+    background: #111318;
 }

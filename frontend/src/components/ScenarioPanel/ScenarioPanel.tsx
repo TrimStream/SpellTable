@@ -28,7 +28,10 @@ export function ScenarioPanel({ scenario }: ScenarioPanelProps) {
 
 	return (
 		<section className={styles.container}>
-			{/* Options / freeform answer */}
+			<header className={styles.header}>
+				<h2 className={styles.title}>{scenario.title}</h2>
+				<p className={styles.question}>{scenario.question}</p>
+			</header>
 			{hasOptions ? (
 				<div className={styles.options}>
 					{scenario.options?.map((option) => {

@@ -1,12 +1,11 @@
 .cards {
     display: flex;
     flex-wrap: wrap;
-    gap: 8px;
-    justify-content: center;
-    align-content: center;
-    height: 100%;
+    gap: 6px;
+    align-content: flex-start;
 }
 
 .cards > * {
-    width: 70px;  /* small but readable */
+    width: clamp(45px, 4.5vw, 75px);
+    flex-shrink: 0;
 }
