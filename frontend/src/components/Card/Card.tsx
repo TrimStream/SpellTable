@@ -12,7 +12,7 @@ export function Card({ card }: CardProps) {
             src={card.imageUrl}
             alt={card.name}
             loading="lazy"
-            className={styles.card}
+            className={`${styles.card} ${card.tapped ? styles.tapped : ''}`}
         />
     );
 }

@@ -47,7 +47,7 @@ export function useScenario(rawScenario: Scenario | null) {
                     for (const zone of Object.values(player.zones)) {
                         zone.cards = zone.cards.map(card => {
                             const fetchedCard = cardMap.get(card.id);
-                            return fetchedCard || card; // Use fetched card or keep original
+                            return fetchedCard ? { ...fetchedCard, tapped: card.tapped } : card; // Use fetched card or keep original
                         });
                     }
                 }

@@ -2,4 +2,9 @@
     width: 100%;
     height: auto;
     border-radius: 12px;
+    transition: transform 0.15s ease;
+}
+
+.tapped {
+    transform: rotate(90deg);
 }
