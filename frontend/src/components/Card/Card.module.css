@@ -7,4 +7,5 @@
 
 .tapped {
     transform: rotate(90deg);
+    margin: 0 16px;
 }

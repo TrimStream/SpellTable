@@ -1,0 +1,34 @@
+.battlefield {
+    /* Stack the three sections vertically */
+    display: flex;
+    flex-direction: column;
+    gap: 2px; /* space between sections */
+    width: 100%;
+    align-items: stretch;
+}
+
+.section {
+    /* Each section is a horizontal row of cards */
+    display: flex;
+    flex-direction: row;
+    gap: 8px;
+    align-items: center;
+    justify-content: center;
+    padding: 2px;
+    /* allow many cards; scroll horizontally if they overflow */
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    min-height: 55px;
+    box-sizing: border-box;
+}
+
+/* Optional visual separators for clarity */
+.section:not(:last-child) {
+    border-bottom: 1px solid rgba(0,0,0,0.06);
+}
+
+.section > * {
+    width: clamp(45px, 4.5vw, 75px);
+    flex-shrink: 0;
+}
