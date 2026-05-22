@@ -37,5 +37,6 @@ export interface Scenario {
     description: string;
     players: [Player, Player, Player, Player];  // Exactly 4
     question: string;           // "What should you do?"
+    options?: string[];  // Optional multiple choice answers TODO: change this later to accept any answer and argue with the AI.
     correctAnswer: string;      // For V1, just store the text explanation
 }

@@ -191,5 +191,11 @@
     }
   ],
   "question": "Opponent 2 has cast Thassa's Oracle. Its ETB trigger is on the stack. What should you do?",
-  "correctAnswer": "Let your opponent resolve Demonic consultation, then respond to the trigger of Thoracle's ability by making them draw a card hence killing them or stifling the ablility or casting Endurance to stop their win attempt."
+  "options": [
+    "Let your opponent resolve Demonic Consultation, then respond to the trigger of Thoracle's ability by casting Endurance.",
+    "Counter Thassa's Oracle before it resolves so the ETB trigger never goes on the stack.",
+    "Destroy all permanents in response to the trigger to remove the win condition.",
+    "Pass priority and let your opponent win if they have no cards left in library."
+  ],
+  "correctAnswer": "Let your opponent resolve Demonic consultation, then respond to the trigger of Thoracle's ability by casting Endurance."
 }
