@@ -34,7 +34,6 @@ export function ScenarioPanel({ scenario }: ScenarioPanelProps) {
 		<section className={styles.container}>
 			<header className={styles.header}>
 				<h2 className={styles.title}>{scenario.title}</h2>
-				<p className={styles.description}>{scenario.description}</p>
 				<p className={styles.question}>{scenario.question}</p>
 			</header>
 

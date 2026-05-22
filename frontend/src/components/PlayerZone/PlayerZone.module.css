@@ -1,5 +1,6 @@
 .commandZoneWrapper {
     position: relative;
+    z-index: 1;
     font-size: small;
 }
 
@@ -16,12 +17,29 @@
 }
 
 .container {
-    border: 1px solid #333;
-    padding: 8px;
+    background: #000000;
     border-radius: 4px;
+    position: relative;
+    overflow: hidden;
+}
+
+/* TODO: Replace hero.png with final SpellTable logo once name and branding are decided */
+.container::before {
+    z-index: 0;
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: url('../../assets/hero.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 20%;
+    opacity: 0.50;
+    pointer-events: none;
 }
 
 .zones {
+    position: relative;
+    z-index: 1;
     display: flex;
     gap: 8px;
 }
