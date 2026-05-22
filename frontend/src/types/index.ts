@@ -13,6 +13,7 @@ export interface Zone {
     type: 'battlefield' | 'hand' | 'graveyard' | 'exile' | 'command' | 'library';
     cards: Card[];
     revealed: boolean;  // Can players see what's in here?
+    cardCount?: number; // Used when cards are not revealed
 }
 
 // Each player's information
