@@ -8,12 +8,10 @@ interface ZoneProps {
 
 export function Zone({ zone }: ZoneProps) {
     return (
-        <div className={styles.container}>
-            <div className={styles.cards}>
-                {zone.cards.map((card) => (
-                    <Card key={card.id} card={card} />
-                ))}
-            </div>
+        <div className={styles.cards}>
+            {zone.cards.map((card) => (
+                <Card key={card.id} card={card} />
+            ))}
         </div>
     );
 }

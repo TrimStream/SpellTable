@@ -19,11 +19,13 @@ export function PlayerZone({ player, position }: PlayerZoneProps) {
 
     return (
         <div className={`${styles.outer} ${positionClass}`} aria-label={`${player.name}'s zone`}>
-            {isTop && <p className={styles.name}>{player.name}</p>}
+            {isTop && <p className={styles.name}>{player.name} — ❤ {player.life}</p>}
             <div className={styles.grid}>
                 <div className={styles.commandWrapper}>
-                    <div className={styles.tax}>{player.commanderTax}</div>
+                    {/* Tax above commander for bottom players, below for top players */}
+                    {!isTop && <div className={styles.tax}>{player.commanderTax}</div>}
                     <Zone zone={player.zones.command} />
+                    {isTop && <div className={styles.tax}>{player.commanderTax}</div>}
                 </div>
                 <div className={styles.battlefield}>
                     <Zone zone={player.zones.battlefield} />
@@ -38,7 +40,7 @@ export function PlayerZone({ player, position }: PlayerZoneProps) {
                     <Zone zone={player.zones.exile} />
                 </div>
             </div>
-            {!isTop && <p className={styles.name}>{player.name}</p>}
+            {!isTop && <p className={styles.name}>{player.name} — ❤ {player.life}</p>}
         </div>
     );
 }

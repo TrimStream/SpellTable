@@ -16,14 +16,10 @@ export function ScenarioPanel({ scenario }: ScenarioPanelProps) {
 	const [isCorrect, setIsCorrect] = useState<boolean | null>(null);
 
 	const currentAnswer = hasOptions ? selectedOption : freeformAnswer;
-
 	const canSubmit = useMemo(() => currentAnswer.trim().length > 0, [currentAnswer]);
 
 	const handleSubmit = () => {
-		if (!canSubmit) {
-			return;
-		}
-
+		if (!canSubmit) return;
 		setSubmittedAnswer(currentAnswer);
 		setIsCorrect(
 			normalizeAnswer(currentAnswer) === normalizeAnswer(scenario.correctAnswer)
@@ -32,16 +28,11 @@ export function ScenarioPanel({ scenario }: ScenarioPanelProps) {
 
 	return (
 		<section className={styles.container}>
-			<header className={styles.header}>
-				<h2 className={styles.title}>{scenario.title}</h2>
-				<p className={styles.question}>{scenario.question}</p>
-			</header>
-
+			{/* Options / freeform answer */}
 			{hasOptions ? (
 				<div className={styles.options}>
 					{scenario.options?.map((option) => {
 						const isSelected = option === selectedOption;
-
 						return (
 							<button
 								key={option}
@@ -55,35 +46,37 @@ export function ScenarioPanel({ scenario }: ScenarioPanelProps) {
 					})}
 				</div>
 			) : (
+				/* TODO: [Milestone 5] Replace freeform textarea with AI evaluation via Gemini */
 				<textarea
 					className={styles.textarea}
 					value={freeformAnswer}
-					onChange={(event) => setFreeformAnswer(event.target.value)}
+					onChange={(e) => setFreeformAnswer(e.target.value)}
 					placeholder="Type your answer here..."
-					rows={4}
+					rows={3}
 				/>
 			)}
 
-			<button
-				type="button"
-				className={styles.submitButton}
-				onClick={handleSubmit}
-				disabled={!canSubmit}
-			>
-				Submit
-			</button>
+			<div className={styles.submitRow}>
+				<button
+					type="button"
+					className={styles.submitButton}
+					onClick={handleSubmit}
+					disabled={!canSubmit}
+				>
+					Submit
+				</button>
 
-			{submittedAnswer !== null && isCorrect !== null ? (
-				<div className={styles.feedback}>
-					<p className={isCorrect ? styles.correct : styles.incorrect}>
-						{isCorrect ? 'Correct!' : 'Not quite.'}
-					</p>
-					<p className={styles.correctAnswer}>
-						<strong>Correct answer:</strong> {scenario.correctAnswer}
-					</p>
-				</div>
-			) : null}
+				{submittedAnswer !== null && isCorrect !== null && (
+					<div className={styles.feedback}>
+                        <span className={isCorrect ? styles.correct : styles.incorrect}>
+                            {isCorrect ? 'Correct!' : 'Not quite.'}
+                        </span>
+						<span className={styles.correctAnswer}>
+                            <strong>Correct answer:</strong> {scenario.correctAnswer}
+                        </span>
+					</div>
+				)}
+			</div>
 		</section>
 	);
 }
-
