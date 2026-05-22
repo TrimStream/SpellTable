@@ -9,7 +9,6 @@ interface ZoneProps {
 export function Zone({ zone }: ZoneProps) {
     return (
         <div className={styles.container}>
-            <label>{zone.type}</label>
             <div className={styles.cards}>
                 {zone.cards.map((card) => (
                     <Card key={card.id} card={card} />
