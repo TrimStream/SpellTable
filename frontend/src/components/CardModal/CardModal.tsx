@@ -10,7 +10,10 @@ interface ScryfallCard {
     id: string;
     name: string;
     image_uris?: { normal: string; large: string; };
-    card_faces?: { image_uris: { normal: string; large: string; }; }[];
+    card_faces?: {
+        image_uris: { normal: string; large: string; };
+        oracle_text?: string;
+    }[];
     type_line: string;
     oracle_text?: string;
     set_name: string;
@@ -65,7 +68,9 @@ export function CardModal({ scryfallId, onClose }: CardModalProps) {
                         <div className={styles.details}>
                             <h2 className={styles.cardName}>{card.name}</h2>
                             <p className={styles.typeLine}>{card.type_line}</p>
-                            <p className={styles.oracleText}>{card.oracle_text}</p>
+                            <p className={styles.oracleText}>
+                                {card.oracle_text ?? card.card_faces?.[1]?.oracle_text ?? card.card_faces?.[0]?.oracle_text}
+                            </p>
                             <p className={styles.setName}><strong>Set:</strong> {card.set_name}</p>
                             <a href={card.scryfall_uri} target="_blank" rel="noopener noreferrer" className={styles.scryfallLink}>View on Scryfall</a>
                         </div>
