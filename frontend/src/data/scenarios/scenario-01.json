@@ -311,7 +311,7 @@
           "type": "hand",
           "cards": [],
           "revealed": false,
-          "cardCount": 4
+          "cardCount": 3
         },
         "graveyard": {
           "type": "graveyard",
@@ -321,10 +321,16 @@
               "name": "Verdant Catacombs",
               "cardType": "land",
               "tapped": false
+            },
+            {
+                "id": "61e9c6df-1c84-4eab-9076-a4feb6347c10",
+                "name": "Mental Misstep",
+                "cardType": "instant",
+                "tapped": false
             }
           ],
           "revealed": true,
-          "cardCount": 1
+          "cardCount": 2
         },
         "exile": {
           "type": "exile",
