@@ -1,0 +1,120 @@
+.backdrop {
+	position: fixed;
+	inset: 0;
+	z-index: 1000;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: 4vh 4vw;
+	background: rgba(0, 0, 0, 0.72);
+	backdrop-filter: blur(4px);
+}
+
+.modal {
+	position: relative;
+	width: min(90vw, 700px);
+	max-height: 85vh;
+	overflow: auto;
+	border-radius: 1.25rem;
+	background: #111827;
+	color: #f9fafb;
+	box-shadow: 0 24px 60px rgba(0, 0, 0, 0.5);
+}
+
+.content {
+	display: flex;
+	flex-direction: row;
+	gap: 4%;
+	padding: 4%;
+}
+
+.cardImage {
+	flex-shrink: 0;
+	width: min(35%, 260px);
+	height: auto;
+	border-radius: 0.75rem;
+	box-shadow: 0 10px 24px rgba(0, 0, 0, 0.3);
+}
+
+.details {
+	display: flex;
+	flex-direction: column;
+	gap: 0.75em;
+	flex: 1;
+	padding-top: 0.5rem;
+	min-width: 0;
+}
+
+.cardName {
+	margin: 0;
+	font-size: clamp(1rem, 2.5vw, 1.5rem);
+	font-weight: 700;
+	line-height: 1.2;
+	color: #f9fafb;
+}
+
+.typeLine {
+	margin: 0;
+	font-size: clamp(0.75rem, 1.5vw, 0.9rem);
+	color: #9ca3af;
+	font-style: italic;
+}
+
+.oracleText {
+	margin: 0;
+	font-size: clamp(0.75rem, 1.5vw, 0.875rem);
+	line-height: 1.6;
+	white-space: pre-line;
+	color: #d1d5db;
+}
+
+.setName {
+	margin: 0;
+	font-size: clamp(0.65rem, 1.2vw, 0.8rem);
+	color: #6b7280;
+}
+
+.scryfallLink {
+	font-size: clamp(0.65rem, 1.2vw, 0.8rem);
+	color: #60a5fa;
+	text-decoration: none;
+	align-self: flex-start;
+}
+
+.scryfallLink:hover {
+	text-decoration: underline;
+}
+
+.closeButton {
+	position: absolute;
+	top: 0.75rem;
+	right: 0.75rem;
+	background: rgba(255, 255, 255, 0.08);
+	border: none;
+	border-radius: 50%;
+	width: clamp(24px, 3vw, 32px);
+	height: clamp(24px, 3vw, 32px);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	cursor: pointer;
+	color: #9ca3af;
+	font-size: clamp(0.75rem, 1.5vw, 1rem);
+	line-height: 1;
+}
+
+.closeButton:hover {
+	background: rgba(255, 255, 255, 0.15);
+	color: #f9fafb;
+}
+
+@media (max-width: 480px) {
+	.content {
+		flex-direction: column;
+		align-items: center;
+	}
+
+	.cardImage {
+		width: min(60vw, 240px);
+	}
+}

@@ -5,11 +5,15 @@ import cardBack from '../../assets/back_magic.png';
 import { Battlefield } from '../Battlefield/Battlefield';
 
 interface PlayerZoneProps {
-    player: Player;
-    position: 'bottom-right' | 'bottom-left' | 'top-left' | 'top-right';
+    player: Player,
+    position: 'bottom-right' | 'bottom-left' | 'top-left' | 'top-right',
+    onCardClick?: (id: string) => void;
 }
 
-export function PlayerZone({ player, position }: PlayerZoneProps) {
+export function PlayerZone(props: PlayerZoneProps) {
+    const { player, position, onCardClick } = props;
+    const handleCardClick = (id: string) => onCardClick?.(id);
+
     const positionClass = {
         'bottom-right': styles.bottomRight,
         'bottom-left': styles.bottomLeft,
@@ -33,18 +37,18 @@ export function PlayerZone({ player, position }: PlayerZoneProps) {
             {/* Command zone */}
             {player.zones.command.cards.length > 0 && (
                 <div className={styles.pileZone}>
-                    <Zone zone={player.zones.command} />
+                    <Zone zone={player.zones.command} onCardClick={handleCardClick} />
                 </div>
             )}
 
             {/* Hand */}
             <div className={styles.handZone}>
                 {isRevealed ? (
-                    <Zone zone={player.zones.hand} />
+                    <Zone zone={player.zones.hand} onCardClick={handleCardClick} />
                 ) : (
                     <div className={styles.hiddenHand}>
-                        {Array.from({ length: player.zones.hand.cardCount ?? 0 }).map((_, i) => (
-                            <img key={i} src={cardBack} alt="Card back" className={styles.pileCard} />
+                        {Array.from({length: player.zones.hand.cardCount ?? 0}).map((_, i) => (
+                            <img key={i} src={cardBack} alt="Card back" className={styles.pileCard}/>
                         ))}
                     </div>
                 )}
@@ -53,11 +57,11 @@ export function PlayerZone({ player, position }: PlayerZoneProps) {
             {/* Library */}
             <div className={styles.pileZone}>
                 <div className={styles.pile}>
-                    <img src={cardBack} alt="Library" className={styles.pileCard} />
+                    <img src={cardBack} alt="Library" className={styles.pileCard}/>
                     <span className={styles.count}>{player.zones.library.cardCount ?? 0}</span>
                 </div>
             </div>
-            
+
             {/* Graveyard */}
             <div className={styles.pileZone}>
                 {player.zones.graveyard.cards.length > 0 ? (
@@ -66,8 +70,11 @@ export function PlayerZone({ player, position }: PlayerZoneProps) {
                             src={player.zones.graveyard.cards[player.zones.graveyard.cards.length - 1].imageUrl}
                             alt="Graveyard"
                             className={styles.pileCard}
+                            onClick={() => handleCardClick(player.zones.graveyard.cards[player.zones.graveyard.cards.length - 1].id)}
+                            style={{ cursor: 'pointer' }}
                         />
-                        <span className={styles.count}>{player.zones.graveyard.cardCount ?? player.zones.graveyard.cards.length}</span>
+                        <span
+                            className={styles.count}>{player.zones.graveyard.cardCount ?? player.zones.graveyard.cards.length}</span>
                     </div>
                 ) : (
                     <div className={styles.emptyPile}>GY</div>
@@ -82,8 +89,11 @@ export function PlayerZone({ player, position }: PlayerZoneProps) {
                             src={player.zones.exile.cards[player.zones.exile.cards.length - 1].imageUrl}
                             alt="Exile"
                             className={styles.pileCard}
+                            onClick={() => handleCardClick(player.zones.exile.cards[player.zones.exile.cards.length - 1].id)}
+                            style={{ cursor: 'pointer' }}
                         />
-                        <span className={styles.count}>{player.zones.exile.cardCount ?? player.zones.exile.cards.length}</span>
+                        <span
+                            className={styles.count}>{player.zones.exile.cardCount ?? player.zones.exile.cards.length}</span>
                     </div>
                 ) : (
                     <div className={styles.emptyPile}>EX</div>
@@ -96,7 +106,7 @@ export function PlayerZone({ player, position }: PlayerZoneProps) {
         <div className={`${styles.playmat} ${positionClass}`} aria-label={`${player.name}'s zone`}>
             {isTop && strip}
             <div className={styles.battlefield}>
-                <Battlefield cards={player.zones.battlefield.cards} isTop={isTop} />
+                <Battlefield cards={player.zones.battlefield.cards} isTop={isTop} onCardClick={handleCardClick} />
             </div>
             {!isTop && strip}
         </div>
