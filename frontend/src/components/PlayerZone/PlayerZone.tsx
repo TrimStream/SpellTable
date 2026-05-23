@@ -1,8 +1,10 @@
+import { useState } from 'react';
 import type { Player } from '../../types';
 import { Zone } from '../CardZone/CardZone';
 import styles from './PlayerZone.module.css';
 import cardBack from '../../assets/back_magic.png';
 import { Battlefield } from '../Battlefield/Battlefield';
+import { ZoneModal } from '../ZoneModal/ZoneModal';
 
 interface PlayerZoneProps {
     player: Player,
@@ -13,6 +15,7 @@ interface PlayerZoneProps {
 export function PlayerZone(props: PlayerZoneProps) {
     const { player, position, onCardClick } = props;
     const handleCardClick = (id: string) => onCardClick?.(id);
+    const [expandedZone, setExpandedZone] = useState<'graveyard' | 'exile' | null>(null);
 
     const positionClass = {
         'bottom-right': styles.bottomRight,
@@ -64,40 +67,36 @@ export function PlayerZone(props: PlayerZoneProps) {
 
             {/* Graveyard */}
             <div className={styles.pileZone}>
-                {player.zones.graveyard.cards.length > 0 ? (
-                    <div className={styles.pile}>
+                <div className={styles.pile} onClick={() => setExpandedZone('graveyard')}>
+                    {player.zones.graveyard.cards.length > 0 ? (
                         <img
                             src={player.zones.graveyard.cards[player.zones.graveyard.cards.length - 1].imageUrl}
                             alt="Graveyard"
                             className={styles.pileCard}
-                            onClick={() => handleCardClick(player.zones.graveyard.cards[player.zones.graveyard.cards.length - 1].id)}
-                            style={{ cursor: 'pointer' }}
                         />
-                        <span
-                            className={styles.count}>{player.zones.graveyard.cardCount ?? player.zones.graveyard.cards.length}</span>
-                    </div>
-                ) : (
-                    <div className={styles.emptyPile}>GY</div>
-                )}
+                    ) : (
+                        <div className={styles.emptyPile}>GY</div>
+                    )}
+                    <span
+                        className={styles.count}>{player.zones.graveyard.cardCount ?? player.zones.graveyard.cards.length}</span>
+                </div>
             </div>
 
             {/* Exile */}
             <div className={styles.pileZone}>
-                {player.zones.exile.cards.length > 0 ? (
-                    <div className={styles.pile}>
+                <div className={styles.pile} onClick={() => setExpandedZone('exile')}>
+                    {player.zones.exile.cards.length > 0 ? (
                         <img
                             src={player.zones.exile.cards[player.zones.exile.cards.length - 1].imageUrl}
                             alt="Exile"
                             className={styles.pileCard}
-                            onClick={() => handleCardClick(player.zones.exile.cards[player.zones.exile.cards.length - 1].id)}
-                            style={{ cursor: 'pointer' }}
                         />
-                        <span
-                            className={styles.count}>{player.zones.exile.cardCount ?? player.zones.exile.cards.length}</span>
-                    </div>
-                ) : (
-                    <div className={styles.emptyPile}>EX</div>
-                )}
+                    ) : (
+                        <div className={styles.emptyPile}>EX</div>
+                    )}
+                    <span
+                        className={styles.count}>{player.zones.exile.cardCount ?? player.zones.exile.cards.length}</span>
+                </div>
             </div>
         </div>
     );
@@ -109,6 +108,14 @@ export function PlayerZone(props: PlayerZoneProps) {
                 <Battlefield cards={player.zones.battlefield.cards} isTop={isTop} onCardClick={handleCardClick} />
             </div>
             {!isTop && strip}
+            {expandedZone && (
+                <ZoneModal
+                    zone={player.zones[expandedZone]}
+                    title={expandedZone === 'graveyard' ? 'Graveyard' : 'Exile'}
+                    onClose={() => setExpandedZone(null)}
+                    onCardClick={(id) => { setExpandedZone(null); onCardClick?.(id); }}
+                />
+            )}
         </div>
     );
 }

@@ -113,6 +113,19 @@
     flex-direction: column;
     align-items: center;
     gap: 2px;
+    cursor: pointer;
+    user-select: none;
+    transition: transform 120ms ease, filter 120ms ease;
+}
+
+.pile:hover {
+    transform: translateY(-1px);
+    filter: brightness(1.08);
+}
+
+.pile:active {
+    transform: translateY(0);
+    filter: brightness(0.98);
 }
 
 .pileCard {
@@ -137,6 +150,11 @@
     justify-content: center;
     font-size: 0.6em;
     color: rgba(255, 255, 255, 0.2);
+}
+
+.pile:hover .emptyPile {
+    border-color: rgba(255, 255, 255, 0.3);
+    color: rgba(255, 255, 255, 0.35);
 }
 
 .hiddenHand {
