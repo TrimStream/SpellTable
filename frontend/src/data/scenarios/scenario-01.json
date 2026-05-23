@@ -287,6 +287,12 @@
               "tapped": false
             },
             {
+              "id": "726e8b29-13e9-4138-b6a9-d2a0d8188d1c",
+              "name": "Thassa's Oracle",
+              "cardType": "creature",
+              "tapped": false
+            },
+            {
               "id": "3d69a3e0-6a2e-475a-964e-0affed1c017d",
               "name": "Birds of Paradise",
               "cardType": "creature",
@@ -435,11 +441,11 @@
       }
     }
   ],
-  "question": "Opponent 2 has cast Thassa's Oracle. Its ETB trigger is on the stack. What should you do?",
+  "question": "Opponent 2 has cast Thassa's Oracle. Its ETB trigger is on the stack. They responded to their own creature's ETB by casting Demonic Consultation. What should you do?",
   "options": [
     "Let your opponent resolve Demonic Consultation, then respond to the trigger of Thoracle's ability by casting Endurance.",
-    "Counter Thassa's Oracle before it resolves so the ETB trigger never goes on the stack.",
-    "Destroy all permanents in response to the trigger to remove the win condition.",
+    "Counter Demonic Consultation with your fierce guardianship for free.",
+    "Attempt to activate Kinnan's activated ability to see the top 5 cards and put a non human creature on the battlefield.",
     "Pass priority and let your opponent win if they have no cards left in library."
   ],
   "correctAnswer": "Let your opponent resolve Demonic Consultation, then respond to the trigger of Thoracle's ability by casting Endurance."
