@@ -237,7 +237,7 @@
     {
       "id": "player_3",
       "name": "Opponent 2",
-      "life": 36,
+      "life": 34,
       "commanderTax": 0,
       "zones": {
         "command": {
@@ -323,8 +323,8 @@
               "tapped": false
             },
             {
-                "id": "61e9c6df-1c84-4eab-9076-a4feb6347c10",
-                "name": "Mental Misstep",
+                "id": "34a0203f-9cce-43a4-9cb7-8ce6647895cd",
+                "name": "Vampiric Tutor",
                 "cardType": "instant",
                 "tapped": false
             }
