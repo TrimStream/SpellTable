@@ -23,7 +23,7 @@ export function useScenario(rawScenario: Scenario | null) {
                 for (const player of rawScenario.players) {
                     for (const zone of Object.values(player.zones)) {
                         for (const card of zone.cards) {
-                            cardIds.add(card.id);
+                            if (!card.isToken) cardIds.add(card.id);
                         }
                     }
                 }
@@ -46,6 +46,7 @@ export function useScenario(rawScenario: Scenario | null) {
                 for (const player of updatedScenario.players) {
                     for (const zone of Object.values(player.zones)) {
                         zone.cards = zone.cards.map(card => {
+                            if (card.isToken) return card; // keep token data, do not touch!!
                             const fetchedCard = cardMap.get(card.id);
                             return fetchedCard ? { ...fetchedCard, tapped: card.tapped } : card; // Use fetched card or keep original
                         });

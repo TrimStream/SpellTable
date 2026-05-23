@@ -281,6 +281,14 @@
               "tapped": true
             },
             {
+              "id": "21f5880d-6272-4ba8-bdf8-f9a7e54a3336",
+              "name": "Treasure",
+              "cardType": "artifact",
+              "imageUrl": "https://cards.scryfall.io/normal/back/2/1/21f5880d-6272-4ba8-bdf8-f9a7e54a3336.jpg?1665776390",
+              "tapped": false,
+              "isToken": true
+            },
+            {
               "id": "93176e85-2343-43a8-8578-69699b464b86",
               "name": "Tataru Taru",
               "cardType": "creature",
@@ -387,22 +395,32 @@
               "tapped": true
             },
             {
-              "id": "861b5889-0183-4bee-afeb-a4b2aa700a8e",
-              "name": "Smothering Tithe",
-              "cardType": "enchantment",
-              "tapped": false
-            },
-            {
               "id": "7811dd72-61b9-4067-ac20-cea153e625d2",
               "name": "Arcane Signet",
               "cardType": "artifact",
               "tapped": false
             },
             {
+              "id": "da1fca2e-4ea7-4c5f-bd58-f9529dfb6f37",
+              "name": "Food",
+              "cardType": "artifact",
+              "imageUrl": "https://cards.scryfall.io/normal/front/d/a/da1fca2e-4ea7-4c5f-bd58-f9529dfb6f37.jpg?1775827284",
+              "tapped": false,
+              "isToken": true
+            },
+            {
+              "id": "da1fca2e-4ea7-4c5f-bd58-f9529dfb6f37-2",
+              "name": "Food",
+              "cardType": "artifact",
+              "imageUrl": "https://cards.scryfall.io/normal/front/d/a/da1fca2e-4ea7-4c5f-bd58-f9529dfb6f37.jpg?1775827284",
+              "tapped": false,
+              "isToken": true
+            },
+            {
               "id": "400382a4-aea2-4827-b06a-1b0b3745908b",
               "name": "Noble Hierarch",
               "cardType": "creature",
-              "tapped": true
+              "tapped": false
             },
             {
               "id": "2fea0356-6684-4730-9eb4-0262856bc1f9",
@@ -417,7 +435,7 @@
           "type": "hand",
           "cards": [],
           "revealed": false,
-          "cardCount": 3
+          "cardCount": 4
         },
         "graveyard": {
           "type": "graveyard",

@@ -6,6 +6,7 @@ export interface Card {
     imageUrl: string;  // Card image from scryfall.
     tapped?: boolean;   // Whether the card is tapped or not. Only used for cards on the battlefield.
     cardType: 'creature' | 'artifact' | 'enchantment' | 'planeswalker' | 'land' | 'instant' | 'sorcery' | 'battle';
+    isToken? : boolean;
 }
 
 // Each Zone a Player has. only one is editable by User
