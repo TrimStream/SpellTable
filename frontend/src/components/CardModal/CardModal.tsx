@@ -9,9 +9,10 @@ interface CardModalProps {
 interface ScryfallCard {
     id: string;
     name: string;
-    image_uris: { normal: string; large: string; };
+    image_uris?: { normal: string; large: string; };
+    card_faces?: { image_uris: { normal: string; large: string; }; }[];
     type_line: string;
-    oracle_text: string;
+    oracle_text?: string;
     set_name: string;
     collector_number: string;
     scryfall_uri: string;
@@ -52,7 +53,15 @@ export function CardModal({ scryfallId, onClose }: CardModalProps) {
                     <div>Loading...</div>
                 ) : card ? (
                     <div className={styles.content}>
-                        <img src={card.image_uris?.large ?? card.image_uris?.normal} alt={card.name} className={styles.cardImage} />
+                        <img src={
+                            card.image_uris?.large ??
+                            card.image_uris?.normal ??
+                            card.card_faces?.[1]?.image_uris?.large ??
+                            card.card_faces?.[0]?.image_uris?.large
+                        }
+                             alt={card.name}
+                             className={styles.cardImage}
+                        />
                         <div className={styles.details}>
                             <h2 className={styles.cardName}>{card.name}</h2>
                             <p className={styles.typeLine}>{card.type_line}</p>
