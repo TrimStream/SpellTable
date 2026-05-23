@@ -8,7 +8,7 @@
     border: 1px solid rgba(255, 255, 255, 0.08);
     border-radius: 8px;
     margin: 8px;
-    overflow: auto;
+    overflow: visible;
 }
 
 .board {
@@ -19,4 +19,5 @@
     gap: 6px;
     padding: 12px;
     background: #111318;
+    overflow: visible;
 }

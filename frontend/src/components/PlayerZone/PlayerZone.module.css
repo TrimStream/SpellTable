@@ -3,7 +3,7 @@
     flex-direction: column;
     background: #000000;
     border-radius: 8px;
-    overflow: hidden;
+    overflow: visible;
     position: relative;
     min-height: 0;
 }
@@ -25,7 +25,7 @@
 .battlefield {
     flex: 1;
     min-height: 0;
-    overflow: auto;
+    overflow: visible;
     position: relative;
     z-index: 1;
     padding: 8px;
