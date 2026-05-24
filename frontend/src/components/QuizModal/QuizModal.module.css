@@ -1,0 +1,201 @@
+.backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.75);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 200;
+}
+
+.modal {
+    background: var(--bg-card);
+    border: 0.5px solid var(--border);
+    border-radius: 12px;
+    width: min(520px, 92vw);
+    overflow: hidden;
+}
+
+.modalHeader {
+    padding: 20px 24px 16px;
+    border-bottom: 0.5px solid var(--border);
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 16px;
+}
+
+.modalTitle {
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--text);
+    margin-bottom: 4px;
+}
+
+.modalSubtitle {
+    font-size: 13px;
+    color: var(--text-muted);
+    line-height: 1.4;
+}
+
+.closeBtn {
+    background: none;
+    border: none;
+    color: var(--text-disabled);
+    font-size: 20px;
+    cursor: pointer;
+    padding: 0;
+    line-height: 1;
+    flex-shrink: 0;
+}
+
+.progressRow {
+    padding: 14px 24px 0;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.progressTrack {
+    flex: 1;
+    height: 3px;
+    background: var(--border);
+    border-radius: 2px;
+    overflow: hidden;
+}
+
+.progressFill {
+    height: 100%;
+    background: var(--gold);
+    border-radius: 2px;
+    transition: width 0.3s ease;
+}
+
+.progressLabel {
+    font-size: 11px;
+    color: var(--text-disabled);
+    white-space: nowrap;
+}
+
+.modalBody {
+    padding: 20px 24px;
+}
+
+.question {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text);
+    line-height: 1.55;
+    margin-bottom: 8px;
+}
+
+.questionNote {
+    font-size: 12px;
+    color: var(--text-disabled);
+    margin-bottom: 14px;
+    line-height: 1.5;
+}
+
+.options {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.option {
+    background: var(--bg-secondary);
+    border: 0.5px solid var(--border);
+    border-radius: 7px;
+    padding: 10px 14px;
+    font-size: 13px;
+    color: var(--text-muted);
+    cursor: pointer;
+    text-align: left;
+    line-height: 1.4;
+    transition: border-color 0.15s ease, color 0.15s ease;
+}
+
+.option:hover {
+    border-color: var(--gold-dark);
+    color: var(--text);
+}
+
+.optionSelected {
+    background: rgba(139, 105, 20, 0.15);
+    border-color: var(--gold);
+    color: var(--gold);
+}
+
+.modalFooter {
+    padding: 14px 24px;
+    border-top: 0.5px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.skipBtn {
+    background: none;
+    border: none;
+    font-size: 12px;
+    color: var(--text-disabled);
+    cursor: pointer;
+}
+
+.nextBtn {
+    background: var(--gold-dark);
+    color: #f5edda;
+    border: none;
+    border-radius: 6px;
+    padding: 8px 20px;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.nextBtn:disabled {
+    opacity: 0.4;
+    cursor: default;
+}
+
+.resultBlock {
+    padding: 32px 24px;
+    text-align: center;
+}
+
+.resultLevel {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 8px;
+}
+
+.resultTitle {
+    font-size: 22px;
+    font-weight: 500;
+    color: var(--text);
+    margin-bottom: 12px;
+}
+
+.resultBody {
+    font-size: 13px;
+    color: var(--text-muted);
+    line-height: 1.6;
+    margin-bottom: 24px;
+    max-width: 380px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.resultBtn {
+    background: var(--gold-dark);
+    color: #f5edda;
+    border: none;
+    border-radius: 6px;
+    padding: 10px 24px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+}

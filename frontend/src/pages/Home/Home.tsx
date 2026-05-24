@@ -1,7 +1,11 @@
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { QuizModal } from '../../components/QuizModal/QuizModal';
 import styles from './Home.module.css';
 
 export function Home() {
+    const [showQuiz, setShowQuiz] = useState(false);
+
     return (
         <div>
             <section className={styles.hero}>
@@ -15,7 +19,9 @@ export function Home() {
                 </p>
                 <div className={styles.heroBtns}>
                     <Link to="/scenarios" className={styles.btnPrimary}>Browse scenarios</Link>
-                    <button className={styles.btnOutline}>Not sure where to start? Take the quiz</button>
+                    <button className={styles.btnOutline} onClick={() => setShowQuiz(true)}>
+                        Not sure where to start? Take the quiz
+                    </button>
                 </div>
             </section>
 
@@ -36,6 +42,8 @@ export function Home() {
                     </div>
                 </div>
             </section>
+
+            {showQuiz && <QuizModal onClose={() => setShowQuiz(false)} />}
         </div>
     );
 }
