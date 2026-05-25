@@ -1,10 +1,14 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { QuizModal } from '../../components/QuizModal/QuizModal';
 import styles from './Home.module.css';
 
 export function Home() {
     const [showQuiz, setShowQuiz] = useState(false);
+
+    useEffect(() => {
+        document.title = 'TrainingArk';
+    }, []);
 
     return (
         <div>

@@ -21,6 +21,12 @@ function ExitButton() {
 function BoardWithScenario({ scenario }: { scenario: Scenario }) {
     const { scenario: loadedScenario, loading, error } = useScenario(scenario);
 
+    useEffect(() => {
+        if (loadedScenario) {
+            document.title = `TrainingArk - ${loadedScenario.title}`;
+        }
+    }, [loadedScenario]);
+
     if (loading) return <LoadingScreen />;
     if (error) return <div style={{ color: 'white', padding: '20px' }}>{error}</div>;
     if (!loadedScenario) return null;

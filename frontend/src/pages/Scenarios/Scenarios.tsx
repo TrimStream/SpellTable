@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import {useEffect, useMemo, useState} from 'react';
 import { Link } from 'react-router-dom';
 import scenariosData from '../../data/scenarios-index.json';
 import type { ScenarioMeta, Difficulty } from '../../types/scenario';
@@ -34,6 +34,10 @@ export function Scenarios() {
         if (filter === 'all') return scenarios;
         return scenarios.filter(s => s.difficulty === filter);
     }, [filter]);
+
+    useEffect(() => {
+        document.title = 'TrainingArk - Scenarios';
+    }, []);
 
     return (
         <div className={styles.container}>
