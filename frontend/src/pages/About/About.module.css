@@ -1,0 +1,45 @@
+.container {
+    min-height: 100vh;
+    background: var(--bg);
+    padding: 64px 40px;
+}
+
+.content {
+    max-width: 680px;
+    margin: 0 auto;
+}
+
+.section {
+    margin-bottom: 48px;
+}
+
+.title {
+    font-size: 32px;
+    font-weight: 500;
+    color: var(--text);
+    margin-bottom: 16px;
+}
+
+.heading {
+    font-size: 18px;
+    font-weight: 500;
+    color: var(--gold);
+    margin-bottom: 12px;
+}
+
+.body {
+    font-size: 14px;
+    color: var(--text-muted);
+    line-height: 1.75;
+    margin-bottom: 12px;
+}
+
+@media (max-width: 768px) {
+    .container {
+        padding: 40px 20px;
+    }
+
+    .title {
+        font-size: 24px;
+    }
+}

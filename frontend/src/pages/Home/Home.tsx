@@ -34,7 +34,7 @@ export function Home() {
                 <div className={styles.cardGrid}>
                     <div className={styles.card}>
                         <p className={styles.cardTitle}>Competitive Commander</p>
-                        <p className={styles.cardBody}>Commander at its highest power level. Every deck is built to win as fast as possible — typically on turns 3–5 through infinite combos and heavy interaction.</p>
+                        <p className={styles.cardBody}>Commander at its highest power level. Every deck is built to win as fast as possible, typically on turns 3–5 through infinite combos and heavy interaction.</p>
                     </div>
                     <div className={styles.card}>
                         <p className={styles.cardTitle}>How this works</p>

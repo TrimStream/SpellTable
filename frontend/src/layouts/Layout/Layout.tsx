@@ -53,8 +53,13 @@ export function Layout() {
                 <div className={styles.navRight}>
                     {/* TODO V7: Uncomment login button when auth is implemented */}
                     {/* <button className={styles.btnLogin}>Log in</button> */}
-                    <NavLink to="/scenarios" className={styles.btnScenarios}>
-                        Browse scenarios
+                    <NavLink
+                        to="/about"
+                        className={({ isActive }) =>
+                            isActive ? `${styles.navLink} ${styles.navLinkActive}` : styles.navLink
+                        }
+                    >
+                        About
                     </NavLink>
                 </div>
             </nav>
