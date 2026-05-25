@@ -1,11 +1,12 @@
 interface TarkLogoProps {
-    size?: 'nav' | 'hero' | 'small';
+    size?: 'nav' | 'hero' | 'small' | 'loading';
 }
 
 const sizes = {
     small: { w: 120, h: 52 },
     nav:   { w: 150, h: 65 },
     hero:  { w: 300, h: 130 },
+    loading: { w: 420, h: 182 },
 };
 
 export function TarkLogo({ size = 'nav' }: TarkLogoProps) {
