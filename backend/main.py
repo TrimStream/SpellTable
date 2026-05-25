@@ -1,5 +1,6 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
+from database import db
 
 app = FastAPI()
 
@@ -11,9 +12,24 @@ app.add_middleware(
 )
 
 @app.get("/")
-def root():
-    return {"status" : "online"}
+async def root():
+    return {"status": "online"}
 
 @app.get("/scenarios")
-def get_scenarios():
-    return []
+async def get_scenarios():
+    cursor = db.scenarios.find(
+        {"status": "published"},
+        {"_id": 0, "players": 0}
+    )
+    scenarios = await cursor.to_list(length=100)
+    return scenarios
+
+@app.get("/scenarios/{scenario_id}")
+async def get_scenario(scenario_id: str):
+    scenario = await db.scenarios.find_one(
+        {"id": scenario_id, "status": "published"},
+        {"_id": 0}
+    )
+    if scenario is None:
+        raise HTTPException(status_code=404, detail="Scenario not found")
+    return scenario
