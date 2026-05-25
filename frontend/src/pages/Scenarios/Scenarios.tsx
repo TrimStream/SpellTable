@@ -9,17 +9,17 @@ const scenarios = scenariosData as ScenarioMeta[];
 const FILTERS = ['all', 'beginner', 'intermediate', 'expert'] as const;
 type Filter = typeof FILTERS[number];
 
-// TODO V4: Read skill level from user account instead of localStorage
-const skillLevel = localStorage.getItem('tark_skill_level') as Difficulty | null;
-
-function isLocked(difficulty: Difficulty): boolean {
-    // TODO V4: Uncomment this when auth is implemented
-    // if (!skillLevel) return false;
-    // if (skillLevel === 'beginner') return difficulty !== 'beginner';
-    // if (skillLevel === 'intermediate') return difficulty === 'expert';
-    // return false;
-    return false;
-}
+// // TODO V4: Read skill level from user account instead of localStorage
+// const skillLevel = localStorage.getItem('tark_skill_level') as Difficulty | null;
+//
+// function isLocked(difficulty: Difficulty): boolean {
+//     // TODO V4: Uncomment this when auth is implemented
+//     // if (!skillLevel) return false;
+//     // if (skillLevel === 'beginner') return difficulty !== 'beginner';
+//     // if (skillLevel === 'intermediate') return difficulty === 'expert';
+//     // return false;
+//     return false;
+// }
 
 const badgeClass: Record<Difficulty, string> = {
     beginner: styles.badgeBeginner,
