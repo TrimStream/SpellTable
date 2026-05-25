@@ -6,6 +6,7 @@ import { BoardPage } from './pages/BoardPage/BoardPage';
 import { About } from './pages/About/About';
 import { Rules } from './pages/Rules/Rules';
 import { Tutorial } from './pages/Tutorial/Tutorial';
+import { ThemeProvider } from './context/ThemeContext';
 
 const router = createBrowserRouter([
   {
@@ -29,5 +30,9 @@ const router = createBrowserRouter([
 ]);
 
 export default function App() {
-  return <RouterProvider router={router} />;
+  return (
+      <ThemeProvider>
+        <RouterProvider router={router} />
+      </ThemeProvider>
+  );
 }

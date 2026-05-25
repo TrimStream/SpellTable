@@ -1,8 +1,10 @@
 import { NavLink, Outlet, useNavigate } from 'react-router-dom';
 import styles from './Layout.module.css';
 import { TarkLogo } from '../../components/TarkLogo/TarkLogo';
+import { useTheme } from '../../context/ThemeContext';
 
 export function Layout() {
+    const { theme, toggle } = useTheme();
     const navigate = useNavigate();
 
     return (
@@ -51,7 +53,10 @@ export function Layout() {
                 </div>
 
                 <div className={styles.navRight}>
-                    {/* TODO V7: Uncomment login button when auth is implemented */}
+                    <button className={styles.themeToggle} onClick={toggle} aria-label="Toggle theme">
+                        {theme === 'dark' ? '☀️' : '🌙'}
+                    </button>
+                    {/* TODO V4: Uncomment login button when auth is implemented */}
                     {/* <button className={styles.btnLogin}>Log in</button> */}
                     <NavLink
                         to="/about"

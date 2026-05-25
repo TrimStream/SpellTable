@@ -32,19 +32,17 @@
   --font-mono: ui-monospace, Consolas, monospace;
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    --bg: #faf8f3;
-    --bg-secondary: #f0ede4;
-    --bg-card: #ffffff;
+[data-theme='light'] {
+  --bg: #e8e0d0;
+  --bg-secondary: #ddd5c4;
+  --bg-card: #e0d8c8;
 
-    --text: #1a1510;
-    --text-muted: rgba(26, 21, 16, 0.45);
-    --text-disabled: rgba(26, 21, 16, 0.2);
+  --text: #1a1510;
+  --text-muted: rgba(26, 21, 16, 0.55);
+  --text-disabled: rgba(26, 21, 16, 0.3);
 
-    --border: rgba(0, 0, 0, 0.07);
-    --border-subtle: rgba(0, 0, 0, 0.04);
-  }
+  --border: rgba(0, 0, 0, 0.1);
+  --border-subtle: rgba(0, 0, 0, 0.06);
 }
 
 
@@ -57,6 +55,9 @@
 html, body, #root {
   height: 100%;
   width: 100%;
+  html {
+    scroll-behavior: smooth;
+  }
 }
 
 body {
