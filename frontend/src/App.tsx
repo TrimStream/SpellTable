@@ -7,6 +7,7 @@ import { About } from './pages/About/About';
 import { Rules } from './pages/Rules/Rules';
 import { Tutorial } from './pages/Tutorial/Tutorial';
 import { ThemeProvider } from './context/ThemeContext';
+import { NotFound } from './pages/NotFound/NotFound';
 
 const router = createBrowserRouter([
   {
@@ -18,12 +19,13 @@ const router = createBrowserRouter([
       { path: 'about', element: <About /> },
       { path: 'rules', element: <Rules /> },
       { path: 'tutorial', element: <Tutorial /> },
+      { path: '*', element: <NotFound /> },
       // TODO V?: Add deck route when deck evaluation is built
       // { path: 'deck', element: <Deck /> },
     ],
   },
   {
-    // Board page lives outside Layout — no nav bar
+    // Board page lives outside Layout, no nav bar
     path: '/board/:id',
     element: <BoardPage />,
   },
