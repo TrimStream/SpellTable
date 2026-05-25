@@ -1,25 +1,10 @@
-import {useEffect, useMemo, useState} from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
-import scenariosData from '../../data/scenarios-index.json';
 import type { ScenarioMeta, Difficulty } from '../../types/scenario';
 import styles from './Scenarios.module.css';
 
-const scenarios = scenariosData as ScenarioMeta[];
-
 const FILTERS = ['all', 'beginner', 'intermediate', 'expert'] as const;
 type Filter = typeof FILTERS[number];
-
-// // TODO V4: Read skill level from user account instead of localStorage
-// const skillLevel = localStorage.getItem('tark_skill_level') as Difficulty | null;
-//
-// function isLocked(difficulty: Difficulty): boolean {
-//     // TODO V4: Uncomment this when auth is implemented
-//     // if (!skillLevel) return false;
-//     // if (skillLevel === 'beginner') return difficulty !== 'beginner';
-//     // if (skillLevel === 'intermediate') return difficulty === 'expert';
-//     // return false;
-//     return false;
-// }
 
 const badgeClass: Record<Difficulty, string> = {
     beginner: styles.badgeBeginner,
@@ -28,16 +13,38 @@ const badgeClass: Record<Difficulty, string> = {
 };
 
 export function Scenarios() {
+    const [scenarios, setScenarios] = useState<ScenarioMeta[]>([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState<string | null>(null);
     const [filter, setFilter] = useState<Filter>('all');
+
+    useEffect(() => {
+        document.title = 'TrainingArk - Scenarios';
+
+        const apiUrl = import.meta.env.VITE_API_URL;
+
+        fetch(`${apiUrl}/scenarios`)
+            .then(res => {
+                if (!res.ok) throw new Error(`HTTP ${res.status}`);
+                return res.json();
+            })
+            .then(data => {
+                setScenarios(data);
+                setLoading(false);
+            })
+            .catch(err => {
+                setError(err.message);
+                setLoading(false);
+            });
+    }, []);
 
     const filtered = useMemo(() => {
         if (filter === 'all') return scenarios;
         return scenarios.filter(s => s.difficulty === filter);
-    }, [filter]);
+    }, [filter, scenarios]);
 
-    useEffect(() => {
-        document.title = 'TrainingArk - Scenarios';
-    }, []);
+    if (loading) return <p style={{ padding: '2rem' }}>Loading scenarios...</p>;
+    if (error) return <p style={{ padding: '2rem', color: 'red' }}>Failed to load scenarios: {error}</p>;
 
     return (
         <div className={styles.container}>
@@ -71,8 +78,8 @@ export function Scenarios() {
                         <div className={styles.cardTop}>
                             <p className={styles.cardTitle}>{scenario.title}</p>
                             <span className={`${styles.badge} ${badgeClass[scenario.difficulty]}`}>
-                {scenario.difficulty}
-              </span>
+                                {scenario.difficulty}
+                            </span>
                         </div>
                         <p className={styles.cardDesc}>{scenario.description}</p>
                         <div className={styles.tags}>

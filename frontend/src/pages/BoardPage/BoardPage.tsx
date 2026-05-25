@@ -44,21 +44,25 @@ export function BoardPage() {
         setLoading(true);
         setError(null);
 
-        import(`../../data/scenarios/${id}.json`)
-            .then(module => {
-                setScenario(module.default as Scenario);
+        const apiUrl = import.meta.env.VITE_API_URL;
+
+        fetch(`${apiUrl}/scenarios/${id}`)
+            .then(res => {
+                if (!res.ok) throw new Error(`HTTP ${res.status}`);
+                return res.json();
+            })
+            .then(data => {
+                setScenario(data as Scenario);
                 setLoading(false);
             })
-            .catch((err) => {
-                console.log('import error:', err);
+            .catch(err => {
+                console.log('fetch error:', err);
                 setError(`Scenario "${id}" not found.`);
                 setLoading(false);
             });
     }, [id]);
 
-    if (loading) {
-        return <LoadingScreen />;
-    }
+    if (loading) return <LoadingScreen />;
 
     if (error) {
         return (
