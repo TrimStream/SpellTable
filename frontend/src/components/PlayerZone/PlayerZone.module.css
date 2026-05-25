@@ -8,7 +8,7 @@
     min-height: 0;
 }
 
-/* TODO: [Milestone 7-8] Replace hero.png with final SpellTable logo once name and branding are decided */
+/* TODO: [Milestone 7-8] Replace hero.png with final TrainingARK logo once name and branding are decided */
 .playmat::before {
     content: '';
     position: absolute;
