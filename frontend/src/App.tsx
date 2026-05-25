@@ -8,6 +8,7 @@ import { Rules } from './pages/Rules/Rules';
 import { Tutorial } from './pages/Tutorial/Tutorial';
 import { ThemeProvider } from './context/ThemeContext';
 import { NotFound } from './pages/NotFound/NotFound';
+import { ErrorBoundary } from './components/ErrorBoundary/ErrorBoundary';
 
 const router = createBrowserRouter([
   {
@@ -33,8 +34,10 @@ const router = createBrowserRouter([
 
 export default function App() {
   return (
-      <ThemeProvider>
-        <RouterProvider router={router} />
-      </ThemeProvider>
+      <ErrorBoundary>
+        <ThemeProvider>
+          <RouterProvider router={router} />
+        </ThemeProvider>
+      </ErrorBoundary>
   );
 }
