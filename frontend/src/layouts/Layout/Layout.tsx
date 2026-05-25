@@ -2,6 +2,7 @@ import { NavLink, Outlet, useNavigate } from 'react-router-dom';
 import styles from './Layout.module.css';
 import { TarkLogo } from '../../components/TarkLogo/TarkLogo';
 import { useTheme } from '../../context/ThemeContext';
+import { Footer } from '../../components/Footer/Footer';
 
 export function Layout() {
     const { theme, toggle } = useTheme();
@@ -72,6 +73,7 @@ export function Layout() {
             <main className={styles.main}>
                 <Outlet />
             </main>
+            <Footer />
         </div>
     );
 }

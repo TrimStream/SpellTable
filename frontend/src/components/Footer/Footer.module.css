@@ -1,0 +1,100 @@
+.footer {
+    border-top: 0.5px solid var(--border);
+    background: var(--bg-secondary);
+    padding: 40px 40px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 32px;
+}
+
+.resources {
+    display: flex;
+    gap: 64px;
+    justify-content: center;
+}
+
+.resourceGroup {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+}
+
+.resourceTitle {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 4px;
+}
+
+.resourceLink {
+    font-size: 13px;
+    color: var(--text-muted);
+    text-decoration: none;
+    transition: color 0.15s ease;
+}
+
+.resourceLink:hover {
+    color: var(--text);
+}
+
+.credit {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+}
+
+.creditName {
+    font-size: 13px;
+    color: var(--text-muted);
+}
+
+.creditRow {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.moxfieldText {
+    font-size: 13px;
+    color: var(--text-muted);
+}
+
+.moxfieldLink {
+    color: var(--gold);
+    text-decoration: none;
+    transition: color 0.15s ease;
+}
+
+.moxfieldLink:hover {
+    color: var(--text);
+}
+
+.githubLink {
+    font-size: 13px;
+    color: var(--text-muted);
+    text-decoration: none;
+    transition: color 0.15s ease;
+}
+
+.githubLink:hover {
+    color: var(--text);
+}
+
+.copyright {
+    font-size: 12px;
+    color: var(--text-disabled);
+}
+
+/* TODO: When Discord server is created, add this class and link in the creditRow div:
+.discordLink {
+  font-size: 13px;
+  color: var(--text-muted);
+  text-decoration: none;
+  transition: color 0.15s ease;
+}
+*/

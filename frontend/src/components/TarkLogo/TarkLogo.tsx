@@ -21,7 +21,7 @@ export function TarkLogo({ size = 'nav' }: TarkLogoProps) {
                     <stop offset="100%" stopColor="#a07828" />
                 </linearGradient>
             </defs>
-            <polygon points="38,118 58,28 74,28 54,118" fill="url(#tarkGold)" />
+            <polygon points="38,118 58,30 74,30 54,118" fill="url(#tarkGold)" />
             <rect x="12" y="28" width="200" height="14" fill="url(#tarkGold)" />
             <polygon points="210,28 252,28 210,54" fill="#a07828"  />
             <text
