@@ -16,6 +16,7 @@ export function AuthModal({ onClose, initialMode = 'login' }: AuthModalProps) {
     const [rememberMe, setRememberMe] = useState(false);
     const [error, setError] = useState<string | null>(null);
     const [loading, setLoading] = useState(false);
+	const [showPassword, setShowPassword] = useState(false);
 
     const { login } = useAuth();
     const apiUrl = import.meta.env.VITE_API_URL;
@@ -113,13 +114,22 @@ export function AuthModal({ onClose, initialMode = 'login' }: AuthModalProps) {
                             value={identifier}
                             onChange={e => setIdentifier(e.target.value)}
                         />
-                        <input
-                            className={styles.input}
-                            type="password"
-                            placeholder="Password"
-                            value={password}
-                            onChange={e => setPassword(e.target.value)}
-                        />
+                        <div className={styles.passwordWrapper}>
+						    <input
+						        className={styles.input}
+						        type={showPassword ? 'text' : 'password'}
+						        placeholder="Password"
+						        value={password}
+						        onChange={e => setPassword(e.target.value)}
+						    />
+						    <button
+						        type="button"
+						        className={styles.showPassword}
+						        onClick={() => setShowPassword(s => !s)}
+						    >
+						        {showPassword ? 'Hide' : 'Show'}
+						    </button>
+						</div>
                         <label className={styles.checkboxLabel}>
                             <input
                                 type="checkbox"
@@ -145,13 +155,22 @@ export function AuthModal({ onClose, initialMode = 'login' }: AuthModalProps) {
                             value={username}
                             onChange={e => setUsername(e.target.value)}
                         />
-                        <input
-                            className={styles.input}
-                            type="password"
-                            placeholder="Password"
-                            value={password}
-                            onChange={e => setPassword(e.target.value)}
-                        />
+                        <div className={styles.passwordWrapper}>
+						    <input
+						        className={styles.input}
+						        type={showPassword ? 'text' : 'password'}
+						        placeholder="Password"
+						        value={password}
+						        onChange={e => setPassword(e.target.value)}
+						    />
+						    <button
+						        type="button"
+						        className={styles.showPassword}
+						        onClick={() => setShowPassword(s => !s)}
+						    >
+						        {showPassword ? 'Hide' : 'Show'}
+						    </button>
+						</div>
                     </div>
                 )}
 
