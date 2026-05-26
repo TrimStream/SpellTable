@@ -5,6 +5,7 @@ import styles from './PlayerZone.module.css';
 import cardBack from '../../assets/back_magic.png';
 import { Battlefield } from '../Battlefield/Battlefield';
 import { ZoneModal } from '../ZoneModal/ZoneModal';
+import tarkWatermark from '../../assets/tark.png';
 
 interface PlayerZoneProps {
     player: Player,
@@ -105,6 +106,7 @@ export function PlayerZone(props: PlayerZoneProps) {
         <div className={`${styles.playmat} ${positionClass}`} aria-label={`${player.name}'s zone`}>
             {isTop && strip}
             <div className={styles.battlefield}>
+                <img src={tarkWatermark} className={styles.watermark} alt="" aria-hidden="true" />
                 <Battlefield cards={player.zones.battlefield.cards} isTop={isTop} onCardClick={handleCardClick} />
             </div>
             {!isTop && strip}

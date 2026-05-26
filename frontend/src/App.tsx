@@ -25,6 +25,7 @@ const router = createBrowserRouter([
 			{ path: 'tutorial', element: <Tutorial /> },
 			{ path: 'dashboard', element: <Dashboard /> },
 			{ path: 'settings', element: <Settings /> },
+			{ path: 'board/:id', element: <BoardPage /> },
 			{ path: '*', element: <NotFound /> },
 			// TODO V?: Add deck route when deck evaluation is built
 			// { path: 'deck', element: <Deck /> },

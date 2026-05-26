@@ -1,0 +1,20 @@
+<svg width="300" height="130" viewBox="0 0 300 130" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+        <linearGradient id="tarkGold" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stop-color="#e8c96a" />
+            <stop offset="60%" stop-color="#c9a84c" />
+            <stop offset="100%" stop-color="#a07828" />
+        </linearGradient>
+    </defs>
+    <polygon points="38,118 58,30 74,30 54,118" fill="url(#tarkGold)" />
+    <rect x="12" y="28" width="200" height="14" fill="url(#tarkGold)" />
+    <polygon points="210,28 252,28 210,54" fill="#a07828" />
+    <text
+        x="75" y="112"
+        font-family="'Trebuchet MS', sans-serif"
+        font-size="88"
+        font-weight="600"
+        fill="#e8e0d4"
+        letter-spacing="8"
+    >ARK</text>
+</svg>

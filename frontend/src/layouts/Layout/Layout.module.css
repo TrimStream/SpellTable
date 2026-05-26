@@ -6,6 +6,11 @@
     color: var(--text);
 }
 
+.mainBoard {
+    flex: 1;
+    overflow: hidden;
+}
+
 .nav {
     height: 64px;
     display: flex;

@@ -3,21 +3,19 @@
     flex-direction: column;
     background: #000000;
     border-radius: 8px;
-    overflow: visible;
+    overflow: clip;
     position: relative;
     min-height: 0;
 }
 
-/* TODO: [Milestone 7-8] Replace hero.png with final TrainingARK logo once name and branding are decided */
-.playmat::before {
-    content: '';
+.watermark {
     position: absolute;
-    inset: 0;
-    background-image: url('../../assets/hero.png');
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: 15%;
-    opacity: 0.4;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 35%;
+    opacity: 0.15;
+    mix-blend-mode: screen;
     pointer-events: none;
     z-index: 0;
 }

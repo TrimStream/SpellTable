@@ -1,14 +1,11 @@
 .container {
     display: flex;
     flex-direction: column;
-    min-height: 100vh;
+    height: calc(100vh - 64px);
     width: 100%;
     background: #111318;
     padding: 0;
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    border-radius: 8px;
-    margin: 8px;
-    overflow: visible;
+    overflow: auto;
 }
 
 .board {
@@ -20,4 +17,34 @@
     padding: 12px;
     background: #111318;
     overflow: visible;
+    height: 100%;
+}
+
+.boardWrapper {
+    position: relative;
+    flex: 1;
+}
+
+.fullscreenButton {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 50;
+    background: rgba(0, 0, 0, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 6px;
+    color: var(--text-muted);
+    font-size: 1.1rem;
+    width: 32px;
+    height: 32px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: color 0.15s, border-color 0.15s;
+}
+
+.fullscreenButton:hover {
+    color: var(--text);
+    border-color: rgba(255, 255, 255, 0.3);
 }

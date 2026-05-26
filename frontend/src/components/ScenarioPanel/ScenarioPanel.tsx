@@ -1,85 +1,111 @@
 import { useMemo, useState } from 'react';
 import type { Scenario } from '../../types';
 import styles from './ScenarioPanel.module.css';
+import { useAuth } from '../../context/AuthContext';
 
 interface ScenarioPanelProps {
-	scenario: Scenario;
+    scenario: Scenario;
 }
 
 const normalizeAnswer = (value: string) => value.trim().toLowerCase();
 
 export function ScenarioPanel({ scenario }: ScenarioPanelProps) {
-	const hasOptions = (scenario.options?.length ?? 0) > 0;
-	const [selectedOption, setSelectedOption] = useState<string>('');
-	const [freeformAnswer, setFreeformAnswer] = useState('');
-	const [submittedAnswer, setSubmittedAnswer] = useState<string | null>(null);
-	const [isCorrect, setIsCorrect] = useState<boolean | null>(null);
+    const hasOptions = (scenario.options?.length ?? 0) > 0;
+    const [selectedOption, setSelectedOption] = useState<string>('');
+    const [freeformAnswer, setFreeformAnswer] = useState('');
+    const [submittedAnswer, setSubmittedAnswer] = useState<string | null>(null);
+    const [isCorrect, setIsCorrect] = useState<boolean | null>(null);
 
-	const currentAnswer = hasOptions ? selectedOption : freeformAnswer;
-	const canSubmit = useMemo(() => currentAnswer.trim().length > 0, [currentAnswer]);
+    const { user, accessToken } = useAuth();
+    const apiUrl = import.meta.env.VITE_API_URL;
 
-	const handleSubmit = () => {
-		if (!canSubmit) return;
-		setSubmittedAnswer(currentAnswer);
-		setIsCorrect(
-			normalizeAnswer(currentAnswer) === normalizeAnswer(scenario.correctAnswer)
-		);
-	};
+    const currentAnswer = hasOptions ? selectedOption : freeformAnswer;
+    const canSubmit = useMemo(() => currentAnswer.trim().length > 0, [currentAnswer]);
 
-	return (
-		<section className={styles.container}>
-			<header className={styles.header}>
-				<h2 className={styles.title}>{scenario.title}</h2>
-				<p className={styles.question}>{scenario.question}</p>
-			</header>
-			{hasOptions ? (
-				<div className={styles.options}>
-					{scenario.options?.map((option) => {
-						const isSelected = option === selectedOption;
-						return (
-							<button
-								key={option}
-								type="button"
-								className={`${styles.optionCard} ${isSelected ? styles.optionCardSelected : ''}`}
-								onClick={() => setSelectedOption(option)}
-							>
-								{option}
-							</button>
-						);
-					})}
-				</div>
-			) : (
-				/* TODO: [Milestone 5] Replace freeform textarea with AI evaluation via Gemini */
-				<textarea
-					className={styles.textarea}
-					value={freeformAnswer}
-					onChange={(e) => setFreeformAnswer(e.target.value)}
-					placeholder="Type your answer here..."
-					rows={3}
-				/>
-			)}
+    const handleSubmit = async () => {
+        if (!canSubmit) return;
+        const correct = normalizeAnswer(currentAnswer) === normalizeAnswer(scenario.correctAnswer);
+        setSubmittedAnswer(currentAnswer);
+        setIsCorrect(correct);
 
-			<div className={styles.submitRow}>
-				<button
-					type="button"
-					className={styles.submitButton}
-					onClick={handleSubmit}
-					disabled={!canSubmit}
-				>
-					Submit
-				</button>
+        if (user && accessToken) {
+            try {
+                await fetch(`${apiUrl}/users/me/scenarios`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${accessToken}`
+                    },
+                    body: JSON.stringify({
+                        scenario_id: scenario.id,
+                        correct
+                    })
+                });
+            } catch {
+                // silently fail - don't interrupt the user experience if tracking fails
+            }
+        }
+    };
 
-				{submittedAnswer !== null && isCorrect !== null && (
-					<div className={styles.feedback}>
+    return (
+        <section className={styles.container}>
+            <header className={styles.header}>
+                <h2 className={styles.title}>{scenario.title}</h2>
+                <p className={styles.question}>{scenario.question}</p>
+            </header>
+            {hasOptions ? (
+                <div className={styles.options}>
+                    {scenario.options?.map((option) => {
+                        const isSelected = option === selectedOption;
+                        return (
+                            <button
+                                key={option}
+                                type="button"
+                                className={`${styles.optionCard} ${isSelected ? styles.optionCardSelected : ''}`}
+                                onClick={() => setSelectedOption(option)}
+                            >
+                                {option}
+                            </button>
+                        );
+                    })}
+                </div>
+            ) : (
+                <textarea
+                    className={styles.textarea}
+                    value={freeformAnswer}
+                    onChange={(e) => setFreeformAnswer(e.target.value)}
+                    placeholder="Type your answer here..."
+                    rows={3}
+                />
+            )}
+
+            <div className={styles.submitRow}>
+                <button
+                    type="button"
+                    className={styles.submitButton}
+                    onClick={handleSubmit}
+                    disabled={!canSubmit}
+                >
+                    Submit
+                </button>
+
+                {submittedAnswer !== null && isCorrect !== null && (
+                    <div className={styles.feedback}>
                         <span className={isCorrect ? styles.correct : styles.incorrect}>
                             {isCorrect ? 'Correct!' : 'Not quite.'}
                         </span>
-						<span className={styles.correctAnswer}>
+                        <span className={styles.correctAnswer}>
                             <strong>Correct answer:</strong> {scenario.correctAnswer}
                         </span>
-					</div>
-				)}
-			</div>
-		</section>
-	);
+                    </div>
+                )}
+            </div>
+
+            {submittedAnswer !== null && !user && (
+                <p className={styles.nudge}>
+                    Want to save your results? <button className={styles.nudgeButton} onClick={() => window.dispatchEvent(new CustomEvent('open-auth-modal', { detail: 'register' }))}>Create a free account</button>
+                </p>
+            )}
+        </section>
+    );
 }

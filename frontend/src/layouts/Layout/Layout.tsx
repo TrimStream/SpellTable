@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { NavLink, Outlet, useNavigate } from 'react-router-dom';
+import { NavLink, Outlet, useNavigate, useLocation } from 'react-router-dom';
 import styles from './Layout.module.css';
 import { TarkLogo } from '../../components/TarkLogo/TarkLogo';
 import { useTheme } from '../../context/ThemeContext';
@@ -14,6 +14,8 @@ export function Layout() {
     const [authModal, setAuthModal] = useState<'login' | 'register' | null>(null);
     const [dropdownOpen, setDropdownOpen] = useState(false);
     const dropdownRef = useRef<HTMLDivElement>(null);
+    const location = useLocation();
+    const isBoardPage = location.pathname.startsWith('/board/');
 
     useEffect(() => {
         function handleClickOutside(e: MouseEvent) {
@@ -26,6 +28,15 @@ export function Layout() {
         }
         return () => document.removeEventListener('mousedown', handleClickOutside);
     }, [dropdownOpen]);
+
+    useEffect(() => {
+        function handleOpenAuth(e: Event) {
+            const mode = (e as CustomEvent).detail as 'login' | 'register';
+            setAuthModal(mode);
+        }
+        window.addEventListener('open-auth-modal', handleOpenAuth);
+        return () => window.removeEventListener('open-auth-modal', handleOpenAuth);
+    }, []);
 
     return (
         <div className={styles.wrapper}>
@@ -117,10 +128,10 @@ export function Layout() {
                 </div>
             </nav>
 
-            <main className={styles.main}>
+            <main className={isBoardPage ? styles.mainBoard : styles.main}>
                 <Outlet />
             </main>
-            <Footer />
+            {!isBoardPage && <Footer />}
 
             {authModal && (
                 <AuthModal

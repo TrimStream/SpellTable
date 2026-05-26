@@ -1,22 +1,9 @@
 import { LoadingScreen } from '../../components/LoadingScreen/LoadingScreen';
 import { useEffect, useState } from 'react';
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import type { Scenario } from "../../types";
 import { Board } from "../../components/Board/Board";
 import { useScenario } from "../../hooks/useScenario";
-import styles from './BoardPage.module.css';
-
-function ExitButton() {
-    const navigate = useNavigate();
-    return (
-        <button
-            onClick={() => navigate('/scenarios')}
-            className={styles.exitBtn}
-        >
-            ← Scenarios
-        </button>
-    );
-}
 
 function BoardWithScenario({ scenario }: { scenario: Scenario }) {
     const { scenario: loadedScenario, loading, error } = useScenario(scenario);
@@ -67,14 +54,12 @@ export function BoardPage() {
     if (error) {
         return (
             <div style={{
-                width: '100vw',
-                height: '100vh',
                 display: 'flex',
                 justifyContent: 'center',
                 alignItems: 'center',
                 color: 'var(--text-muted)',
                 fontSize: '14px',
-                background: 'var(--bg)'
+                padding: '2rem'
             }}>
                 {error}
             </div>
@@ -83,10 +68,5 @@ export function BoardPage() {
 
     if (!scenario) return null;
 
-    return (
-        <div style={{ position: 'relative' }}>
-            <BoardWithScenario scenario={scenario} />
-            <ExitButton />
-        </div>
-    );
+    return <BoardWithScenario scenario={scenario} />;
 }

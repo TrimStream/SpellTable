@@ -35,28 +35,28 @@
 }
 
 .optionCard {
-	flex: 1;
-	min-width: 160px;
-	border: 1px solid rgba(255, 255, 255, 0.12);
-	border-radius: 6px;
-	padding: 6px 10px;
-	background: transparent;
-	color: #d1d5db;
-	text-align: left;
-	cursor: pointer;
-	font-size: 12px;
-	transition: border-color 0.15s ease, background 0.15s ease;
+    flex: 1;
+    min-width: 160px;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 6px;
+    padding: 6px 10px;
+    background: transparent;
+    color: #d1d5db;
+    text-align: left;
+    cursor: pointer;
+    font-size: 12px;
+    transition: border-color 0.15s ease, background 0.15s ease;
 }
 
 .optionCard:hover {
-	border-color: rgba(255, 255, 255, 0.25);
-	background: rgba(255, 255, 255, 0.04);
+    border-color: rgba(255, 255, 255, 0.25);
+    background: rgba(255, 255, 255, 0.04);
 }
 
 .optionCardSelected {
-	border-color: #7c3aed;
-	background: rgba(124, 58, 237, 0.12);
-	color: white;
+    border-color: var(--gold);
+    background: rgba(201, 168, 76, 0.12);
+    color: white;
 }
 
 .textarea {
@@ -80,24 +80,24 @@
 }
 
 .submitButton {
-	border: 1px solid rgba(255, 255, 255, 0.15);
-	border-radius: 6px;
-	padding: 5px 14px;
-	background: #1e293b;
-	color: #fff;
-	cursor: pointer;
-	font-size: 12px;
-	flex-shrink: 0;
-	transition: background 0.15s ease;
+    border: none;
+    border-radius: 6px;
+    padding: 5px 14px;
+    background: var(--gold-dark);
+    color: #f5edda;
+    cursor: pointer;
+    font-size: 12px;
+    flex-shrink: 0;
+    transition: background 0.15s ease;
 }
 
-.submitButton:hover {
-	background: #2d3f5c;
+.submitButton:hover:not(:disabled) {
+    background: var(--gold);
 }
 
 .submitButton:disabled {
-	opacity: 0.4;
-	cursor: not-allowed;
+    opacity: 0.4;
+    cursor: not-allowed;
 }
 
 .feedback {
@@ -120,4 +120,24 @@
 
 .correctAnswer {
 	color: #9ca3af;
+}
+
+.nudge {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    margin: 0.5rem 0 0 0;
+}
+
+.nudgeButton {
+    background: none;
+    border: none;
+    color: var(--gold);
+    font-size: 0.85rem;
+    cursor: pointer;
+    padding: 0;
+    text-decoration: underline;
+}
+
+.nudgeButton:hover {
+    color: var(--gold-bright);
 }
