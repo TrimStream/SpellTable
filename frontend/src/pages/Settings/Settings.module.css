@@ -1,0 +1,212 @@
+.container {
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+.header {
+    margin-bottom: 2rem;
+}
+
+.title {
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: var(--text);
+    margin: 0;
+}
+
+.section {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.sectionTitle {
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin: 0 0 1.25rem 0;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid var(--border);
+}
+
+.field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    margin-bottom: 1rem;
+}
+
+.field:last-child {
+    margin-bottom: 0;
+}
+
+.label {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+}
+
+.input {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    color: var(--text);
+    font-size: 0.95rem;
+    padding: 0.65rem 0.9rem;
+    width: 100%;
+    box-sizing: border-box;
+    transition: border-color 0.15s;
+}
+
+.input:focus {
+    outline: none;
+    border-color: var(--gold);
+}
+
+.input::placeholder {
+    color: var(--text-muted);
+}
+
+.passwordWrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.passwordWrapper .input {
+    padding-right: 3.5rem;
+}
+
+.showPassword {
+    position: absolute;
+    right: 0.75rem;
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    font-size: 0.78rem;
+    cursor: pointer;
+    padding: 0;
+    transition: color 0.15s;
+}
+
+.showPassword:hover {
+    color: var(--text);
+}
+
+.saveButton {
+    background: var(--gold-dark);
+    color: #f5edda;
+    border: none;
+    border-radius: 6px;
+    padding: 0.6rem 1.25rem;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.15s;
+    margin-top: 1rem;
+}
+
+.saveButton:hover:not(:disabled) {
+    background: var(--gold);
+}
+
+.saveButton:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.success {
+    color: var(--diff-beginner);
+    font-size: 0.85rem;
+    margin-top: 0.5rem;
+}
+
+.error {
+    color: var(--diff-expert);
+    font-size: 0.85rem;
+    margin-top: 0.5rem;
+}
+
+.themeRow {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.themeLabel {
+    font-size: 0.9rem;
+    color: var(--text);
+}
+
+.themeSwitch {
+    width: 36px;
+    height: 20px;
+    border-radius: 10px;
+    background: var(--border);
+    border: none;
+    cursor: pointer;
+    position: relative;
+    transition: background 0.2s;
+    padding: 0;
+}
+
+.themeSwitchOn {
+    background: var(--gold);
+}
+
+.themeSwitchThumb {
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: white;
+    transition: transform 0.2s;
+}
+
+.themeSwitchOn .themeSwitchThumb {
+    transform: translateX(16px);
+}
+
+.dangerSection {
+    background: var(--bg-card);
+    border: 1px solid rgba(224, 112, 112, 0.3);
+    border-radius: 10px;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.dangerTitle {
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--diff-expert);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin: 0 0 1.25rem 0;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid rgba(224, 112, 112, 0.2);
+}
+
+.dangerText {
+    font-size: 0.88rem;
+    color: var(--text-muted);
+    margin: 0 0 1rem 0;
+}
+
+.dangerButton {
+    background: none;
+    border: 1px solid var(--diff-expert);
+    color: var(--diff-expert);
+    border-radius: 6px;
+    padding: 0.6rem 1.25rem;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: background 0.15s;
+    opacity: 0.6;
+    cursor: not-allowed;
+}

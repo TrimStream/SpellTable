@@ -1,4 +1,5 @@
-from fastapi import APIRouter, Depends
+from auth_password import verify_password, hash_password
+from fastapi import APIRouter, Depends, HTTPException
 from database import db
 from dependencies import require_current_user
 from bson import ObjectId
@@ -76,3 +77,31 @@ async def remove_bookmark(scenario_id: str, user=Depends(require_current_user)):
 @router.get("/me/bookmarks")
 async def get_bookmarks(user=Depends(require_current_user)):
     return {"bookmarks": user.get("bookmarks", [])}
+
+class ChangeUsernameRequest(BaseModel):
+    new_username: str
+
+class ChangePasswordRequest(BaseModel):
+    current_password: str
+    new_password: str
+
+@router.patch("/me/username")
+async def change_username(body: ChangeUsernameRequest, user=Depends(require_current_user)):
+    existing = await db.users.find_one({"username": body.new_username})
+    if existing:
+        raise HTTPException(status_code=400, detail="Username already taken")
+    await db.users.update_one(
+        {"_id": user["_id"]},
+        {"$set": {"username": body.new_username}}
+    )
+    return {"username": body.new_username}
+
+@router.patch("/me/password")
+async def change_password(body: ChangePasswordRequest, user=Depends(require_current_user)):
+    if not verify_password(body.current_password, user["passwordHash"]):
+        raise HTTPException(status_code=400, detail="Current password is incorrect")
+    await db.users.update_one(
+        {"_id": user["_id"]},
+        {"$set": {"passwordHash": hash_password(body.new_password)}}
+    )
+    return {"status": "updated"}
