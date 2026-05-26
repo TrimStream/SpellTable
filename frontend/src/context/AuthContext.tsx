@@ -13,6 +13,9 @@ interface AuthContextType {
     user: User | null;
     accessToken: string | null;
     loading: boolean;
+    authModalMode: 'login' | 'register' | null;
+    openAuthModal: (mode: 'login' | 'register') => void;
+    closeAuthModal: () => void;
     login: (accessToken: string, refreshToken: string | null) => Promise<void>;
     logout: () => void;
 }
@@ -23,8 +26,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     const [user, setUser] = useState<User | null>(null);
     const [accessToken, setAccessToken] = useState<string | null>(null);
     const [loading, setLoading] = useState(true);
+    const [authModalMode, setAuthModalMode] = useState<'login' | 'register' | null>(null);
 
     const apiUrl = import.meta.env.VITE_API_URL;
+
+    const openAuthModal = (mode: 'login' | 'register') => setAuthModalMode(mode);
+    const closeAuthModal = () => setAuthModalMode(null);
 
     async function fetchUser(token: string): Promise<User | null> {
         try {
@@ -53,7 +60,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         localStorage.removeItem("tark_refresh_token");
     }
 
-    // on mount, try to restore session from refresh token
     useEffect(() => {
         async function restoreSession() {
             const refreshToken = localStorage.getItem("tark_refresh_token");
@@ -86,7 +92,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }, []);
 
     return (
-        <AuthContext.Provider value={{ user, accessToken, loading, login, logout }}>
+        <AuthContext.Provider value={{ user, accessToken, loading, authModalMode, openAuthModal, closeAuthModal, login, logout }}>
             {children}
         </AuthContext.Provider>
     );

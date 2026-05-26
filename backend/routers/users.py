@@ -53,3 +53,26 @@ async def record_scenario_completion(
     )
 
     return {"status": "recorded"}
+
+class BookmarkRequest(BaseModel):
+    scenario_id: str
+
+@router.post("/me/bookmarks")
+async def add_bookmark(body: BookmarkRequest, user=Depends(require_current_user)):
+    await db.users.update_one(
+        {"_id": user["_id"]},
+        {"$addToSet": {"bookmarks": body.scenario_id}}
+    )
+    return {"status": "bookmarked"}
+
+@router.delete("/me/bookmarks/{scenario_id}")
+async def remove_bookmark(scenario_id: str, user=Depends(require_current_user)):
+    await db.users.update_one(
+        {"_id": user["_id"]},
+        {"$pull": {"bookmarks": scenario_id}}
+    )
+    return {"status": "removed"}
+
+@router.get("/me/bookmarks")
+async def get_bookmarks(user=Depends(require_current_user)):
+    return {"bookmarks": user.get("bookmarks", [])}

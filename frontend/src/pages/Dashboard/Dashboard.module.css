@@ -1,0 +1,184 @@
+.container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+.header {
+    margin-bottom: 2rem;
+}
+
+.greeting {
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: var(--text);
+    margin: 0 0 0.25rem 0;
+}
+
+.subtext {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    margin: 0;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.25rem;
+}
+
+.skillBadge {
+    display: inline-block;
+    padding: 0.2rem 0.6rem;
+    border-radius: 4px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    text-transform: capitalize;
+}
+
+.skillBeginner {
+    background: rgba(94, 203, 130, 0.15);
+    color: var(--diff-beginner);
+}
+
+.skillIntermediate {
+    background: rgba(201, 168, 76, 0.15);
+    color: var(--diff-intermediate);
+}
+
+.skillExpert {
+    background: rgba(224, 112, 112, 0.15);
+    color: var(--diff-expert);
+}
+
+.statsGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.statCard {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1.25rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.statLabel {
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.statValue {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--gold);
+    line-height: 1;
+}
+
+.accuracyBar {
+    height: 6px;
+    background: var(--border);
+    border-radius: 3px;
+    margin-top: 0.5rem;
+    overflow: hidden;
+}
+
+.accuracyFill {
+    height: 100%;
+    background: var(--gold);
+    border-radius: 3px;
+    transition: width 0.6s ease;
+}
+
+.section {
+    margin-bottom: 2rem;
+}
+
+.sectionTitle {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text);
+    margin: 0 0 1rem 0;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--border);
+}
+
+.scenarioList {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.scenarioRow {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 0.75rem 1rem;
+    font-size: 0.88rem;
+}
+
+.scenarioRowClickable {
+    cursor: pointer;
+    transition: background 0.15s, border-color 0.15s;
+}
+
+.scenarioRowClickable:hover {
+    background: var(--bg-secondary);
+    border-color: var(--gold);
+}
+
+.scenarioId {
+    color: var(--text);
+    font-weight: 500;
+}
+
+.scenarioMeta {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    color: var(--text-muted);
+    font-size: 0.8rem;
+}
+
+.arrow {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+}
+
+.correct {
+    color: var(--diff-beginner);
+    font-weight: 600;
+}
+
+.incorrect {
+    color: var(--diff-expert);
+    font-weight: 600;
+}
+
+.empty {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    padding: 0.5rem 0;
+}
+
+.link {
+    color: var(--gold);
+    cursor: pointer;
+}
+
+.link:hover {
+    color: var(--gold-bright);
+}
+
+.loading {
+    color: var(--text-muted);
+    padding: 2rem;
+}

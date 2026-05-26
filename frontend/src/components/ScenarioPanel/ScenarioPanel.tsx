@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import {useEffect, useMemo, useState} from 'react';
 import type { Scenario } from '../../types';
 import styles from './ScenarioPanel.module.css';
 import { useAuth } from '../../context/AuthContext';
@@ -15,8 +15,10 @@ export function ScenarioPanel({ scenario }: ScenarioPanelProps) {
     const [freeformAnswer, setFreeformAnswer] = useState('');
     const [submittedAnswer, setSubmittedAnswer] = useState<string | null>(null);
     const [isCorrect, setIsCorrect] = useState<boolean | null>(null);
+    const [isBookmarked, setIsBookmarked] = useState(false);
+    const [bookmarkLoading, setBookmarkLoading] = useState(false);
 
-    const { user, accessToken } = useAuth();
+    const { user, accessToken, openAuthModal } = useAuth();
     const apiUrl = import.meta.env.VITE_API_URL;
 
     const currentAnswer = hasOptions ? selectedOption : freeformAnswer;
@@ -46,6 +48,49 @@ export function ScenarioPanel({ scenario }: ScenarioPanelProps) {
             }
         }
     };
+
+    useEffect(() => {
+        if (!user || !accessToken) return;
+        fetch(`${apiUrl}/users/me/bookmarks`, {
+            headers: { Authorization: `Bearer ${accessToken}` }
+        })
+            .then(r => r.json())
+            .then(data => {
+                setIsBookmarked(data.bookmarks.includes(scenario.id));
+            })
+            .catch(() => {});
+    }, [user, accessToken, scenario.id]);
+
+    async function handleBookmark() {
+        if (!user || !accessToken) {
+            openAuthModal('register');
+            return;
+        }
+        setBookmarkLoading(true);
+        try {
+            if (isBookmarked) {
+                await fetch(`${apiUrl}/users/me/bookmarks/${scenario.id}`, {
+                    method: 'DELETE',
+                    headers: { Authorization: `Bearer ${accessToken}` }
+                });
+                setIsBookmarked(false);
+            } else {
+                await fetch(`${apiUrl}/users/me/bookmarks`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        Authorization: `Bearer ${accessToken}`
+                    },
+                    body: JSON.stringify({ scenario_id: scenario.id })
+                });
+                setIsBookmarked(true);
+            }
+        } catch {
+            // silently fail
+        } finally {
+            setBookmarkLoading(false);
+        }
+    }
 
     return (
         <section className={styles.container}>
@@ -81,6 +126,15 @@ export function ScenarioPanel({ scenario }: ScenarioPanelProps) {
 
             <div className={styles.submitRow}>
                 <button
+                    className={styles.bookmarkButton}
+                    onClick={handleBookmark}
+                    disabled={bookmarkLoading}
+                    title={isBookmarked ? 'Remove bookmark' : 'Bookmark this scenario'}
+                >
+                    {isBookmarked ? '★' : '☆'}
+                </button>
+
+                <button
                     type="button"
                     className={styles.submitButton}
                     onClick={handleSubmit}
@@ -103,7 +157,7 @@ export function ScenarioPanel({ scenario }: ScenarioPanelProps) {
 
             {submittedAnswer !== null && !user && (
                 <p className={styles.nudge}>
-                    Want to save your results? <button className={styles.nudgeButton} onClick={() => window.dispatchEvent(new CustomEvent('open-auth-modal', { detail: 'register' }))}>Create a free account</button>
+                    Want to save your results? <button className={styles.nudgeButton} onClick={() => openAuthModal('register')}>Create a free account</button>
                 </p>
             )}
         </section>

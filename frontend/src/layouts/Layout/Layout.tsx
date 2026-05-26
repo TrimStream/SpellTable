@@ -5,13 +5,11 @@ import { TarkLogo } from '../../components/TarkLogo/TarkLogo';
 import { useTheme } from '../../context/ThemeContext';
 import { useAuth } from '../../context/AuthContext';
 import { Footer } from '../../components/Footer/Footer';
-import { AuthModal } from '../../components/AuthModal/AuthModal';
 
 export function Layout() {
     const { theme, toggle } = useTheme();
-    const { user, logout, loading } = useAuth();
+    const { user, logout, loading, openAuthModal } = useAuth();
     const navigate = useNavigate();
-    const [authModal, setAuthModal] = useState<'login' | 'register' | null>(null);
     const [dropdownOpen, setDropdownOpen] = useState(false);
     const dropdownRef = useRef<HTMLDivElement>(null);
     const location = useLocation();
@@ -28,15 +26,6 @@ export function Layout() {
         }
         return () => document.removeEventListener('mousedown', handleClickOutside);
     }, [dropdownOpen]);
-
-    useEffect(() => {
-        function handleOpenAuth(e: Event) {
-            const mode = (e as CustomEvent).detail as 'login' | 'register';
-            setAuthModal(mode);
-        }
-        window.addEventListener('open-auth-modal', handleOpenAuth);
-        return () => window.removeEventListener('open-auth-modal', handleOpenAuth);
-    }, []);
 
     return (
         <div className={styles.wrapper}>
@@ -115,10 +104,10 @@ export function Layout() {
                                 </div>
                             ) : (
                                 <div className={styles.authButtons}>
-                                    <button className={styles.btnLogin} onClick={() => setAuthModal('login')}>
+                                    <button className={styles.btnLogin} onClick={() => openAuthModal('login')}>
                                         Log in
                                     </button>
-                                    <button className={styles.btnRegister} onClick={() => setAuthModal('register')}>
+                                    <button className={styles.btnRegister} onClick={() => openAuthModal('register')}>
                                         Register
                                     </button>
                                 </div>
@@ -132,13 +121,6 @@ export function Layout() {
                 <Outlet />
             </main>
             {!isBoardPage && <Footer />}
-
-            {authModal && (
-                <AuthModal
-                    initialMode={authModal}
-                    onClose={() => setAuthModal(null)}
-                />
-            )}
         </div>
     );
 }
