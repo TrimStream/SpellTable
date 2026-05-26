@@ -144,6 +144,39 @@
     font-size: 14px;
 }
 
+.loadingArea {
+    flex: 1;
+}
+
+.errorArea {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 4rem 0;
+    gap: 1rem;
+}
+
+.errorText {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    text-align: center;
+}
+
+.retryButton {
+    background: var(--gold-dark);
+    color: #f5edda;
+    border: none;
+    border-radius: 6px;
+    padding: 8px 20px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: background 0.15s;
+}
+
+.retryButton:hover {
+    background: var(--gold);
+}
+
 @media (max-width: 768px) {
     .header {
         padding: 24px 20px 0;
