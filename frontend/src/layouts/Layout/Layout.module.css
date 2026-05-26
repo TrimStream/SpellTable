@@ -18,6 +18,7 @@
     top: 0;
     z-index: 100;
     overflow: visible;
+    gap: 24px;
 }
 
 .logoMark {
@@ -27,12 +28,15 @@
     gap: 0;
     text-decoration: none;
     cursor: pointer;
+    flex-shrink: 0;
 }
 
 .navLinks {
     display: flex;
     align-items: center;
     gap: 24px;
+    flex: 1;
+    justify-content: center;
 }
 
 .navLink {
@@ -60,31 +64,184 @@
     display: flex;
     align-items: center;
     gap: 10px;
+    flex-shrink: 0;
 }
 
-.btnScenarios {
-    font-size: 12px;
+.main {
+    flex: 1;
+}
+
+.authButtons {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.btnLogin {
+    font-size: 13px;
     font-weight: 500;
-    background: #8b6914;
+    background: none;
+    color: var(--text-muted);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 6px 14px;
+    cursor: pointer;
+    transition: color 0.15s, border-color 0.15s;
+}
+
+.btnLogin:hover {
+    color: var(--text);
+    border-color: var(--text-muted);
+}
+
+.btnRegister {
+    font-size: 13px;
+    font-weight: 500;
+    background: var(--gold-dark);
     color: #f5edda;
     border: none;
     border-radius: 6px;
     padding: 6px 14px;
     cursor: pointer;
-    text-decoration: none;
+    transition: background 0.15s;
 }
 
-.themeToggle {
+.btnRegister:hover {
+    background: var(--gold);
+}
+
+.profileWrapper {
+    position: relative;
+}
+
+.profileButton {
     background: none;
     border: none;
     cursor: pointer;
-    font-size: 16px;
-    padding: 4px;
+    padding: 0;
+    display: flex;
+    align-items: center;
+}
+
+.avatar {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background: var(--gold-dark);
+    color: #f5edda;
+    font-size: 0.9rem;
+    font-weight: 700;
     display: flex;
     align-items: center;
     justify-content: center;
+    transition: background 0.15s;
 }
 
-.main {
-    flex: 1;
+.profileButton:hover .avatar {
+    background: var(--gold);
+}
+
+.dropdown {
+    position: absolute;
+    top: calc(100% + 10px);
+    right: 0;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    min-width: 200px;
+    padding: 0.5rem 0;
+    z-index: 200;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+}
+
+.dropdownUser {
+    display: flex;
+    flex-direction: column;
+    padding: 0.6rem 1rem;
+    gap: 2px;
+}
+
+.dropdownUsername {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--text);
+}
+
+.dropdownEmail {
+    font-size: 0.78rem;
+    color: var(--text-muted);
+}
+
+.dropdownDivider {
+    height: 1px;
+    background: var(--border);
+    margin: 0.3rem 0;
+}
+
+.dropdownItem {
+    width: 100%;
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    font-size: 0.88rem;
+    padding: 0.5rem 1rem;
+    text-align: left;
+    cursor: pointer;
+    transition: background 0.15s, color 0.15s;
+}
+
+.dropdownItem:hover {
+    background: var(--bg-secondary);
+    color: var(--text);
+}
+
+.dropdownLogout {
+    color: var(--diff-expert);
+}
+
+.dropdownLogout:hover {
+    color: var(--diff-expert);
+}
+
+.dropdownTheme {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.5rem 1rem;
+}
+
+.dropdownItemLabel {
+    font-size: 0.88rem;
+    color: var(--text-muted);
+}
+
+.themeSwitch {
+    width: 36px;
+    height: 20px;
+    border-radius: 10px;
+    background: var(--border);
+    border: none;
+    cursor: pointer;
+    position: relative;
+    transition: background 0.2s;
+    padding: 0;
+}
+
+.themeSwitchOn {
+    background: var(--gold);
+}
+
+.themeSwitchThumb {
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: white;
+    transition: transform 0.2s;
+}
+
+.themeSwitchOn .themeSwitchThumb {
+    transform: translateX(16px);
 }

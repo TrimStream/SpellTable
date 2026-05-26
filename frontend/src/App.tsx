@@ -7,37 +7,43 @@ import { About } from './pages/About/About';
 import { Rules } from './pages/Rules/Rules';
 import { Tutorial } from './pages/Tutorial/Tutorial';
 import { ThemeProvider } from './context/ThemeContext';
+import { AuthProvider } from './context/AuthContext';
 import { NotFound } from './pages/NotFound/NotFound';
 import { ErrorBoundary } from './components/ErrorBoundary/ErrorBoundary';
+import { Dashboard } from './pages/Dashboard/Dashboard';
+import { Settings } from './pages/Settings/Settings';
 
 const router = createBrowserRouter([
-  {
-    path: '/',
-    element: <Layout />,
-    children: [
-      { index: true, element: <Home /> },
-      { path: 'scenarios', element: <Scenarios /> },
-      { path: 'about', element: <About /> },
-      { path: 'rules', element: <Rules /> },
-      { path: 'tutorial', element: <Tutorial /> },
-      { path: '*', element: <NotFound /> },
-      // TODO V?: Add deck route when deck evaluation is built
-      // { path: 'deck', element: <Deck /> },
-    ],
-  },
-  {
-    // Board page lives outside Layout, no nav bar
-    path: '/board/:id',
-    element: <BoardPage />,
-  },
+	{
+		path: '/',
+		element: <Layout />,
+		children: [
+			{ index: true, element: <Home /> },
+			{ path: 'scenarios', element: <Scenarios /> },
+			{ path: 'about', element: <About /> },
+			{ path: 'rules', element: <Rules /> },
+			{ path: 'tutorial', element: <Tutorial /> },
+			{ path: 'dashboard', element: <Dashboard /> },
+			{ path: 'settings', element: <Settings /> },
+			{ path: '*', element: <NotFound /> },
+			// TODO V?: Add deck route when deck evaluation is built
+			// { path: 'deck', element: <Deck /> },
+		],
+	},
+	{
+		path: '/board/:id',
+		element: <BoardPage />,
+	},
 ]);
 
 export default function App() {
-  return (
-      <ErrorBoundary>
-        <ThemeProvider>
-          <RouterProvider router={router} />
-        </ThemeProvider>
-      </ErrorBoundary>
-  );
+	return (
+		<ErrorBoundary>
+			<ThemeProvider>
+				<AuthProvider>
+					<RouterProvider router={router} />
+				</AuthProvider>
+			</ThemeProvider>
+		</ErrorBoundary>
+	);
 }
