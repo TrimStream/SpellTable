@@ -12,6 +12,26 @@ class ScenarioCompletionRequest(BaseModel):
     scenario_id: str
     correct: bool
 
+@router.get("/me/dashboard")
+async def get_dashboard(user=Depends(require_current_user)):
+    scenarios_completed = user.get("scenariosCompleted", [])
+    total = len(scenarios_completed)
+    correct = sum(1 for s in scenarios_completed if s.get("correct"))
+    accuracy = round((correct / total) * 100) if total > 0 else 0
+
+    unique_scenarios = list({s["scenarioId"] for s in scenarios_completed})
+
+    return {
+        "total_attempted": total,
+        "total_correct": correct,
+        "accuracy": accuracy,
+        "scenarios_completed": scenarios_completed,
+        "bookmarks": user.get("bookmarks", []),
+        "skill_level": user.get("skillLevel"),
+        "archetype": user.get("archetype"),
+        "member_since": user.get("createdAt"),
+        "unique_scenarios_count": len(unique_scenarios)
+    }
 
 @router.post("/me/scenarios")
 async def record_scenario_completion(
