@@ -13,6 +13,7 @@ import { ErrorBoundary } from './components/ErrorBoundary/ErrorBoundary';
 import { Dashboard } from './pages/Dashboard/Dashboard';
 import { Settings } from './pages/Settings/Settings';
 import { AuthModal } from './components/AuthModal/AuthModal';
+import { VerifyEmail } from './pages/VerifyEmail/VerifyEmail';
 
 const router = createBrowserRouter([
     {
@@ -27,6 +28,7 @@ const router = createBrowserRouter([
             { path: 'dashboard', element: <Dashboard /> },
             { path: 'settings', element: <Settings /> },
             { path: 'board/:id', element: <BoardPage /> },
+            { path: 'verify-email', element: <VerifyEmail /> },
             { path: '*', element: <NotFound /> },
         ],
     },

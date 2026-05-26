@@ -30,7 +30,7 @@ class UserResponse(BaseModel):
     username: str
     skill_level: Optional[str] = None
     archetype: Optional[str] = None
-
+    verified: bool = False
 
 class RefreshRequest(BaseModel):
     refresh_token: str

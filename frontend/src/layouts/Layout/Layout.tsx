@@ -8,12 +8,28 @@ import { Footer } from '../../components/Footer/Footer';
 
 export function Layout() {
     const { theme, toggle } = useTheme();
-    const { user, logout, loading, openAuthModal } = useAuth();
+    const { user, logout, loading, openAuthModal, accessToken } = useAuth();
     const navigate = useNavigate();
     const [dropdownOpen, setDropdownOpen] = useState(false);
     const dropdownRef = useRef<HTMLDivElement>(null);
     const location = useLocation();
     const isBoardPage = location.pathname.startsWith('/board/');
+    const [verificationDismissed, setVerificationDismissed] = useState(false);
+    const [resendStatus, setResendStatus] = useState<'idle' | 'sending' | 'sent'>('idle');
+
+    async function handleResendVerification() {
+        if (resendStatus !== 'idle') return;
+        setResendStatus('sending');
+        try {
+            await fetch(`${import.meta.env.VITE_API_URL}/auth/resend-verification`, {
+                method: 'POST',
+                headers: { Authorization: `Bearer ${accessToken}` }
+            });
+            setResendStatus('sent');
+        } catch {
+            setResendStatus('idle');
+        }
+    }
 
     useEffect(() => {
         function handleClickOutside(e: MouseEvent) {
@@ -116,6 +132,18 @@ export function Layout() {
                     )}
                 </div>
             </nav>
+
+            {user && !user.verified && !verificationDismissed && (
+                <div className={styles.verificationBanner}>
+                    <span>Please verify your email address to unlock all features.</span>
+                    <div className={styles.bannerActions}>
+                        <button className={styles.bannerResend} onClick={handleResendVerification}>
+                            {resendStatus === 'sending' ? 'Sending...' : resendStatus === 'sent' ? 'Sent!' : 'Resend email'}
+                        </button>
+                        <button className={styles.bannerDismiss} onClick={() => setVerificationDismissed(true)}>×</button>
+                    </div>
+                </div>
+            )}
 
             <main className={isBoardPage ? styles.mainBoard : styles.main}>
                 <Outlet />

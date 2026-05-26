@@ -250,3 +250,51 @@
 .themeSwitchOn .themeSwitchThumb {
     transform: translateX(16px);
 }
+
+.verificationBanner {
+    background: rgba(201, 168, 76, 0.1);
+    border-bottom: 1px solid rgba(201, 168, 76, 0.3);
+    padding: 10px 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    gap: 1rem;
+}
+
+.bannerActions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-shrink: 0;
+}
+
+.bannerResend {
+    background: none;
+    border: 1px solid var(--gold-dark);
+    color: var(--gold);
+    border-radius: 4px;
+    padding: 4px 10px;
+    font-size: 0.8rem;
+    cursor: pointer;
+    transition: background 0.15s;
+}
+
+.bannerResend:hover {
+    background: rgba(201, 168, 76, 0.1);
+}
+
+.bannerDismiss {
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    font-size: 1.1rem;
+    cursor: pointer;
+    padding: 0 4px;
+    line-height: 1;
+}
+
+.bannerDismiss:hover {
+    color: var(--text);
+}

@@ -7,6 +7,7 @@ interface User {
     username: string;
     skill_level: string | null;
     archetype: string | null;
+    verified: boolean;
 }
 
 interface AuthContextType {

@@ -6,6 +6,7 @@ from auth_jwt import create_access_token, create_refresh_token, decode_token
 from datetime import datetime, timezone
 from dependencies import require_current_user
 from bson import ObjectId
+from email_service import send_verification_email, generate_verification_token
 
 router = APIRouter(prefix="/auth", tags=["auth"])
 
@@ -40,11 +41,22 @@ async def register(body: RegisterRequest):
             "moxfield": None,
             "discord": None
         },
-        "createdAt": now
+        "createdAt": now,
+        "verified": False,
+        "verificationToken": generate_verification_token(),
     }
 
     result = await db.users.insert_one(user)
     user_id = str(result.inserted_id)
+
+    # send verification email - fire and forget, don't block registration if it fails
+    base_url = "https://trainingark.vercel.app"
+    await send_verification_email(
+        user["email"],
+        user["username"],
+        user["verificationToken"],
+        base_url
+    )
 
     access_token = create_access_token({"sub": user_id})
     refresh_token = create_refresh_token({"sub": user_id})
@@ -85,7 +97,8 @@ async def me(user=Depends(require_current_user)):
         email=user["email"],
         username=user["username"],
         skill_level=user.get("skillLevel"),
-        archetype=user.get("archetype")
+        archetype=user.get("archetype"),
+        verified=user.get("verified", False)
     )
 
 @router.post("/refresh", response_model=TokenResponse)
@@ -113,3 +126,26 @@ async def refresh(body: RefreshRequest):
         refresh_token=None
     )
 
+@router.get("/verify-email")
+async def verify_email(token: str):
+    user = await db.users.find_one({"verificationToken": token})
+    if not user:
+        raise HTTPException(status_code=400, detail="Invalid or expired verification token")
+    await db.users.update_one(
+        {"_id": user["_id"]},
+        {"$set": {"verified": True, "verificationToken": None}}
+    )
+    return {"status": "verified"}
+
+@router.post("/resend-verification")
+async def resend_verification(user=Depends(require_current_user)):
+    if user.get("verified"):
+        return {"status": "already verified"}
+    token = generate_verification_token()
+    await db.users.update_one(
+        {"_id": user["_id"]},
+        {"$set": {"verificationToken": token}}
+    )
+    base_url = "https://trainingark.vercel.app"
+    await send_verification_email(user["email"], user["username"], token, base_url)
+    return {"status": "sent"}
