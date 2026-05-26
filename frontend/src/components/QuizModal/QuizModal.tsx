@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { QUIZ_QUESTIONS, calculateLevel, SKILL_LEVEL_LABELS, SKILL_LEVEL_DESCRIPTIONS } from '../../data/quiz';
 import styles from './QuizModal.module.css';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../../context/AuthContext';
 
 interface QuizModalProps {
     onClose: () => void;
@@ -14,6 +15,7 @@ export function QuizModal({ onClose }: QuizModalProps) {
     const [answers, setAnswers] = useState<number[]>([]);
     const [done, setDone] = useState(false);
     const [result, setResult] = useState<string | null>(null);
+    const { user, openAuthModal } = useAuth();
 
     const question = QUIZ_QUESTIONS[currentIndex];
     const isLast = currentIndex === QUIZ_QUESTIONS.length - 1;
@@ -62,6 +64,14 @@ export function QuizModal({ onClose }: QuizModalProps) {
                         <button className={styles.resultBtn} onClick={() => { onClose(); navigate('/scenarios'); }}>
                             Browse scenarios
                         </button>
+                        {!user && (
+                            <p className={styles.nudge}>
+                                <button className={styles.nudgeBtn} onClick={() => { onClose(); openAuthModal('register'); }}>
+                                    Create a free account
+                                </button>
+                                {' '}to save your level and track your progress.
+                            </p>
+                        )}
                     </div>
                 </div>
             </div>

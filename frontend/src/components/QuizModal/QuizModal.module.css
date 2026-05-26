@@ -199,3 +199,23 @@
     font-weight: 500;
     cursor: pointer;
 }
+
+.nudge {
+    margin-top: 1rem;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+}
+
+.nudgeBtn {
+    background: none;
+    border: none;
+    color: var(--gold);
+    font-size: 0.85rem;
+    cursor: pointer;
+    padding: 0;
+    text-decoration: underline;
+}
+
+.nudgeBtn:hover {
+    color: var(--gold-bright);
+}
