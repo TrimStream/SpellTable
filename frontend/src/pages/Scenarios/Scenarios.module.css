@@ -177,6 +177,29 @@
     background: var(--gold);
 }
 
+.cardTopRight {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-shrink: 0;
+}
+
+.bookmarkBtn {
+    background: none;
+    border: none;
+    color: var(--gold);
+    font-size: 1rem;
+    cursor: pointer;
+    padding: 0;
+    line-height: 1;
+    transition: opacity 0.15s;
+    flex-shrink: 0;
+}
+
+.bookmarkBtn:hover {
+    opacity: 0.7;
+}
+
 @media (max-width: 768px) {
     .header {
         padding: 24px 20px 0;

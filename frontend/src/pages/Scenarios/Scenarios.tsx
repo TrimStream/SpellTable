@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import type { ScenarioMeta, Difficulty } from '../../types/scenario';
 import styles from './Scenarios.module.css';
 import { LoadingScreen } from '../../components/LoadingScreen/LoadingScreen';
+import { useAuth } from '../../context/AuthContext';
 
 const FILTERS = ['all', 'beginner', 'intermediate', 'expert'] as const;
 type Filter = typeof FILTERS[number];
@@ -18,10 +19,13 @@ export function Scenarios() {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
     const [filter, setFilter] = useState<Filter>('all');
+    const [bookmarks, setBookmarks] = useState<Set<string>>(new Set());
+
+    const { user, accessToken, openAuthModal } = useAuth();
+    const apiUrl = import.meta.env.VITE_API_URL;
 
     useEffect(() => {
         document.title = 'TrainingArk - Scenarios';
-        const apiUrl = import.meta.env.VITE_API_URL;
         fetch(`${apiUrl}/scenarios`)
             .then(res => {
                 if (!res.ok) throw new Error(`HTTP ${res.status}`);
@@ -36,6 +40,62 @@ export function Scenarios() {
                 setLoading(false);
             });
     }, []);
+
+    useEffect(() => {
+        if (!user || !accessToken) return;
+        fetch(`${apiUrl}/users/me/bookmarks`, {
+            headers: { Authorization: `Bearer ${accessToken}` }
+        })
+            .then(r => r.json())
+            .then(data => setBookmarks(new Set(data.bookmarks)))
+            .catch(() => {});
+    }, [user, accessToken]);
+
+    async function toggleBookmark(e: React.MouseEvent, scenarioId: string) {
+        e.preventDefault();
+        e.stopPropagation();
+
+        if (!user || !accessToken) {
+            openAuthModal('register');
+            return;
+        }
+
+        const isBookmarked = bookmarks.has(scenarioId);
+
+        // optimistic update
+        setBookmarks(prev => {
+            const next = new Set(prev);
+            if (isBookmarked) next.delete(scenarioId);
+            else next.add(scenarioId);
+            return next;
+        });
+
+        try {
+            if (isBookmarked) {
+                await fetch(`${apiUrl}/users/me/bookmarks/${scenarioId}`, {
+                    method: 'DELETE',
+                    headers: { Authorization: `Bearer ${accessToken}` }
+                });
+            } else {
+                await fetch(`${apiUrl}/users/me/bookmarks`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        Authorization: `Bearer ${accessToken}`
+                    },
+                    body: JSON.stringify({ scenario_id: scenarioId })
+                });
+            }
+        } catch {
+            // revert optimistic update on failure
+            setBookmarks(prev => {
+                const next = new Set(prev);
+                if (isBookmarked) next.add(scenarioId);
+                else next.delete(scenarioId);
+                return next;
+            });
+        }
+    }
 
     const filtered = useMemo(() => {
         if (filter === 'all') return scenarios;
@@ -85,9 +145,18 @@ export function Scenarios() {
                         >
                             <div className={styles.cardTop}>
                                 <p className={styles.cardTitle}>{scenario.title}</p>
-                                <span className={`${styles.badge} ${badgeClass[scenario.difficulty]}`}>
-                                    {scenario.difficulty}
-                                </span>
+                                <div className={styles.cardTopRight}>
+                                    <span className={`${styles.badge} ${badgeClass[scenario.difficulty]}`}>
+                                        {scenario.difficulty}
+                                    </span>
+                                    <button
+                                        className={styles.bookmarkBtn}
+                                        onClick={(e) => toggleBookmark(e, scenario.id)}
+                                        title={bookmarks.has(scenario.id) ? 'Remove bookmark' : 'Bookmark'}
+                                    >
+                                        {bookmarks.has(scenario.id) ? '★' : '☆'}
+                                    </button>
+                                </div>
                             </div>
                             <p className={styles.cardDesc}>{scenario.description}</p>
                             <div className={styles.tags}>
