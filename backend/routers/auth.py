@@ -42,21 +42,23 @@ async def register(body: RegisterRequest):
             "discord": None
         },
         "createdAt": now,
-        "verified": False,
-        "verificationToken": generate_verification_token(),
+        "verified": True,
+        "verificationToken": None,
     }
 
     result = await db.users.insert_one(user)
     user_id = str(result.inserted_id)
 
-    # send verification email - fire and forget, don't block registration if it fails
-    base_url = "https://trainingark.vercel.app"
-    await send_verification_email(
-        user["email"],
-        user["username"],
-        user["verificationToken"],
-        base_url
-    )
+    # TODO: Uncomment when custom domain is added to Resend
+    # Resend free tier only sends to verified email addresses (your own Resend account email)
+    # Once a custom domain is configured, change from address to noreply@yourdomain.com
+    # base_url = "https://trainingark.vercel.app"
+    # await send_verification_email(
+    #     user["email"],
+    #     user["username"],
+    #     user["verificationToken"],
+    #     base_url
+    # )
 
     access_token = create_access_token({"sub": user_id})
     refresh_token = create_refresh_token({"sub": user_id})
@@ -137,15 +139,16 @@ async def verify_email(token: str):
     )
     return {"status": "verified"}
 
-@router.post("/resend-verification")
-async def resend_verification(user=Depends(require_current_user)):
-    if user.get("verified"):
-        return {"status": "already verified"}
-    token = generate_verification_token()
-    await db.users.update_one(
-        {"_id": user["_id"]},
-        {"$set": {"verificationToken": token}}
-    )
-    base_url = "https://trainingark.vercel.app"
-    await send_verification_email(user["email"], user["username"], token, base_url)
-    return {"status": "sent"}
+# TODO: Uncomment when custom domain is added to Resend
+# @router.post("/resend-verification")
+# async def resend_verification(user=Depends(require_current_user)):
+#     if user.get("verified"):
+#         return {"status": "already verified"}
+#     token = generate_verification_token()
+#     await db.users.update_one(
+#         {"_id": user["_id"]},
+#         {"$set": {"verificationToken": token}}
+#     )
+#     base_url = "https://trainingark.vercel.app"
+#     await send_verification_email(user["email"], user["username"], token, base_url)
+#     return {"status": "sent"}
