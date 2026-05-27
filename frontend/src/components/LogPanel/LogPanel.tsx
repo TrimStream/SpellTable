@@ -8,10 +8,10 @@ interface LogPanelProps {
     onChoice: (stepId: string, choice: Choice) => void;
 }
 
-export function LogPanel({ scenario }: LogPanelProps) {
+export function LogPanel({ scenario: _scenario }: LogPanelProps) {
     return (
         <div style={{
-            width: '320px',
+            width: '240px',
             flexShrink: 0,
             background: 'var(--bg-secondary)',
             borderLeft: '1px solid var(--border)',

@@ -1,31 +1,45 @@
+/* ── Battlefield ── */
+/* Fills the full playmat. Padding on the info bar side keeps cards    */
+/* from hiding under the absolutely positioned info bar.               */
+
 .battlefield {
-    /* Stack the three sections vertically */
     display: flex;
     flex-direction: column;
-    gap: 2px; /* space between sections */
+    gap: 2px;
     width: 100%;
+    height: 100%;
     align-items: stretch;
+    box-sizing: border-box;
+    padding: 8px;
 }
 
+.paddingLeft {
+    padding-left: 108px;
+}
+
+.paddingRight {
+    padding-right: 108px;
+}
+
+/* ── Sections ── */
+
 .section {
-    /* Each section is a horizontal row of cards */
     display: flex;
     flex-direction: row;
     gap: 8px;
     align-items: center;
     justify-content: center;
     padding: 2px;
-    /* allow many cards; scroll horizontally if they overflow */
     flex-wrap: nowrap;
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
     min-height: 55px;
     box-sizing: border-box;
+    flex: 1;
 }
 
-/* Optional visual separators for clarity */
 .section:not(:last-child) {
-    border-bottom: 1px solid rgba(0,0,0,0.06);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.06);
 }
 
 .section > * {

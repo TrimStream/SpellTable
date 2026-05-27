@@ -1,0 +1,211 @@
+/* ── Info bar container ── */
+/* Absolutely positioned over the playmat edge.                        */
+/* Never participates in layout so expanding zones never affect        */
+/* the grid row height.                                                */
+
+.infoBar {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 100px;
+    display: flex;
+    flex-direction: column;
+    background: rgba(13, 13, 18, 0.93);
+    border: 1px solid var(--border);
+    overflow-y: auto;
+    overflow-x: hidden;
+    z-index: 10;
+    backdrop-filter: blur(2px);
+}
+
+.infoBarLeft {
+    left: 0;
+    border-left: none;
+    border-radius: 6px 0 0 6px;
+}
+
+.infoBarRight {
+    right: 0;
+    border-right: none;
+    border-radius: 0 6px 6px 0;
+}
+
+/* ── Name block ── */
+
+.nameBlock {
+    padding: 4px 8px 1px;
+    border-bottom: 1px solid var(--border-subtle);
+    flex-shrink: 0;
+}
+
+.playerName {
+    font-size: 0.65rem;
+    font-weight: 600;
+    color: var(--text);
+    display: block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* ── Life block ── */
+
+.lifeBlock {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding: 2px 8px 1px;
+    flex-shrink: 0;
+}
+
+.lifeIcon {
+    font-size: 0.65rem;
+    color: #e07070;
+    flex-shrink: 0;
+}
+
+.lifeTotal {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--text);
+}
+
+/* ── Tax block ── */
+
+.taxBlock {
+    padding: 0 8px 4px;
+    border-bottom: 1px solid var(--border-subtle);
+    flex-shrink: 0;
+}
+
+.tax {
+    font-size: 0.6rem;
+    color: var(--text-muted);
+    white-space: nowrap;
+}
+
+/* ── Command block ── */
+
+.commandBlock {
+    padding: 4px 8px;
+    border-bottom: 1px solid var(--border-subtle);
+    flex-shrink: 0;
+}
+
+.commandCards {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    align-items: center;
+}
+
+.commandCards > div > img {
+    width: 52px !important;
+    height: auto !important;
+}
+
+/* ── Zone blocks ── */
+
+.zoneBlock {
+    display: flex;
+    flex-direction: column;
+    border-bottom: 1px solid var(--border-subtle);
+    flex-shrink: 0;
+}
+
+.zoneHeader {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding: 4px 8px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    text-align: left;
+    flex-shrink: 0;
+    transition: background 0.12s;
+    min-height: 26px;
+}
+
+.zoneHeader:hover {
+    background: rgba(255, 255, 255, 0.04);
+}
+
+.zoneBlock > div.zoneHeader {
+    cursor: default;
+}
+
+.zoneBlock > div.zoneHeader:hover {
+    background: none;
+}
+
+.zoneIcon {
+    font-size: 0.72rem;
+    flex-shrink: 0;
+    width: 16px;
+    text-align: center;
+}
+
+.zoneLabel {
+    font-size: 0.62rem;
+    color: var(--text-muted);
+    flex: 1;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.zoneCount {
+    font-size: 0.68rem;
+    color: var(--text-muted);
+    flex-shrink: 0;
+    min-width: 14px;
+    text-align: right;
+}
+
+.zoneChevron {
+    font-size: 0.55rem;
+    color: var(--text-disabled);
+    flex-shrink: 0;
+    margin-left: 2px;
+}
+
+/* ── Expanded cards area ── */
+
+.expandedCards {
+    max-height: 200px;
+    overflow-y: auto;
+    padding: 4px 6px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    align-items: stretch;
+}
+
+.expandedCards::-webkit-scrollbar {
+    width: 3px;
+}
+
+.expandedCards::-webkit-scrollbar-thumb {
+    background: var(--border);
+    border-radius: 2px;
+}
+
+.expandedCards > div > img {
+    width: 100% !important;
+    height: auto !important;
+}
+
+.expandedCard {
+    width: 100%;
+    height: auto;
+    border-radius: 3px;
+    flex-shrink: 0;
+    display: block;
+}
+
+.emptyZone {
+    font-size: 0.65rem;
+    color: var(--text-disabled);
+    padding: 4px 0;
+}

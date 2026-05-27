@@ -5,8 +5,7 @@
 .page {
     display: flex;
     flex-direction: column;
-    min-height: calc(100vh - 64px);
-    background: #111318;
+    background: var(--bg);
     overflow-x: hidden;
 }
 
@@ -19,7 +18,7 @@
     flex-direction: row;
     height: calc(100vh - 64px);
     width: 100%;
-    background: #111318;
+    background: var(--bg);
     flex-shrink: 0;
 }
 
@@ -44,7 +43,7 @@
     flex: 1;
     gap: 6px;
     padding: 6px;
-    background: #111318;
+    background: var(--bg);
     overflow: visible;
 }
 
