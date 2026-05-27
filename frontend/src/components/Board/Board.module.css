@@ -1,12 +1,41 @@
-.container {
+/* ── Page wrapper ── */
+/* Full height scroll. Board section fills the viewport on load. */
+/* Below fold content is revealed by scrolling. */
+
+.page {
     display: flex;
     flex-direction: column;
+    min-height: calc(100vh - 64px);
+    background: #111318;
+    overflow-x: hidden;
+}
+
+/* ── Board section ── */
+/* Fills the viewport on arrival. Contains board grid + log panel side by side. */
+/* This is what gets fullscreened. */
+
+.boardSection {
+    display: flex;
+    flex-direction: row;
     height: calc(100vh - 64px);
     width: 100%;
     background: #111318;
-    padding: 0;
-    overflow: auto;
+    flex-shrink: 0;
 }
+
+/* ── Board column ── */
+/* Takes all remaining width after the log panel. */
+/* position: relative so the fullscreen button can be absolute inside it. */
+
+.boardColumn {
+    flex: 1;
+    min-width: 0;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ── 2x2 grid ── */
 
 .board {
     display: grid;
@@ -14,21 +43,18 @@
     grid-template-rows: 1fr 1fr;
     flex: 1;
     gap: 6px;
-    padding: 12px;
+    padding: 6px;
     background: #111318;
     overflow: visible;
-    height: 100%;
 }
 
-.boardWrapper {
-    position: relative;
-    flex: 1;
-}
+/* ── Fullscreen button ── */
+/* Positioned inside boardColumn, top-right corner. */
 
 .fullscreenButton {
     position: absolute;
-    top: 10px;
-    right: 10px;
+    top: 8px;
+    right: 8px;
     z-index: 50;
     background: rgba(0, 0, 0, 0.5);
     border: 1px solid rgba(255, 255, 255, 0.15);
@@ -47,4 +73,14 @@
 .fullscreenButton:hover {
     color: var(--text);
     border-color: rgba(255, 255, 255, 0.3);
+}
+
+/* ── Below fold ── */
+/* Empty stub. Social features populate this in V8. */
+/* min-height keeps it from collapsing to zero so it exists in the DOM. */
+
+.belowFold {
+    min-height: 200px;
+    background: var(--bg-secondary);
+    border-top: 1px solid var(--border);
 }
