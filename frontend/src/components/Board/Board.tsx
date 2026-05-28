@@ -4,6 +4,7 @@ import { PlayerZone } from '../PlayerZone/PlayerZone';
 import { CardModal } from '../CardModal/CardModal';
 import { LogPanel } from '../LogPanel/LogPanel';
 import { fetchBoardState } from '../../api/boardState';
+import { fetchCard } from '../../api/scryfall';
 import styles from './Board.module.css';
 
 interface BoardProps {
@@ -12,10 +13,7 @@ interface BoardProps {
 }
 
 export function Board({ scenario, cardImageMap }: BoardProps) {
-    // ── Card modal state ──
     const [selectedCardId, setSelectedCardId] = useState<string | null>(null);
-
-    // ── Fullscreen state ──
     const [isFullscreen, setIsFullscreen] = useState(false);
     const boardSectionRef = useRef<HTMLDivElement>(null);
 
@@ -35,30 +33,28 @@ export function Board({ scenario, cardImageMap }: BoardProps) {
         return () => document.removeEventListener('fullscreenchange', handleFullscreenChange);
     }, []);
 
-    // ── Scenario step state ──
     const [currentStepId, setCurrentStepId] = useState<string | null>(
         scenario.startStepId ?? null
     );
     const [userChoices, setUserChoices] = useState<Record<string, Choice>>({});
     const [scenarioComplete, setScenarioComplete] = useState(false);
     const [resetKey, setResetKey] = useState(0);
-
-    // ── Board state ──
     const [currentBoardState, setCurrentBoardState] = useState<BoardState | null>(null);
     const boardStateCache = useRef<Map<string, BoardState>>(new Map());
 
-    // ── Current step lookup ──
+    // ── Supplementary image map ──
+    // Holds imageUrls for cards that appear in boardState snapshots but
+    // were not in scenario.players and therefore not fetched by useScenario.
+    // Examples: Thassa's Oracle (not on battlefield at scenario start),
+    // Demonic Consultation (in graveyard only after it resolves).
+    const localImageMap = useRef<Map<string, string>>(new Map());
+
     const currentStep: ScenarioStep | undefined = scenario.steps?.find(
         s => s.id === currentStepId
     );
 
     // ── Hydrate board state players with cached images ──
-    // boardState documents from MongoDB have no imageUrls -- they store only
-    // Scryfall UUIDs. This function fills in imageUrls from the map built
-    // by useScenario so we never make redundant Scryfall requests.
-    function hydratePlayers(
-        players: BoardState['players']
-    ): BoardState['players'] {
+    function hydratePlayers(players: BoardState['players']): BoardState['players'] {
         return players.map(player => ({
             ...player,
             zones: Object.fromEntries(
@@ -68,12 +64,45 @@ export function Board({ scenario, cardImageMap }: BoardProps) {
                         ...zone,
                         cards: zone.cards.map(card => ({
                             ...card,
-                            imageUrl: card.imageUrl ?? cardImageMap.get(card.id),
+                            imageUrl: card.imageUrl
+                                ?? cardImageMap.get(card.id)
+                                ?? localImageMap.current.get(card.id),
                         })),
                     },
                 ])
             ),
         })) as BoardState['players'];
+    }
+
+    // ── Fetch images for cards missing from both image maps ──
+    async function fetchMissingImages(players: BoardState['players']): Promise<void> {
+        const missingIds = new Set<string>();
+        for (const player of players) {
+            for (const zone of Object.values(player.zones)) {
+                for (const card of zone.cards) {
+                    if (
+                        !card.isToken &&
+                        !card.imageUrl &&
+                        !cardImageMap.has(card.id) &&
+                        !localImageMap.current.has(card.id)
+                    ) {
+                        missingIds.add(card.id);
+                    }
+                }
+            }
+        }
+
+        if (missingIds.size === 0) return;
+
+        const fetchPromises = Array.from(missingIds).map(id =>
+            fetchCard(id).catch(() => null)
+        );
+        const fetched = (await Promise.all(fetchPromises)).filter(Boolean);
+        for (const card of fetched) {
+            if (card?.imageUrl) {
+                localImageMap.current.set(card.id, card.imageUrl);
+            }
+        }
     }
 
     // ── Fetch board state when step changes ──
@@ -88,7 +117,8 @@ export function Board({ scenario, cardImageMap }: BoardProps) {
         }
 
         fetchBoardState(id)
-            .then(boardState => {
+            .then(async boardState => {
+                await fetchMissingImages(boardState.players);
                 const hydrated = {
                     ...boardState,
                     players: hydratePlayers(boardState.players),
@@ -101,7 +131,6 @@ export function Board({ scenario, cardImageMap }: BoardProps) {
             });
     }, [currentStep]);
 
-    // ── Auto-advance narration steps ──
     useEffect(() => {
         if (!currentStep) return;
         if (currentStep.decisionPoint) return;
@@ -114,7 +143,6 @@ export function Board({ scenario, cardImageMap }: BoardProps) {
         }
     }, [currentStep]);
 
-    // ── Step advancement ──
     function handleChoice(stepId: string, choice: Choice) {
         setUserChoices(prev => ({ ...prev, [stepId]: choice }));
         const currentStepObj = scenario.steps?.find(s => s.id === stepId);
@@ -127,23 +155,21 @@ export function Board({ scenario, cardImageMap }: BoardProps) {
         }
     }
 
-    // ── Reset for play again ──
     function handleReset() {
         setCurrentStepId(scenario.startStepId ?? null);
         setUserChoices({});
         setScenarioComplete(false);
         setCurrentBoardState(null);
         boardStateCache.current.clear();
+        localImageMap.current.clear();
         setResetKey(prev => prev + 1);
     }
 
-    // ── Resolve current players ──
     const currentPlayers = currentBoardState?.players ?? scenario.players;
 
     return (
         <div className={styles.page}>
             <div className={styles.boardSection} ref={boardSectionRef}>
-
                 <div className={styles.boardColumn}>
                     <button
                         className={styles.fullscreenButton}
@@ -185,7 +211,6 @@ export function Board({ scenario, cardImageMap }: BoardProps) {
                     onChoice={handleChoice}
                     onReset={handleReset}
                 />
-
             </div>
 
             <div className={styles.belowFold}>
@@ -198,7 +223,6 @@ export function Board({ scenario, cardImageMap }: BoardProps) {
                     onClose={() => setSelectedCardId(null)}
                 />
             )}
-
         </div>
     );
 }

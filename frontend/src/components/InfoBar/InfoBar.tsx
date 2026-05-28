@@ -198,16 +198,18 @@ export function InfoBar({ player, position, onCardClick }: InfoBarProps) {
     const graveyardBlock = (
         <div key="graveyard" className={`${styles.zoneBlock} ${expandedZones.has('graveyard') ? styles.zoneExpanded : ''}`}>
             <button
-                className={styles.zoneHeader}
-                onClick={() => toggleZone('graveyard')}
-                aria-label={`${expandedZones.has('graveyard') ? 'Collapse' : 'Expand'} graveyard`}
-            >
-                <span className={styles.zoneIcon}>{ZONE_ICONS.graveyard}</span>
-				<span className={styles.zoneLabel}>GY</span>
-				<span className={styles.zoneCount}>{zoneCount('graveyard')}</span>
-				<span className={styles.zoneChevron}>{expandedZones.has('graveyard') ? '▲' : '▼'}</span>
-
-            </button>
+			    className={styles.zoneHeader}
+			    onClick={() => player.zones.graveyard.cards.length > 0 ? toggleZone('graveyard') : undefined}
+			    aria-label={`${expandedZones.has('graveyard') ? 'Collapse' : 'Expand'} graveyard`}
+			    style={{ cursor: player.zones.graveyard.cards.length > 0 ? 'pointer' : 'default' }}
+			>
+			    <span className={styles.zoneIcon}>{ZONE_ICONS.graveyard}</span>
+			    <span className={styles.zoneLabel}>GY</span>
+			    <span className={styles.zoneCount}>{zoneCount('graveyard')}</span>
+			    {player.zones.graveyard.cards.length > 0 && (
+			        <span className={styles.zoneChevron}>{expandedZones.has('graveyard') ? '▲' : '▼'}</span>
+			    )}
+			</button>
             {expandedZones.has('graveyard') && (
                 <div className={styles.expandedCards}>
                     {player.zones.graveyard.cards.length === 0 ? (
@@ -228,13 +230,16 @@ export function InfoBar({ player, position, onCardClick }: InfoBarProps) {
         <div key="exile" className={`${styles.zoneBlock} ${expandedZones.has('exile') ? styles.zoneExpanded : ''}`}>
             <button
                 className={styles.zoneHeader}
-                onClick={() => toggleZone('exile')}
+                onClick={() => player.zones.graveyard.cards.length > 0 ? toggleZone('graveyard') : undefined}
                 aria-label={`${expandedZones.has('exile') ? 'Collapse' : 'Expand'} exile`}
+                style={{ cursor: player.zones.graveyard.cards.length > 0 ? 'pointer' : 'default' }}
             >
                 <span className={styles.zoneIcon}>{ZONE_ICONS.exile}</span>
 				<span className={styles.zoneLabel}>EX</span>
 				<span className={styles.zoneCount}>{zoneCount('exile')}</span>
-				<span className={styles.zoneChevron}>{expandedZones.has('exile') ? '▲' : '▼'}</span>
+	            {player.zones.exile.cards.length > 0 && (
+					<span className={styles.zoneChevron}>{expandedZones.has('exile') ? '▲' : '▼'}</span>
+	            )}
             </button>
             {expandedZones.has('exile') && (
                 <div className={styles.expandedCards}>
