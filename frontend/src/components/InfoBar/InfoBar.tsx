@@ -2,6 +2,7 @@ import { useState } from 'react';
 import type { Player, Card } from '../../types';
 import { Card as CardComponent } from '../Card/Card';
 import styles from './InfoBar.module.css';
+import CARD_BACK from '../../assets/back_magic.png';
 
 type Position = 'top-left' | 'top-right' | 'bottom-left' | 'bottom-right';
 type ExpandableZone = 'graveyard' | 'exile' | 'hand';
@@ -21,9 +22,6 @@ const ZONE_ICONS = {
     exile: '✕',
     command: '⚔',
 } as const;
-
-// ── Card back image ──
-const CARD_BACK = '/src/assets/back_magic.png';
 
 export function InfoBar({ player, position, onCardClick }: InfoBarProps) {
     const [expandedZones, setExpandedZones] = useState<Set<ExpandableZone>>(new Set());
