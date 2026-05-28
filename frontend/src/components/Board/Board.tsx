@@ -8,9 +8,10 @@ import styles from './Board.module.css';
 
 interface BoardProps {
     scenario: Scenario;
+    cardImageMap: Map<string, string>;
 }
 
-export function Board({ scenario }: BoardProps) {
+export function Board({ scenario, cardImageMap }: BoardProps) {
     // ── Card modal state ──
     const [selectedCardId, setSelectedCardId] = useState<string | null>(null);
 
@@ -43,8 +44,6 @@ export function Board({ scenario }: BoardProps) {
     const [resetKey, setResetKey] = useState(0);
 
     // ── Board state ──
-    // Starts null, populated when first boardStateId is fetched.
-    // Falls back to scenario.players until first fetch completes.
     const [currentBoardState, setCurrentBoardState] = useState<BoardState | null>(null);
     const boardStateCache = useRef<Map<string, BoardState>>(new Map());
 
@@ -53,23 +52,49 @@ export function Board({ scenario }: BoardProps) {
         s => s.id === currentStepId
     );
 
+    // ── Hydrate board state players with cached images ──
+    // boardState documents from MongoDB have no imageUrls -- they store only
+    // Scryfall UUIDs. This function fills in imageUrls from the map built
+    // by useScenario so we never make redundant Scryfall requests.
+    function hydratePlayers(
+        players: BoardState['players']
+    ): BoardState['players'] {
+        return players.map(player => ({
+            ...player,
+            zones: Object.fromEntries(
+                Object.entries(player.zones).map(([zoneName, zone]) => [
+                    zoneName,
+                    {
+                        ...zone,
+                        cards: zone.cards.map(card => ({
+                            ...card,
+                            imageUrl: card.imageUrl ?? cardImageMap.get(card.id),
+                        })),
+                    },
+                ])
+            ),
+        })) as BoardState['players'];
+    }
+
     // ── Fetch board state when step changes ──
     useEffect(() => {
         if (!currentStep?.boardStateId) return;
 
         const id = currentStep.boardStateId;
 
-        // Check cache first
         if (boardStateCache.current.has(id)) {
             setCurrentBoardState(boardStateCache.current.get(id)!);
             return;
         }
 
-        // Fetch from API
         fetchBoardState(id)
             .then(boardState => {
-                boardStateCache.current.set(id, boardState);
-                setCurrentBoardState(boardState);
+                const hydrated = {
+                    ...boardState,
+                    players: hydratePlayers(boardState.players),
+                };
+                boardStateCache.current.set(id, hydrated);
+                setCurrentBoardState(hydrated);
             })
             .catch(err => {
                 console.error('Failed to fetch board state:', err);
@@ -112,8 +137,7 @@ export function Board({ scenario }: BoardProps) {
         setResetKey(prev => prev + 1);
     }
 
-    // ── Resolve current players and stack ──
-    // Use currentBoardState if available, fall back to scenario.players.
+    // ── Resolve current players ──
     const currentPlayers = currentBoardState?.players ?? scenario.players;
 
     return (

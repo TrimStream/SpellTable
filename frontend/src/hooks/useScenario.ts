@@ -6,20 +6,21 @@ interface UseScenarioResult {
     scenario: Scenario | null;
     loading: boolean;
     error: string | null;
+    cardImageMap: Map<string, string>;
 }
 
 export function useScenario(rawScenario: Scenario): UseScenarioResult {
     const [scenario, setScenario] = useState<Scenario | null>(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
+    const [cardImageMap, setCardImageMap] = useState<Map<string, string>>(new Map());
 
     useEffect(() => {
         let cancelled = false;
 
         async function hydrate() {
             try {
-                // ── Step 1: Collect all Scryfall IDs that need fetching ──
-                // Use a Set for automatic deduplication.
+                // ── Step 1: Collect all Scryfall IDs ──
 
                 const cardIds = new Set<string>();
 
@@ -43,19 +44,29 @@ export function useScenario(rawScenario: Scenario): UseScenarioResult {
 
                 if (cancelled) return;
 
-                // ── Step 3: Build an id -> Card map for O(1) lookup ──
+                // ── Step 3: Build id -> Card map ──
 
                 const cardMap = new Map<string, Card>();
                 for (const card of fetchedCards) {
                     cardMap.set(card.id, card);
                 }
 
-                // ── Step 4: Deep clone the scenario ──
+                // ── Step 4: Build id -> imageUrl map ──
+                // Extracted separately so Board can hydrate boardState snapshots
+                // without re-fetching from Scryfall.
+
+                const imageMap = new Map<string, string>();
+                for (const card of fetchedCards) {
+                    if (card.imageUrl) {
+                        imageMap.set(card.id, card.imageUrl);
+                    }
+                }
+
+                // ── Step 5: Deep clone the scenario ──
 
                 const hydrated: Scenario = JSON.parse(JSON.stringify(rawScenario));
 
-                // ── Step 5: Re-hydrate player zone cards ──
-                // Restore game-state fields that Scryfall doesn't know about.
+                // ── Step 6: Re-hydrate player zone cards ──
 
                 for (const player of hydrated.players) {
                     for (const zone of Object.values(player.zones)) {
@@ -75,6 +86,8 @@ export function useScenario(rawScenario: Scenario): UseScenarioResult {
                 }
 
                 setScenario(hydrated);
+                setCardImageMap(imageMap);
+
             } catch (err) {
                 if (!cancelled) {
                     setError('Failed to load scenario. Please try again.');
@@ -92,5 +105,5 @@ export function useScenario(rawScenario: Scenario): UseScenarioResult {
         };
     }, [rawScenario]);
 
-    return { scenario, loading, error };
+    return { scenario, loading, error, cardImageMap };
 }

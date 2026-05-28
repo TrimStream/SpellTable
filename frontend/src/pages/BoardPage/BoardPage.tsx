@@ -1,12 +1,12 @@
 import { LoadingScreen } from '../../components/LoadingScreen/LoadingScreen';
 import { useEffect, useState } from 'react';
-import { useParams } from "react-router-dom";
-import type { Scenario } from "../../types";
-import { Board } from "../../components/Board/Board";
-import { useScenario } from "../../hooks/useScenario";
+import { useParams } from 'react-router-dom';
+import type { Scenario } from '../../types';
+import { Board } from '../../components/Board/Board';
+import { useScenario } from '../../hooks/useScenario';
 
 function BoardWithScenario({ scenario }: { scenario: Scenario }) {
-    const { scenario: loadedScenario, loading, error } = useScenario(scenario);
+    const { scenario: loadedScenario, loading, error, cardImageMap } = useScenario(scenario);
 
     useEffect(() => {
         if (loadedScenario) {
@@ -18,7 +18,7 @@ function BoardWithScenario({ scenario }: { scenario: Scenario }) {
     if (error) return <div style={{ color: 'white', padding: '20px' }}>{error}</div>;
     if (!loadedScenario) return null;
 
-    return <Board scenario={loadedScenario} />;
+    return <Board scenario={loadedScenario} cardImageMap={cardImageMap} />;
 }
 
 export function BoardPage() {
