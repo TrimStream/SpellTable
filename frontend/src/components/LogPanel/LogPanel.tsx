@@ -217,12 +217,22 @@ export function LogPanel({
                         <div className={styles.correctionText}>
                             {pendingCorrection.explanation}
                         </div>
-                        <button
-                            className={styles.correctionDismiss}
-                            onClick={dismissCorrection}
-                        >
-                            Continue
-                        </button>
+                        <div className={styles.correctionButtons}>
+                            {pendingCorrection.quality === 'blunder' && (
+                                <button
+                                    className={styles.correctionRestart}
+                                    onClick={() => { dismissCorrection(); onReset(); }}
+                                >
+                                    Restart
+                                </button>
+                            )}
+                            <button
+                                className={styles.correctionDismiss}
+                                onClick={dismissCorrection}
+                            >
+                                Continue
+                            </button>
+                        </div>
                     </div>
                 )}
 
