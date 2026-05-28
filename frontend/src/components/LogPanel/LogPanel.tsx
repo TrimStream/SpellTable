@@ -8,6 +8,7 @@ interface LogPanelProps {
     userChoices: Record<string, Choice>;
     scenarioComplete: boolean;
     onChoice: (stepId: string, choice: Choice) => void;
+    onReset: () => void;
 }
 
 // ── Log entry types ──
@@ -25,6 +26,7 @@ export function LogPanel({
     userChoices,
     scenarioComplete,
     onChoice,
+    onReset,
 }: LogPanelProps) {
     const [logEntries, setLogEntries] = useState<LogEntry[]>([]);
     const [awaitingChoice, setAwaitingChoice] = useState(false);
@@ -76,8 +78,6 @@ export function LogPanel({
         }
 
         if (step.decisionPoint) {
-            console.log('setting awaitingChoice true for step', step.id);
-            console.log('render state:', { awaitingChoice, pendingCorrection: !!pendingCorrection, currentStepId: currentStep?.id });
             setAwaitingChoice(true);
         }
     }
@@ -86,7 +86,7 @@ export function LogPanel({
     useEffect(() => {
         if (!currentStep) return;
         processStep(currentStep);
-    }, [currentStep, processStep]);
+    }, [currentStep]);
 
     // ── Handle scenario complete ──
     useEffect(() => {
@@ -177,6 +177,9 @@ export function LogPanel({
                         </div>
                     );
                 })}
+                <button className={styles.playAgainButton} onClick={onReset}>
+                    Play Again
+                </button>
             </div>
         );
     }

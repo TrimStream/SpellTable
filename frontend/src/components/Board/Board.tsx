@@ -19,6 +19,8 @@ export function Board({ scenario }: BoardProps) {
     const [isFullscreen, setIsFullscreen] = useState(false);
     const boardSectionRef = useRef<HTMLDivElement>(null);
 
+    const [resetKey, setResetKey] = useState(0);
+
     function toggleFullscreen() {
         if (!document.fullscreenElement) {
             boardSectionRef.current?.requestFullscreen();
@@ -46,6 +48,13 @@ export function Board({ scenario }: BoardProps) {
     const [userChoices, setUserChoices] = useState<Record<string, Choice>>({});
     const [scenarioComplete, setScenarioComplete] = useState(false);
 
+    // ── Board state tracking ──
+    // Starts as scenario.players, updates when a step has a boardState snapshot.
+    // Steps without boardState keep the previous state.
+    const [currentPlayers, setCurrentPlayers] = useState<Scenario['players']>(
+        scenario.players
+    );
+
     // ── Step advancement ──
     // Called by LogPanel's ActionArea when the user makes a choice.
     // Records the choice, then advances to the next step.
@@ -63,19 +72,21 @@ export function Board({ scenario }: BoardProps) {
         }
     }
 
+    // ── Reset for play again ──
+    function handleReset() {
+        setCurrentStepId(scenario.startStepId ?? null);
+        setUserChoices({});
+        setScenarioComplete(false);
+        setCurrentPlayers(scenario.players);
+        setResetKey(prev => prev + 1);
+    }
+
     // ── Current step lookup ──
     const currentStep: ScenarioStep | undefined = scenario.steps?.find(
         s => s.id === currentStepId
     );
 
-    console.log('Board state:', {
-        currentStepId,
-        currentStep: currentStep?.id,
-        stepsCount: scenario.steps?.length,
-        startStepId: scenario.startStepId
-    });
-    const players = scenario.players;
-
+    // Auto-advance
     useEffect(() => {
         if (!currentStep) return;
         if (currentStep.decisionPoint) return;
@@ -86,6 +97,12 @@ export function Board({ scenario }: BoardProps) {
         if (currentStep.nextStepId) {
             setCurrentStepId(currentStep.nextStepId);
         }
+    }, [currentStep]);
+
+    // ── Update board state when step has a snapshot ──
+    useEffect(() => {
+        if (!currentStep?.boardState) return;
+        setCurrentPlayers(currentStep.boardState);
     }, [currentStep]);
 
     return (
@@ -106,22 +123,22 @@ export function Board({ scenario }: BoardProps) {
                     </button>
                     <div className={styles.board} aria-label="Player board">
                         <PlayerZone
-                            player={players[2]}
+                            player={currentPlayers[2]}
                             position="top-left"
                             onCardClick={setSelectedCardId}
                         />
                         <PlayerZone
-                            player={players[3]}
+                            player={currentPlayers[3]}
                             position="top-right"
                             onCardClick={setSelectedCardId}
                         />
                         <PlayerZone
-                            player={players[1]}
+                            player={currentPlayers[1]}
                             position="bottom-left"
                             onCardClick={setSelectedCardId}
                         />
                         <PlayerZone
-                            player={players[0]}
+                            player={currentPlayers[0]}
                             position="bottom-right"
                             onCardClick={setSelectedCardId}
                         />
@@ -130,11 +147,13 @@ export function Board({ scenario }: BoardProps) {
 
                 {/* Log panel: fixed 320px right side */}
                 <LogPanel
+                    key={resetKey}
                     scenario={scenario}
                     currentStep={currentStep}
                     userChoices={userChoices}
                     scenarioComplete={scenarioComplete}
                     onChoice={handleChoice}
+                    onReset={handleReset}
                 />
 
             </div>
