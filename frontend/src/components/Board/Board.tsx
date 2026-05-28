@@ -52,7 +52,10 @@ export function Board({ scenario }: BoardProps) {
     // If the next step has isFinal, marks the scenario complete.
     function handleChoice(stepId: string, choice: Choice) {
         setUserChoices(prev => ({ ...prev, [stepId]: choice }));
-        const nextStep = scenario.steps?.find(s => s.id === choice.nextStepId);
+        // Advance to the current step's nextStepId, not the choice's nextStepId
+        const currentStepObj = scenario.steps?.find(s => s.id === stepId);
+        if (!currentStepObj?.nextStepId) return;
+        const nextStep = scenario.steps?.find(s => s.id === currentStepObj.nextStepId);
         if (!nextStep) return;
         setCurrentStepId(nextStep.id);
         if (nextStep.isFinal) {
@@ -65,7 +68,25 @@ export function Board({ scenario }: BoardProps) {
         s => s.id === currentStepId
     );
 
+    console.log('Board state:', {
+        currentStepId,
+        currentStep: currentStep?.id,
+        stepsCount: scenario.steps?.length,
+        startStepId: scenario.startStepId
+    });
     const players = scenario.players;
+
+    useEffect(() => {
+        if (!currentStep) return;
+        if (currentStep.decisionPoint) return;
+        if (currentStep.isFinal) {
+            setScenarioComplete(true);
+            return;
+        }
+        if (currentStep.nextStepId) {
+            setCurrentStepId(currentStep.nextStepId);
+        }
+    }, [currentStep]);
 
     return (
         // ── Page wrapper: full scroll, board section fills viewport on load ──

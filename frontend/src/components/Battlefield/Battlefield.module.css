@@ -14,11 +14,11 @@
 }
 
 .paddingLeft {
-    padding-left: 108px;
+    padding-left: calc(var(--info-bar-width) + 8px);
 }
 
 .paddingRight {
-    padding-right: 108px;
+    padding-right: calc(var(--info-bar-width) + 8px);
 }
 
 /* ── Sections ── */
@@ -39,7 +39,7 @@
 }
 
 .section:not(:last-child) {
-    border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+    border-bottom: 1px solid var(--border-subtle);
 }
 
 .section > * {

@@ -7,15 +7,14 @@
     position: absolute;
     top: 0;
     bottom: 0;
-    width: 100px;
+    width: var(--info-bar-width);
     display: flex;
     flex-direction: column;
-    background: rgba(13, 13, 18, 0.93);
+    background: var(--bg-card);
     border: 1px solid var(--border);
     overflow-y: auto;
     overflow-x: hidden;
     z-index: 10;
-    backdrop-filter: blur(2px);
 }
 
 .infoBarLeft {
@@ -30,6 +29,10 @@
     border-radius: 0 6px 6px 0;
 }
 
+.contentBottom {
+    justify-content: flex-start;
+}
+
 /* ── Name block ── */
 
 .nameBlock {
@@ -39,7 +42,7 @@
 }
 
 .playerName {
-    font-size: 0.65rem;
+    font-size: clamp(0.55rem, 0.7vw, 0.68rem);
     font-weight: 600;
     color: var(--text);
     display: block;
@@ -65,7 +68,7 @@
 }
 
 .lifeTotal {
-    font-size: 0.9rem;
+    font-size: clamp(0.8rem, 1vw, 1rem);
     font-weight: 700;
     color: var(--text);
 }
@@ -79,7 +82,7 @@
 }
 
 .tax {
-    font-size: 0.6rem;
+    font-size: clamp(0.55rem, 0.6vw, 0.65rem);
     color: var(--text-muted);
     white-space: nowrap;
 }
@@ -148,7 +151,7 @@
 }
 
 .zoneLabel {
-    font-size: 0.62rem;
+    font-size: clamp(0.55rem, 0.65vw, 0.65rem);
     color: var(--text-muted);
     flex: 1;
     white-space: nowrap;
@@ -156,7 +159,7 @@
 }
 
 .zoneCount {
-    font-size: 0.68rem;
+    font-size: clamp(0.6rem, 0.7vw, 0.72rem);
     color: var(--text-muted);
     flex-shrink: 0;
     min-width: 14px;

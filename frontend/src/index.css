@@ -30,6 +30,8 @@
   --font-sans: system-ui, 'Segoe UI', Roboto, sans-serif;
   --font-display: 'Rajdhani', sans-serif;
   --font-mono: ui-monospace, Consolas, monospace;
+
+  --info-bar-width: clamp(80px, 8vw, 110px);
 }
 
 [data-theme='light'] {
@@ -55,9 +57,10 @@
 html, body, #root {
   height: 100%;
   width: 100%;
-  html {
-    scroll-behavior: smooth;
-  }
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 body {

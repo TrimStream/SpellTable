@@ -113,15 +113,15 @@ export interface Choice {
     // Button text shown in the action area.
     // Examples: "Pass priority", "Cast Endurance", "Activate Kinnan"
 
-    isCorrect: boolean;
-    // Used in the debrief to mark this choice correct or incorrect.
+    quality: 'best' | 'ok' | 'blunder';
+    // Replaces isCorrect boolean. More nuanced than right/wrong.
+    // 'best' = optimal line
+    // 'ok' = acceptable but suboptimal
+    // 'blunder' = loses the game or throws significant advantage
 
     logEntry: string;
     // Appended to the log feed when this choice is selected.
     // Written in second person: "You cast Endurance in response to the ETB trigger."
-
-    nextStepId: string;
-    // The ScenarioStep.id to advance to after this choice is made.
 
     explanation: string;
     // Shown in the debrief only. Explains why this was correct or incorrect.
@@ -143,10 +143,16 @@ export interface ScenarioStep {
     id: string;
     // Unique identifier. Referenced by Choice.nextStepId and Scenario.startStepId.
 
+    label?: string;
+
     logLines: string[];
     // Narration lines appended to the log feed when this step is entered.
     // Rendered as 'narration' or 'priority-pass' entries depending on content.
     // Empty array is valid for pure decision steps with no narration.
+
+    boardState?: [Player, Player, Player, Player];
+    // If present, board updates to this state when step is entered.
+    // If absent, board keeps the previous state.
 
     decisionPoint?: DecisionPoint;
     // If present: append logLines, then pause and show choices in action area.

@@ -267,12 +267,16 @@ export function InfoBar({ player, position, onCardClick }: InfoBarProps) {
         exileBlock,
     ];
 
-	const sections = isTop ? [...bottomOrder].reverse() : bottomOrder;
+	const spacer = <div key="spacer" style={{ flex: 1 }} />;
+
+	const sections = isTop
+	    ? [spacer, ...[...bottomOrder].reverse()]
+	    : bottomOrder;
 
     const isRight = position === 'top-right' || position === 'bottom-right';
 
 	return (
-	    <div className={`${styles.infoBar} ${isRight ? styles.infoBarRight : styles.infoBarLeft}`}>
+	    <div className={`${styles.infoBar} ${isRight ? styles.infoBarRight : styles.infoBarLeft} ${isTop ? styles.contentBottom : ''}`}>
 	        {sections}
 	    </div>
 	);
