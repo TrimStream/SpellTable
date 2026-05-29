@@ -76,7 +76,10 @@ export function Board({ scenario, cardImageMap }: BoardProps) {
     }
 
     // ── Fetch images for cards missing from both image maps ──
-    async function fetchMissingImages(players: BoardState['players']): Promise<void> {
+    async function fetchMissingImages(
+        players: BoardState['players'],
+        stack: BoardState['stack']
+    ): Promise<void> {
         const missingIds = new Set<string>();
         for (const player of players) {
             for (const zone of Object.values(player.zones)) {
@@ -90,6 +93,17 @@ export function Board({ scenario, cardImageMap }: BoardProps) {
                         missingIds.add(card.id);
                     }
                 }
+            }
+        }
+
+        // ── Also check stack items ──
+        for (const item of stack) {
+            if (
+                !item.imageUrl &&
+                !cardImageMap.has(item.sourceCardId) &&
+                !localImageMap.current.has(item.sourceCardId)
+            ) {
+                missingIds.add(item.sourceCardId);
             }
         }
 
@@ -119,10 +133,18 @@ export function Board({ scenario, cardImageMap }: BoardProps) {
 
         fetchBoardState(id)
             .then(async boardState => {
-                await fetchMissingImages(boardState.players);
+                await fetchMissingImages(boardState.players, boardState.stack);
+                const hydratedStack = boardState.stack.map(item => ({
+                    ...item,
+                    imageUrl:
+                        item.imageUrl
+                        ?? cardImageMap.get(item.sourceCardId)
+                        ?? localImageMap.current.get(item.sourceCardId),
+                }));
                 const hydrated = {
                     ...boardState,
                     players: hydratePlayers(boardState.players),
+                    stack: hydratedStack,
                 };
                 boardStateCache.current.set(id, hydrated);
                 setCurrentBoardState(hydrated);
