@@ -2,10 +2,9 @@ from auth_password import verify_password, hash_password
 from fastapi import APIRouter, Depends, HTTPException
 from database import db
 from dependencies import require_current_user
-from bson import ObjectId
 from datetime import datetime, timezone
 from pydantic import BaseModel
-from typing import List, Optional
+from typing import List
 
 router = APIRouter(prefix="/users", tags=["users"])
 
@@ -23,13 +22,12 @@ class ScenarioCompletionRequest(BaseModel):
     choices: List[ChoiceRecord]
 
 
-def completion_is_perfect(choices: list) -> bool:
-    # A completion is perfect only if every choice was 'best'.
-    return all(c.get("quality") == "best" for c in choices)
-
-
-def completion_has_no_blunders(choices: list) -> bool:
-    return all(c.get("quality") != "blunder" for c in choices)
+def calculate_score(choices: list) -> tuple[int, int]:
+    # Returns (earned_points, max_points)
+    quality_points = {"best": 2, "ok": 1, "blunder": 0}
+    earned = sum(quality_points.get(c.get("quality", "blunder"), 0) for c in choices)
+    max_pts = len(choices) * 2
+    return earned, max_pts
 
 
 @router.get("/me/dashboard")
@@ -37,15 +35,19 @@ async def get_dashboard(user=Depends(require_current_user)):
     scenarios_completed = user.get("scenariosCompleted", [])
     total = len(scenarios_completed)
 
-    # ── Score calculation ──
-    # Perfect: all choices were 'best' (counts as correct for legacy metric)
-    # No blunders: acceptable line, counted as partial credit
-    # Has blunders: incorrect
-    perfect = sum(1 for s in scenarios_completed if completion_is_perfect(s.get("choices", [])))
-    no_blunders = sum(1 for s in scenarios_completed if completion_has_no_blunders(s.get("choices", [])))
+    total_earned = 0
+    total_possible = 0
+    perfect = 0
 
-    # Accuracy based on no-blunder completions
-    accuracy = round((no_blunders / total) * 100) if total > 0 else 0
+    for s in scenarios_completed:
+        choices = s.get("choices", [])
+        earned, possible = calculate_score(choices)
+        total_earned += earned
+        total_possible += possible
+        if earned == possible and possible > 0:
+            perfect += 1
+
+    accuracy = round((total_earned / total_possible) * 100) if total_possible > 0 else 0
 
     unique_scenarios = list({s["scenarioId"] for s in scenarios_completed})
 

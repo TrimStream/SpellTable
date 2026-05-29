@@ -148,6 +148,17 @@
     font-size: 0.8rem;
 }
 
+.scoreBadge {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.2rem 0.55rem;
+    border-radius: 999px;
+    background: rgba(229, 185, 71, 0.12);
+    color: var(--gold);
+    font-weight: 600;
+    letter-spacing: 0.01em;
+}
+
 .arrow {
     color: var(--text-muted);
     font-size: 0.9rem;

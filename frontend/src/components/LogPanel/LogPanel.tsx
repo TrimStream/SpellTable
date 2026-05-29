@@ -41,7 +41,7 @@ export function LogPanel({
     const entryCounter = useRef(0);
 
     const scenarioCompletedLogged = useRef(false);
-    const { accessToken } = useAuth();
+    const { accessToken, openAuthModal } = useAuth();
 
     // ── Auto-scroll to bottom when new entries appear ──
     useEffect(() => {
@@ -206,6 +206,17 @@ export function LogPanel({
                 <button className={styles.playAgainButton} onClick={onReset}>
                     Play Again
                 </button>
+                {!accessToken && (
+                    <div className={styles.loginNudge}>
+                        <p>Create a free account to save your results and track your progress.</p>
+                        <button
+                            className={styles.loginNudgeButton}
+                            onClick={() => openAuthModal('register')}
+                        >
+                            Register to save
+                        </button>
+                    </div>
+                )}
             </div>
         );
     }

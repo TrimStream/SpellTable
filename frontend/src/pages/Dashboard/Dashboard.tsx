@@ -5,8 +5,10 @@ import styles from './Dashboard.module.css';
 
 interface ScenarioCompletion {
     scenarioId: string;
-    correct: boolean;
     completedAt: string;
+    choices: {
+        quality: 'best' | 'ok' | 'blunder' | string;
+    }[];
 }
 
 interface DashboardData {
@@ -63,6 +65,17 @@ export function Dashboard() {
         return new Date(iso).toLocaleDateString('en-US', {
             month: 'short', day: 'numeric', year: 'numeric'
         });
+    }
+
+    function calculateScore(choices: ScenarioCompletion['choices']) {
+        const qualityPoints: Record<string, number> = {
+            best: 2,
+            ok: 1,
+            blunder: 0,
+        };
+        const earned = choices.reduce((sum, choice) => sum + (qualityPoints[choice.quality] ?? 0), 0);
+        const max = choices.length * 2;
+        return { earned, max };
     }
 
     return (
@@ -139,19 +152,23 @@ export function Dashboard() {
                     </p>
                 ) : (
                     <div className={styles.scenarioList}>
-                        {[...data.scenarios_completed].reverse().slice(0, 10).map((s, i) => (
-                            <div key={i} className={styles.scenarioRow}>
-                                <span className={styles.scenarioId}>
-                                    {scenarioTitles[s.scenarioId] || s.scenarioId}
-                                </span>
-                                <div className={styles.scenarioMeta}>
-                                    <span className={s.correct ? styles.correct : styles.incorrect}>
-                                        {s.correct ? 'Correct' : 'Incorrect'}
+                        {[...data.scenarios_completed].reverse().slice(0, 10).map((s, i) => {
+                            const { earned, max } = calculateScore(s.choices ?? []);
+
+                            return (
+                                <div key={i} className={styles.scenarioRow}>
+                                    <span className={styles.scenarioId}>
+                                        {scenarioTitles[s.scenarioId] || s.scenarioId}
                                     </span>
-                                    <span>{formatDate(s.completedAt)}</span>
+                                    <div className={styles.scenarioMeta}>
+                                        <span className={styles.scoreBadge}>
+                                            Score {earned}/{max}
+                                        </span>
+                                        <span>{formatDate(s.completedAt)}</span>
+                                    </div>
                                 </div>
-                            </div>
-                        ))}
+                            );
+                        })}
                     </div>
                 )}
             </div>

@@ -297,3 +297,35 @@
 .playAgainButton:hover {
     background: var(--gold);
 }
+
+.loginNudge {
+    margin-top: 12px;
+    padding: 10px;
+    background: rgba(201, 168, 76, 0.08);
+    border: 1px solid rgba(201, 168, 76, 0.2);
+    border-radius: 6px;
+    text-align: center;
+}
+
+.loginNudge p {
+    font-size: 0.65rem;
+    color: var(--text-muted);
+    margin-bottom: 8px;
+    line-height: 1.4;
+}
+
+.loginNudgeButton {
+    background: var(--gold-dark);
+    color: #f5edda;
+    border: none;
+    border-radius: 4px;
+    padding: 5px 14px;
+    font-size: 0.68rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.15s;
+}
+
+.loginNudgeButton:hover {
+    background: var(--gold);
+}
