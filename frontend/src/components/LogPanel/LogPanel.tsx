@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import type { Scenario, ScenarioStep, Choice } from '../../types';
 import styles from './LogPanel.module.css';
+import { useAuth } from '../../context/AuthContext';
 
 interface LogPanelProps {
     scenario: Scenario;
@@ -40,6 +41,7 @@ export function LogPanel({
     const entryCounter = useRef(0);
 
     const scenarioCompletedLogged = useRef(false);
+    const { accessToken } = useAuth();
 
     // ── Auto-scroll to bottom when new entries appear ──
     useEffect(() => {
@@ -97,6 +99,30 @@ export function LogPanel({
                 type: 'system',
                 text: 'Scenario complete.',
             }]);
+
+            // ── Save attempt to backend ──
+            if (Object.keys(userChoices).length > 0) {
+                const choices = Object.entries(userChoices).map(([stepId, choice]) => ({
+                    step_id: stepId,
+                    choice_id: choice.id,
+                    label: choice.label,
+                    quality: choice.quality,
+                }));
+
+                fetch(`${import.meta.env.VITE_API_URL}/users/me/scenarios`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        ...(accessToken ? { Authorization: `Bearer ${accessToken}` } : {}),
+                    },
+                    body: JSON.stringify({
+                        scenario_id: scenario.id,
+                        choices,
+                    }),
+                }).catch(err => {
+                    console.error('Failed to save scenario completion:', err);
+                });
+            }
         }
     }, [scenarioComplete]);
 
