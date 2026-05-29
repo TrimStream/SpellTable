@@ -76,6 +76,14 @@ export function Layout() {
                 <div className={styles.navRight}>
                     {!loading && (
                         <>
+                            {user && (
+                                <button
+                                    className={styles.builderButton}
+                                    onClick={() => navigate('/builder')}
+                                >
+                                    Builder
+                                </button>
+                            )}
                             {user ? (
                                 <div className={styles.profileWrapper} ref={dropdownRef}>
                                     <button

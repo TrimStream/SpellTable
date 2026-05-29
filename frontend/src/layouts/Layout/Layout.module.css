@@ -115,6 +115,21 @@
     background: var(--gold);
 }
 
+.builderButton {
+    background: none;
+    border: 1px solid var(--gold);
+    color: var(--gold);
+    border-radius: 6px;
+    padding: 0.4rem 0.9rem;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: background 0.15s;
+}
+
+.builderButton:hover {
+    background: rgba(201, 168, 76, 0.1);
+}
+
 .profileWrapper {
     position: relative;
 }

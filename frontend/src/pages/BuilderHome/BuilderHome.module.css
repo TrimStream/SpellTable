@@ -1,0 +1,129 @@
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 2rem;
+}
+
+.title {
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: var(--text);
+    margin: 0 0 0.25rem 0;
+}
+
+.subtitle {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    margin: 0;
+}
+
+.newButton {
+    background: var(--gold-dark);
+    color: #f5edda;
+    border: none;
+    border-radius: 6px;
+    padding: 0.6rem 1.25rem;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.15s;
+    white-space: nowrap;
+}
+
+.newButton:hover:not(:disabled) {
+    background: var(--gold);
+}
+
+.newButton:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.sectionTitle {
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin: 0 0 1rem 0;
+}
+
+.draftList {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.draftCard {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 1rem 1.25rem;
+    cursor: pointer;
+    transition: border-color 0.15s;
+}
+
+.draftCard:hover {
+    border-color: var(--gold);
+}
+
+.draftInfo {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.draftTitle {
+    font-size: 0.95rem;
+    color: var(--text);
+    font-weight: 500;
+}
+
+.draftMeta {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+}
+
+.deleteButton {
+    background: none;
+    border: 1px solid var(--diff-expert);
+    color: var(--diff-expert);
+    border-radius: 6px;
+    padding: 0.35rem 0.75rem;
+    font-size: 0.8rem;
+    cursor: pointer;
+    opacity: 0.6;
+    transition: opacity 0.15s;
+}
+
+.deleteButton:hover {
+    opacity: 1;
+}
+
+.muted {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+}
+
+.guestPrompt {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 1.5rem;
+    text-align: center;
+    color: var(--text-muted);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+}
