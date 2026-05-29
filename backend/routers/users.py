@@ -151,3 +151,8 @@ async def change_password(body: ChangePasswordRequest, user=Depends(require_curr
         {"$set": {"passwordHash": hash_password(body.new_password)}}
     )
     return {"status": "updated"}
+
+@router.delete("/me")
+async def delete_account(user=Depends(require_current_user)):
+    await db.users.delete_one({"_id": user["_id"]})
+    return {"status": "deleted"}

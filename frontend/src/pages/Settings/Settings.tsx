@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import styles from './Settings.module.css';
 
 export function Settings() {
-    const { user, accessToken, login, loading: authLoading } = useAuth();
+    const { user, accessToken, login, logout, loading: authLoading } = useAuth();
     const { theme, toggle } = useTheme();
     const navigate = useNavigate();
     const apiUrl = import.meta.env.VITE_API_URL;
@@ -23,6 +23,12 @@ export function Settings() {
     const [passwordError, setPasswordError] = useState<string | null>(null);
     const [passwordSuccess, setPasswordSuccess] = useState(false);
     const [passwordLoading, setPasswordLoading] = useState(false);
+
+    // Delete account state
+    const [showDeleteModal, setShowDeleteModal] = useState(false);
+    const [deleteConfirmInput, setDeleteConfirmInput] = useState('');
+    const [deleteLoading, setDeleteLoading] = useState(false);
+    const [deleteError, setDeleteError] = useState<string | null>(null);
 
     useEffect(() => {
         if (authLoading) return;
@@ -60,12 +66,10 @@ export function Settings() {
             }
             setUsernameSuccess(true);
             setNewUsername('');
-            // refresh user data by re-fetching me
             const meRes = await fetch(`${apiUrl}/auth/me`, {
                 headers: { Authorization: `Bearer ${accessToken}` }
             });
             if (meRes.ok) {
-                // force auth context to update by triggering a re-login with existing tokens
                 const refreshToken = localStorage.getItem('tark_refresh_token');
                 await login(accessToken!, refreshToken);
             }
@@ -117,15 +121,38 @@ export function Settings() {
         }
     }
 
+    async function handleDeleteAccount() {
+        if (!user || deleteConfirmInput !== user.username) return;
+        setDeleteLoading(true);
+        setDeleteError(null);
+        try {
+            const res = await fetch(`${apiUrl}/users/me`, {
+                method: 'DELETE',
+                headers: { Authorization: `Bearer ${accessToken}` }
+            });
+            if (!res.ok) {
+                const data = await res.json();
+                setDeleteError(data.detail || 'Failed to delete account');
+                return;
+            }
+            logout();
+            navigate('/');
+        } catch {
+            setDeleteError('Something went wrong');
+        } finally {
+            setDeleteLoading(false);
+        }
+    }
+
     return (
         <div className={styles.container}>
             <div className={styles.header}>
                 <h1 className={styles.title}>Settings</h1>
             </div>
 
+            {/* Account section — unchanged */}
             <div className={styles.section}>
                 <h2 className={styles.sectionTitle}>Account</h2>
-
                 <div className={styles.field}>
                     <label className={styles.label}>Current username</label>
                     <input
@@ -136,7 +163,6 @@ export function Settings() {
                         style={{ opacity: 0.5 }}
                     />
                 </div>
-
                 <div className={styles.field}>
                     <label className={styles.label}>New username</label>
                     <input
@@ -147,10 +173,8 @@ export function Settings() {
                         onChange={e => { setNewUsername(e.target.value); setUsernameSuccess(false); setUsernameError(null); }}
                     />
                 </div>
-
                 {usernameError && <p className={styles.error}>{usernameError}</p>}
                 {usernameSuccess && <p className={styles.success}>Username updated successfully.</p>}
-
                 <button
                     className={styles.saveButton}
                     onClick={handleChangeUsername}
@@ -160,9 +184,9 @@ export function Settings() {
                 </button>
             </div>
 
+            {/* Password section — unchanged */}
             <div className={styles.section}>
                 <h2 className={styles.sectionTitle}>Password</h2>
-
                 <div className={styles.field}>
                     <label className={styles.label}>Current password</label>
                     <div className={styles.passwordWrapper}>
@@ -178,7 +202,6 @@ export function Settings() {
                         </button>
                     </div>
                 </div>
-
                 <div className={styles.field}>
                     <label className={styles.label}>New password</label>
                     <div className={styles.passwordWrapper}>
@@ -194,7 +217,6 @@ export function Settings() {
                         </button>
                     </div>
                 </div>
-
                 <div className={styles.field}>
                     <label className={styles.label}>Confirm new password</label>
                     <div className={styles.passwordWrapper}>
@@ -207,10 +229,8 @@ export function Settings() {
                         />
                     </div>
                 </div>
-
                 {passwordError && <p className={styles.error}>{passwordError}</p>}
                 {passwordSuccess && <p className={styles.success}>Password updated successfully.</p>}
-
                 <button
                     className={styles.saveButton}
                     onClick={handleChangePassword}
@@ -220,6 +240,7 @@ export function Settings() {
                 </button>
             </div>
 
+            {/* Appearance section — unchanged */}
             <div className={styles.section}>
                 <h2 className={styles.sectionTitle}>Appearance</h2>
                 <div className={styles.themeRow}>
@@ -234,13 +255,60 @@ export function Settings() {
                 </div>
             </div>
 
+            {/* Danger Zone */}
             <div className={styles.dangerSection}>
                 <h2 className={styles.dangerTitle}>Danger Zone</h2>
-                <p className={styles.dangerText}>Permanently delete your account and all associated data. This cannot be undone.</p>
-                <button className={styles.dangerButton} disabled>
-                    Delete account (coming soon)
+                <p className={styles.dangerText}>
+                    Permanently delete your account and all associated data. This cannot be undone.
+                </p>
+                <button
+                    className={styles.dangerButton}
+                    onClick={() => { setShowDeleteModal(true); setDeleteConfirmInput(''); setDeleteError(null); }}
+                >
+                    Delete account
                 </button>
             </div>
+
+            {/* Delete confirmation modal */}
+            {showDeleteModal && (
+                <div className={styles.modalBackdrop} onClick={() => setShowDeleteModal(false)}>
+                    <div className={styles.modal} onClick={e => e.stopPropagation()}>
+                        <h2 className={styles.modalTitle}>Delete account</h2>
+                        <p className={styles.modalText}>
+                            This will permanently delete your account, all scenario completions, and all bookmarks.
+                            <strong> This cannot be undone.</strong>
+                        </p>
+                        <p className={styles.modalText}>
+                            Type <strong>{user.username}</strong> to confirm.
+                        </p>
+                        <input
+                            className={styles.input}
+                            type="text"
+                            placeholder={user.username}
+                            value={deleteConfirmInput}
+                            onChange={e => { setDeleteConfirmInput(e.target.value); setDeleteError(null); }}
+                            autoFocus
+                        />
+                        {deleteError && <p className={styles.error}>{deleteError}</p>}
+                        <div className={styles.modalButtons}>
+                            <button
+                                className={styles.cancelButton}
+                                onClick={() => setShowDeleteModal(false)}
+                                disabled={deleteLoading}
+                            >
+                                Cancel
+                            </button>
+                            <button
+                                className={styles.dangerButton}
+                                onClick={handleDeleteAccount}
+                                disabled={deleteConfirmInput !== user.username || deleteLoading}
+                            >
+                                {deleteLoading ? 'Deleting...' : 'Delete account'}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
         </div>
     );
 }
