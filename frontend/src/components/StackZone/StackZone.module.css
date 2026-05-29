@@ -1,5 +1,4 @@
 /* ── Wrapper ── */
-/* Absolutely positioned in the center of the board grid. */
 
 .wrapper {
     position: absolute;
@@ -43,20 +42,33 @@
     border-radius: 8px;
     padding: 8px;
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
-    min-width: 140px;
+    min-width: 200px;
+    max-width: 280px;
+    max-height: 320px;
+    overflow-y: auto;
     z-index: 30;
+}
+
+.popup::-webkit-scrollbar {
+    width: 3px;
+}
+
+.popup::-webkit-scrollbar-thumb {
+    background: var(--border);
+    border-radius: 2px;
 }
 
 .popupHeader {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    font-size: 0.68rem;
+    font-size: 0.65rem;
     font-weight: 600;
     color: var(--gold);
-    margin-bottom: 8px;
+    margin-bottom: 6px;
     padding-bottom: 6px;
     border-bottom: 1px solid var(--border-subtle);
+    gap: 8px;
 }
 
 .closeButton {
@@ -67,6 +79,7 @@
     cursor: pointer;
     padding: 0;
     line-height: 1;
+    flex-shrink: 0;
 }
 
 .closeButton:hover {
@@ -78,54 +91,55 @@
 .items {
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 2px;
 }
 
 .item {
-    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 5px 6px;
+    border-radius: 4px;
     cursor: pointer;
-    transition: transform 0.12s;
+    transition: background 0.1s;
 }
 
 .item:hover {
-    transform: translateY(-2px);
-}
-
-.cardImage {
-    width: 100px;
-    height: auto;
-    border-radius: 4px;
-    display: block;
-}
-
-.cardPlaceholder {
-    width: 100px;
-    height: 140px;
     background: var(--bg-secondary);
-    border: 1px solid var(--border);
-    border-radius: 4px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 0.6rem;
-    color: var(--text-muted);
-    text-align: center;
-    padding: 4px;
 }
 
-/* ── Resolves next badge ── */
+.itemTop {
+    background: rgba(201, 168, 76, 0.08);
+    border: 1px solid rgba(201, 168, 76, 0.2);
+}
+
+.itemTop:hover {
+    background: rgba(201, 168, 76, 0.14);
+}
+
+.typeIcon {
+    font-size: 0.65rem;
+    color: var(--gold);
+    flex-shrink: 0;
+    width: 14px;
+    text-align: center;
+}
+
+.itemName {
+    font-size: 0.68rem;
+    color: var(--text);
+    flex: 1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
 
 .resolvesBadge {
-    position: absolute;
-    top: -8px;
-    left: 50%;
-    transform: translateX(-50%);
-    background: var(--gold-dark);
-    color: #f5edda;
     font-size: 0.55rem;
     font-weight: 600;
-    padding: 2px 6px;
+    color: var(--gold);
+    background: rgba(201, 168, 76, 0.15);
+    padding: 1px 5px;
     border-radius: 3px;
-    white-space: nowrap;
-    z-index: 1;
+    flex-shrink: 0;
 }

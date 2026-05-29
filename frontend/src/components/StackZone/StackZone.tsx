@@ -8,10 +8,15 @@ interface StackZoneProps {
     stack: StackItem[];
 }
 
+const TYPE_ICONS: Record<StackItem['type'], string> = {
+    cast: '✦',
+    triggered: '⟳',
+    activated: '⚡',
+};
+
 export function StackZone({ stack }: StackZoneProps) {
     const [open, setOpen] = useState(false);
-    const [hoveredItem, setHoveredItem] = useState<{
-        id: string;
+    const [hovered, setHovered] = useState<{
         imageUrl: string;
         x: number;
         y: number;
@@ -36,7 +41,7 @@ export function StackZone({ stack }: StackZoneProps) {
                 {open && (
                     <div className={styles.popup}>
                         <div className={styles.popupHeader}>
-                            Stack
+                            <span>Stack — top resolves first</span>
                             <button
                                 className={styles.closeButton}
                                 onClick={() => setOpen(false)}
@@ -49,35 +54,29 @@ export function StackZone({ stack }: StackZoneProps) {
                             {stack.map((item, index) => (
                                 <div
                                     key={item.id}
-                                    className={styles.item}
+                                    className={`${styles.item} ${index === 0 ? styles.itemTop : ''}`}
                                     onMouseMove={e => {
                                         if (!item.imageUrl) return;
-                                        setHoveredItem({
-                                            id: item.id,
+                                        setHovered({
                                             imageUrl: item.imageUrl,
                                             x: e.clientX,
                                             y: e.clientY,
                                         });
                                     }}
-                                    onMouseLeave={() => setHoveredItem(null)}
+                                    onMouseLeave={() => setHovered(null)}
                                     onClick={() => {
                                         setSelectedCardId(item.sourceCardId);
                                         setOpen(false);
                                     }}
                                 >
+                                    <span className={styles.typeIcon}>
+                                        {TYPE_ICONS[item.type]}
+                                    </span>
+                                    <span className={styles.itemName}>
+                                        {item.sourceCardName}
+                                    </span>
                                     {index === 0 && (
-                                        <span className={styles.resolvesBadge}>resolves next</span>
-                                    )}
-                                    {item.imageUrl ? (
-                                        <img
-                                            src={item.imageUrl}
-                                            alt={item.sourceCardName}
-                                            className={styles.cardImage}
-                                        />
-                                    ) : (
-                                        <div className={styles.cardPlaceholder}>
-                                            {item.sourceCardName}
-                                        </div>
+                                        <span className={styles.resolvesBadge}>next</span>
                                     )}
                                 </div>
                             ))}
@@ -87,16 +86,16 @@ export function StackZone({ stack }: StackZoneProps) {
             </div>
 
             {/* ── Hover preview portal ── */}
-            {hoveredItem && createPortal(
+            {hovered && createPortal(
                 <img
-                    src={hoveredItem.imageUrl}
+                    src={hovered.imageUrl}
                     alt="preview"
                     style={{
                         position: 'fixed',
-                        top: hoveredItem.y > window.innerHeight * 0.6
-                            ? hoveredItem.y - 320
-                            : hoveredItem.y,
-                        left: hoveredItem.x + 20,
+                        top: hovered.y > window.innerHeight * 0.6
+                            ? hovered.y - 320
+                            : hovered.y,
+                        left: hovered.x + 20,
                         width: 'clamp(220px, 18vw, 320px)',
                         height: 'auto',
                         borderRadius: '10px',
