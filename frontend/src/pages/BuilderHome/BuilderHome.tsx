@@ -19,6 +19,9 @@ export function BuilderHome() {
     const [loading, setLoading] = useState(true);
     const [creating, setCreating] = useState(false);
 
+    const [deleteTargetId, setDeleteTargetId] = useState<string | null>(null);
+    const [deleteLoading, setDeleteLoading] = useState(false);
+
     useEffect(() => {
         if (authLoading) return;
         if (!user) return;
@@ -59,14 +62,16 @@ export function BuilderHome() {
         }
     }
 
-    async function handleDelete(id: string, e: React.MouseEvent) {
-        e.stopPropagation();
-        if (!confirm('Delete this draft? This cannot be undone.')) return;
-        await fetch(`${apiUrl}/builder/scenarios/${id}`, {
+    async function handleDelete() {
+        if (!deleteTargetId) return;
+        setDeleteLoading(true);
+        await fetch(`${apiUrl}/builder/scenarios/${deleteTargetId}`, {
             method: 'DELETE',
             headers: { Authorization: `Bearer ${accessToken}` }
         });
-        setDrafts(prev => prev.filter(d => d.id !== id));
+        setDrafts(prev => prev.filter(d => d.id !== deleteTargetId));
+        setDeleteTargetId(null);
+        setDeleteLoading(false);
     }
 
     if (authLoading) return null;
@@ -123,7 +128,7 @@ export function BuilderHome() {
                                     </div>
                                     <button
                                         className={styles.deleteButton}
-                                        onClick={(e) => handleDelete(draft.id, e)}
+                                        onClick={(e) => { e.stopPropagation(); setDeleteTargetId(draft.id); }}
                                     >
                                         Delete
                                     </button>
@@ -132,6 +137,30 @@ export function BuilderHome() {
                         </div>
                     )}
                 </>
+            )}
+            {deleteTargetId && (
+                <div className={styles.modalBackdrop} onClick={() => setDeleteTargetId(null)}>
+                    <div className={styles.modal} onClick={e => e.stopPropagation()}>
+                        <h2 className={styles.modalTitle}>Delete draft?</h2>
+                        <p className={styles.modalText}>This cannot be undone.</p>
+                        <div className={styles.modalButtons}>
+                            <button
+                                className={styles.cancelButton}
+                                onClick={() => setDeleteTargetId(null)}
+                                disabled={deleteLoading}
+                            >
+                                Cancel
+                            </button>
+                            <button
+                                className={styles.dangerButton}
+                                onClick={handleDelete}
+                                disabled={deleteLoading}
+                            >
+                                {deleteLoading ? 'Deleting...' : 'Delete'}
+                            </button>
+                        </div>
+                    </div>
+                </div>
             )}
         </div>
     );

@@ -127,3 +127,84 @@
     align-items: center;
     gap: 1rem;
 }
+
+.modalBackdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.modal {
+    background: var(--bg-card);
+    border: 1px solid rgba(224, 112, 112, 0.3);
+    border-radius: 10px;
+    padding: 2rem;
+    width: min(400px, 90vw);
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.modalTitle {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--diff-expert);
+    margin: 0;
+}
+
+.modalText {
+    font-size: 0.88rem;
+    color: var(--text-muted);
+    margin: 0;
+}
+
+.modalButtons {
+    display: flex;
+    gap: 0.75rem;
+    justify-content: flex-end;
+}
+
+.cancelButton {
+    background: none;
+    border: 1px solid var(--border);
+    color: var(--text-muted);
+    border-radius: 6px;
+    padding: 0.6rem 1.25rem;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: border-color 0.15s, color 0.15s;
+}
+
+.cancelButton:hover:not(:disabled) {
+    border-color: var(--text-muted);
+    color: var(--text);
+}
+
+.cancelButton:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.dangerButton {
+    background: none;
+    border: 1px solid var(--diff-expert);
+    color: var(--diff-expert);
+    border-radius: 6px;
+    padding: 0.6rem 1.25rem;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: background 0.15s;
+}
+
+.dangerButton:hover:not(:disabled) {
+    background: rgba(224, 112, 112, 0.1);
+}
+
+.dangerButton:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
