@@ -45,6 +45,7 @@
     padding: 6px;
     background: var(--bg);
     overflow: visible;
+    position: relative;
 }
 
 /* ── Fullscreen button ── */

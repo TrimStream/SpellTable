@@ -6,6 +6,7 @@ import { LogPanel } from '../LogPanel/LogPanel';
 import { fetchBoardState } from '../../api/boardState';
 import { fetchCard } from '../../api/scryfall';
 import styles from './Board.module.css';
+import { StackZone } from '../StackZone/StackZone';
 
 interface BoardProps {
     scenario: Scenario;
@@ -199,6 +200,7 @@ export function Board({ scenario, cardImageMap }: BoardProps) {
                             position="bottom-right"
                             onCardClick={setSelectedCardId}
                         />
+                        <StackZone stack={currentBoardState?.stack ?? []} />
                     </div>
                 </div>
 
