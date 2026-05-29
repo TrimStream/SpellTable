@@ -13,7 +13,7 @@ interface ScenarioCompletion {
 
 interface DashboardData {
     total_attempted: number;
-    total_correct: number;
+    total_perfect: number;
     accuracy: number;
     scenarios_completed: ScenarioCompletion[];
     bookmarks: string[];
@@ -101,8 +101,8 @@ export function Dashboard() {
                     <span className={styles.statValue}>{data.total_attempted}</span>
                 </div>
                 <div className={styles.statCard}>
-                    <span className={styles.statLabel}>Correct</span>
-                    <span className={styles.statValue}>{data.total_correct}</span>
+                    <span className={styles.statLabel}>Perfect</span>
+                    <span className={styles.statValue}>{data.total_perfect}</span>
                 </div>
                 <div className={styles.statCard}>
                     <span className={styles.statLabel}>Accuracy</span>

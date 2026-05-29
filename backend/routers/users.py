@@ -53,7 +53,7 @@ async def get_dashboard(user=Depends(require_current_user)):
 
     return {
         "total_attempted": total,
-        "total_correct": perfect,
+        "total_perfect": perfect,
         "accuracy": accuracy,
         "scenarios_completed": scenarios_completed,
         "bookmarks": user.get("bookmarks", []),
