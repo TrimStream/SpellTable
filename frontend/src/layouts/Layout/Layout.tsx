@@ -81,7 +81,7 @@ export function Layout() {
                                     className={styles.builderButton}
                                     onClick={() => navigate('/builder')}
                                 >
-                                    Builder
+                                    ✏️
                                 </button>
                             )}
                             {user ? (
