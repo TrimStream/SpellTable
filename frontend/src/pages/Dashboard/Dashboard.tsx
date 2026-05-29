@@ -24,7 +24,7 @@ interface DashboardData {
 }
 
 export function Dashboard() {
-    const { user, accessToken } = useAuth();
+    const { user, accessToken, loading: authLoading } = useAuth();
     const navigate = useNavigate();
     const [data, setData] = useState<DashboardData | null>(null);
     const [loading, setLoading] = useState(true);
@@ -32,6 +32,7 @@ export function Dashboard() {
     const apiUrl = import.meta.env.VITE_API_URL;
 
     useEffect(() => {
+        if (authLoading) return;
         if (!user || !accessToken) {
             navigate('/');
             return;
@@ -50,7 +51,7 @@ export function Dashboard() {
             setScenarioTitles(titles);
             setLoading(false);
         }).catch(() => setLoading(false));
-    }, [user, accessToken]);
+    }, [user, accessToken, authLoading, navigate, apiUrl]);
 
     if (loading) return <p className={styles.loading}>Loading...</p>;
     if (!data) return null;

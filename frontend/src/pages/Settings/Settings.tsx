@@ -1,11 +1,11 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useAuth } from '../../context/AuthContext';
 import { useTheme } from '../../context/ThemeContext';
 import { useNavigate } from 'react-router-dom';
 import styles from './Settings.module.css';
 
 export function Settings() {
-    const { user, accessToken, login } = useAuth();
+    const { user, accessToken, login, loading: authLoading } = useAuth();
     const { theme, toggle } = useTheme();
     const navigate = useNavigate();
     const apiUrl = import.meta.env.VITE_API_URL;
@@ -24,8 +24,18 @@ export function Settings() {
     const [passwordSuccess, setPasswordSuccess] = useState(false);
     const [passwordLoading, setPasswordLoading] = useState(false);
 
+    useEffect(() => {
+        if (authLoading) return;
+        if (!user) {
+            navigate('/');
+        }
+    }, [authLoading, user, navigate]);
+
+    if (authLoading) {
+        return <p className={styles.error}>Loading...</p>;
+    }
+
     if (!user) {
-        navigate('/');
         return null;
     }
 
