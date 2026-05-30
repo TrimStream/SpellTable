@@ -42,15 +42,15 @@ async def create_draft(user=Depends(require_current_user)):
 
 
 @router.get("/scenarios")
-async def get_my_drafts(user=Depends(require_current_user)):
+async def get_my_scenarios(user=Depends(require_current_user)):
     cursor = db.scenarios.find(
-        {"authorId": user["_id"], "status": "draft"},
+        {"authorId": user["_id"]},
         {"_id": 0, "players": 0}
     )
-    drafts = await cursor.to_list(length=100)
-    for d in drafts:
-        d["authorId"] = str(d["authorId"])
-    return drafts
+    scenarios = await cursor.to_list(length=100)
+    for s in scenarios:
+        s["authorId"] = str(s["authorId"])
+    return scenarios
 
 
 @router.get("/scenarios/{scenario_id}")

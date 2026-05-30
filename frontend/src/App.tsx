@@ -14,7 +14,6 @@ import { Dashboard } from './pages/Dashboard/Dashboard';
 import { Settings } from './pages/Settings/Settings';
 import { AuthModal } from './components/AuthModal/AuthModal';
 import { VerifyEmail } from './pages/VerifyEmail/VerifyEmail';
-import { BuilderHome } from './pages/BuilderHome/BuilderHome';
 import { BuilderEditor } from './pages/BuilderEditor/BuilderEditor';
 
 const router = createBrowserRouter([
@@ -31,7 +30,6 @@ const router = createBrowserRouter([
             { path: 'settings', element: <Settings /> },
             { path: 'board/:id', element: <BoardPage /> },
             { path: 'verify-email', element: <VerifyEmail /> },
-            { path: 'builder', element: <BuilderHome /> },
             { path: 'builder/:id', element: <BuilderEditor /> },
             { path: '*', element: <NotFound /> },
         ],

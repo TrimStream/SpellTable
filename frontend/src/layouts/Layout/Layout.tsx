@@ -8,7 +8,7 @@ import { Footer } from '../../components/Footer/Footer';
 
 export function Layout() {
     const { theme, toggle } = useTheme();
-    const { user, logout, loading, openAuthModal } = useAuth();
+    const { user, logout, loading, openAuthModal, accessToken } = useAuth();
     const navigate = useNavigate();
     const [dropdownOpen, setDropdownOpen] = useState(false);
     const dropdownRef = useRef<HTMLDivElement>(null);
@@ -30,6 +30,21 @@ export function Layout() {
     //         setResendStatus('idle');
     //     }
     // }
+
+    async function handleNewScenario() {
+        if (!accessToken) {
+            openAuthModal('register');
+            return;
+        }
+        const res = await fetch(`${import.meta.env.VITE_API_URL}/builder/scenarios`, {
+            method: 'POST',
+            headers: { Authorization: `Bearer ${accessToken}` }
+        });
+        if (res.ok) {
+            const data = await res.json();
+            navigate(`/builder/${data.id}`);
+        }
+    }
 
     useEffect(() => {
         function handleClickOutside(e: MouseEvent) {
@@ -79,7 +94,9 @@ export function Layout() {
                             {user && (
                                 <button
                                     className={styles.builderButton}
-                                    onClick={() => navigate('/builder')}
+                                    onClick={handleNewScenario}
+                                    aria-label="New scenario"
+                                    title="New scenario"
                                 >
                                     ✏️
                                 </button>
