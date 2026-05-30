@@ -186,3 +186,409 @@
     background: rgba(224, 112, 112, 0.1);
     opacity: 1;
 }
+
+.stepList {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    margin-bottom: 1rem;
+    flex: 1;
+}
+
+.stepRow {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 0.6rem 0.75rem;
+    cursor: pointer;
+    transition: border-color 0.15s;
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+}
+
+.stepRow:hover {
+    border-color: var(--gold);
+}
+
+.stepRowSelected {
+    border-color: var(--gold);
+    background: rgba(201, 168, 76, 0.07);
+}
+
+.stepRowMain {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.stepIndex {
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    width: 14px;
+    flex-shrink: 0;
+}
+
+.stepLabel {
+    font-size: 0.85rem;
+    color: var(--text);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    flex: 1;
+}
+
+.stepRowFooter {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.stepBadge {
+    font-size: 0.68rem;
+    font-weight: 600;
+    padding: 0.15rem 0.45rem;
+    border-radius: 3px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+
+.badgeNarration {
+    background: rgba(255,255,255,0.06);
+    color: var(--text-muted);
+}
+
+.badgeQuestion {
+    background: rgba(201, 168, 76, 0.15);
+    color: var(--gold);
+}
+
+.badgeFinal {
+    background: rgba(94, 203, 130, 0.15);
+    color: var(--diff-beginner);
+}
+
+.stepDeleteButton {
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    font-size: 1rem;
+    cursor: pointer;
+    padding: 0;
+    line-height: 1;
+    transition: color 0.15s;
+}
+
+.stepDeleteButton:hover {
+    color: var(--diff-expert);
+}
+
+.addStepButton {
+    width: 100%;
+    background: none;
+    border: 1px dashed var(--border);
+    color: var(--text-muted);
+    border-radius: 6px;
+    padding: 0.5rem;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: border-color 0.15s, color 0.15s;
+}
+
+.addStepButton:hover {
+    border-color: var(--gold);
+    color: var(--gold);
+}
+
+.metaPanel {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+}
+
+.field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+}
+
+.fieldLabel {
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+
+.input {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    color: var(--text);
+    font-size: 0.88rem;
+    padding: 0.5rem 0.75rem;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.input:focus {
+    outline: none;
+    border-color: var(--gold);
+}
+
+.textarea {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    color: var(--text);
+    font-size: 0.85rem;
+    padding: 0.5rem 0.75rem;
+    width: 100%;
+    box-sizing: border-box;
+    resize: vertical;
+    font-family: inherit;
+    line-height: 1.5;
+}
+
+.textarea:focus {
+    outline: none;
+    border-color: var(--gold);
+}
+
+.hint {
+    font-size: 0.72rem;
+    color: var(--text-disabled);
+    margin: 0;
+}
+
+.difficultyRow {
+    display: flex;
+    gap: 0.4rem;
+}
+
+.difficultyButton {
+    flex: 1;
+    background: none;
+    border: 1px solid var(--border);
+    color: var(--text-muted);
+    border-radius: 6px;
+    padding: 0.35rem 0;
+    font-size: 0.78rem;
+    cursor: pointer;
+    text-transform: capitalize;
+    transition: border-color 0.15s, color 0.15s;
+}
+
+.difficultySelected {
+    border-color: var(--gold);
+    color: var(--gold);
+}
+
+.tagRow {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+}
+
+.tagToggle {
+    background: none;
+    border: 1px solid var(--border);
+    color: var(--text-muted);
+    border-radius: 999px;
+    padding: 0.25rem 0.65rem;
+    font-size: 0.78rem;
+    cursor: pointer;
+    transition: border-color 0.15s, color 0.15s;
+}
+
+.tagToggleOn {
+    border-color: var(--gold);
+    color: var(--gold);
+    background: rgba(201, 168, 76, 0.1);
+}
+
+.chipList {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin-bottom: 0.4rem;
+}
+
+.chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    background: rgba(255,255,255,0.06);
+    border-radius: 999px;
+    padding: 0.2rem 0.6rem;
+    font-size: 0.78rem;
+    color: var(--text);
+}
+
+.chipRemove {
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    cursor: pointer;
+    font-size: 0.9rem;
+    padding: 0;
+    line-height: 1;
+    transition: color 0.15s;
+}
+
+.chipRemove:hover {
+    color: var(--diff-expert);
+}
+
+.inputRow {
+    display: flex;
+    gap: 0.4rem;
+}
+
+.logLines {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+    margin-bottom: 0.4rem;
+}
+
+.logLineRow {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 0.5rem;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 0.4rem 0.6rem;
+    font-size: 0.82rem;
+    color: var(--text);
+}
+
+.logLineText {
+    flex: 1;
+    line-height: 1.4;
+}
+
+.toggleRow {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.toggle {
+    width: 36px;
+    height: 20px;
+    border-radius: 10px;
+    background: var(--border);
+    border: none;
+    cursor: pointer;
+    position: relative;
+    transition: background 0.2s;
+    padding: 0;
+    flex-shrink: 0;
+}
+
+.toggleOn {
+    background: var(--gold);
+}
+
+.toggleThumb {
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: white;
+    transition: transform 0.2s;
+}
+
+.toggleOn .toggleThumb {
+    transform: translateX(16px);
+}
+
+.decisionPanel {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    padding-top: 0.75rem;
+    border-top: 1px solid var(--border);
+}
+
+.choiceCard {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 0.75rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.choiceHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.choiceNumber {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+
+.qualityRow {
+    display: flex;
+    gap: 0.4rem;
+}
+
+.qualityButton {
+    flex: 1;
+    background: none;
+    border: 1px solid var(--border);
+    color: var(--text-muted);
+    border-radius: 6px;
+    padding: 0.3rem 0;
+    font-size: 0.75rem;
+    cursor: pointer;
+    text-transform: capitalize;
+    transition: border-color 0.15s, color 0.15s;
+}
+
+.quality_best { border-color: var(--diff-beginner); color: var(--diff-beginner); }
+.quality_ok { border-color: var(--gold); color: var(--gold); }
+.quality_blunder { border-color: var(--diff-expert); color: var(--diff-expert); }
+
+.autocompleteWrapper {
+    position: relative;
+}
+
+.suggestionList {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    z-index: 100;
+    overflow-y: auto;
+    max-height: 240px;
+    margin-top: 2px;
+}
+
+.suggestionRow {
+    padding: 0.5rem 0.75rem;
+    font-size: 0.85rem;
+    color: var(--text);
+    cursor: pointer;
+    transition: background 0.1s;
+}
+
+.suggestionRow:hover {
+    background: rgba(201, 168, 76, 0.1);
+    color: var(--gold);
+}

@@ -190,7 +190,16 @@ export function Dashboard() {
                     authoredScenarios.length === 0 ? (
                         <p className={styles.empty}>
                             No scenarios yet.{' '}
-                            <span className={styles.link} onClick={() => navigate('/builder')}>
+                            <span className={styles.link} onClick={async () => {
+                                const res = await fetch(`${apiUrl}/builder/scenarios`, {
+                                    method: 'POST',
+                                    headers: { Authorization: `Bearer ${accessToken}` }
+                                });
+                                if (res.ok) {
+                                    const data = await res.json();
+                                    navigate(`/builder/${data.id}`);
+                                }
+                            }}>
                                 Create one
                             </span>
                         </p>

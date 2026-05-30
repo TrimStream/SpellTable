@@ -42,7 +42,7 @@ export function Home() {
                     </div>
                     <div className={styles.card}>
                         <p className={styles.cardTitle}>Who is this for?</p>
-                        <p className={styles.cardBody}>Players who know Magic but keep losing in cEDH. You picked up Kenrith or Kinnan. You're not sure why your lines are wrong. Start here.</p>
+                        <p className={styles.cardBody}>Players who know Magic but keep losing in cEDH. You picked up Sisay or Kinnan. You're not sure why your lines are wrong. Start here.</p>
                     </div>
                 </div>
             </section>
